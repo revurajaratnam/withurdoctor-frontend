@@ -1,0 +1,329 @@
+*{
+   
+    box-sizing:border-box ;
+    flex-wrap: wrap;
+    max-width: 100%;
+}
+html{
+    scroll-behavior: smooth;
+
+}
+#vfySignIn{
+    color: black;
+    text-decoration:none;
+}
+#vfySignup{
+    color: black;
+    text-decoration:none;
+}
+#vfySignIn:hover{
+    text-decoration:underline;
+}
+#vfySignup:hover{
+    text-decoration: underline;
+}
+#docinfo{
+    padding: 0;
+    margin: 0;
+    
+}
+#drname{
+    text-decoration: none;
+}
+#drname:hover{
+    text-decoration: underline;
+
+}
+#nb{
+    font-size: small;
+}
+#login-signup-btn{
+    background-color: white;
+    color: gray;
+    border: 1px solid gray;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#login-signup-btn:hover{
+    color: rgb(6, 154, 212);
+    border: 1px solid rgb(6, 154, 212);
+}
+.email-focus:focus{
+   border-color: #13BEF0 !important;
+    outline:none;
+}
+.password-focus:focus {
+    outline: none;
+    border-color: #13BEF0 !important; 
+}
+.checkbox-30days {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 2px solid gray;
+    border-radius: 4px;
+    background-color: transparent;
+    cursor: pointer;
+    position: relative;
+}
+
+
+
+.checkbox-30days:checked {
+    background-color: #0DCAF0;
+    border-color: #0DCAF0;
+}
+
+.checkbox-30days:checked::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 3px;
+    width: 4px;
+    height: 6px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+.borders-btn{
+    border: none;
+    color: #0DCAF0;
+    padding: 10px;
+    background-color: none;
+    border-bottom:3px solid #0DCAF0;
+
+}
+.fullname-input{
+ 
+    border: 1px solid #ddd;
+
+}
+.emails-input{
+    border: 1px solid #ddd;
+}
+.password-input{
+    border:1px solid #ddd;
+}
+.confirmpassword{
+    border: 1px solid #ddd;
+}
+.fullname-input:focus{
+    outline: none;
+    border-color:  #13BEF0;
+}
+
+.emails-input:focus{
+    outline: none;
+    border-color: #0DCAF0;
+}
+.password-input:focus{
+    outline: none;
+    border-color: #0DCAF0;
+}
+.confirmpassword:focus{
+    outline: none;
+    border: 1px solid #0DCAF0;
+}
+.f-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 50px;
+    margin-top: 50px;
+}
+.home-focus:focus{
+    border: none;
+    outline: none;
+}
+.hover-zoom:hover{
+    
+    background-color: #F0F0F5;
+}
+.profile-dropdown{
+    min-width: 230px;
+    width: max-content;
+   
+}
+.forProviders{
+    min-width: 220px
+}
+.fnpage-focus{
+    border: none;
+    outline: none;
+   cursor: pointer;
+}
+.fnpage-focus:focus{
+    outline: none;
+    border: none;
+}
+.location-h-effect{
+    text-align: left;
+    padding-left: 30px;
+    padding: 10px;
+    border-bottom: 1px solid rgb(237, 236, 236);
+}
+.location-h-effect:hover{
+    background-color: #dadada;
+    cursor: pointer;
+    
+}
+.popular-search{
+    text-decoration: none;
+    color: rgb(114, 114, 114);
+}
+.popular-search:hover{
+    text-decoration: underline;
+    color: white;
+}
+.icon-text {
+    text-decoration: none;
+    color: rgb(213, 213, 213);
+  }
+  
+  .icon {
+    display: inline-block;
+    transition: 0.2s ease;
+  }
+  
+  .icon-text:hover {
+    color: white;
+  }
+  
+  .icon-text:hover .icon {
+    transform: scale(1.2);
+  }
+  .Contact-Clinic{
+    margin-top:px;
+    text-decoration: none;
+    color: #13BEF0;
+
+  }
+  .Contact-Clinic:hover{
+    padding: 10px;
+        background-color: #13BEF0;
+        color: #ffff;
+        border-radius: 5px;
+  }
+  .input-focus{
+    border: none;
+    outline: none;
+  }
+  .input-focus:focus{
+
+  }
+
+  .consult-page {
+    background-color: #f2f3f7;
+    min-height: 100vh;
+    padding: 25px;
+  }
+  
+  .consult-box {
+    width: 920px;
+    min-height: 380px;
+    background-color: white;
+    margin: 30px auto;
+    padding: 30px;
+    display: flex;
+    position: relative;
+    border: 1px solid #ddd;
+  }
+  
+  .consult-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #777;
+    font-size: 28px;
+    text-decoration: none;
+  }
+  
+  .consult-left {
+    width: 50%;
+    padding-right: 50px;
+    border-right: 1px solid #e4e7ec;
+  }
+  
+  .consult-left h1 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  
+  .consult-label {
+    font-size: 13px;
+    margin-top: 18px;
+    margin-bottom: 8px;
+  }
+  
+  .selected-speciality {
+    width: 190px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 13px;
+    border: 1px solid #13bef0;
+    padding: 8px;
+  }
+  
+  .consult-input {
+    width: 270px;
+    padding: 10px;
+    font-size: 12px;
+    border: 1px solid #ddd;
+    outline: none;
+  }
+  
+  .consult-small-text {
+    font-size: 10px;
+    margin-top: 6px;
+  }
+  
+  .consult-right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  .consult-animation-card {
+    text-align: center;
+    animation: fadeSlide 0.6s ease;
+  }
+  
+  .consult-animation-img {
+    object-fit: contain;
+  }
+  
+  .consult-animation-card h5 {
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  
+  .consult-dots {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+  }
+  
+  
+  
+  @keyframes fadeSlide {
+    from {
+      opacity: 0;
+      transform: translateY(150px);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+   
+
+  
+  
+
+  }
