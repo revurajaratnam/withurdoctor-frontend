@@ -22,7 +22,7 @@ export const states = [
     "Rajasthan",
     "Sikkim",
     "Tamil Nadu",
-    "Telangana",
+    "Hyderabad",
     "Tripura",
     "Uttar Pradesh",
     "Uttarakhand",
