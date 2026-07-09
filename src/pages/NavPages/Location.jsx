@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { states } from "../../utils/StatesAndCities";
 import { specialization } from "../../utils/drSpecial";
 import { Link } from "react-router-dom";
+import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
 
 export default function LocationandSearch({
   locationValue,
@@ -13,7 +14,7 @@ export default function LocationandSearch({
   const [dropdown, setDropdown] = useState(null);
   const searchBoxRef = useRef(null);
   const searchInputRef = useRef(null);
-
+  const {data} = useGetdrdataQuery();
   useEffect(() => {
     const handleClickOutSide = (e) => {
       if (searchBoxRef.current && !searchBoxRef.current.contains(e.target)) {
@@ -28,27 +29,36 @@ export default function LocationandSearch({
     };
   }, []);
 
+  const doctorsDatas = Array.isArray(data?.data)? data.data : [];
+  const safeText = (value) => String(value || "").toLowerCase();
+  const finalDoctorData = doctorsData.length >0 ? doctorsData :doctorsDatas;
   const filteredState = states.filter((s) =>
-    s.toLowerCase().includes(locationValue.toLowerCase())
+    safeText(s).includes(safeText(locationValue))
   );
 
   const filteredSpecialization = specialization.filter((s) =>
-    s.title.toLowerCase().includes(searchValue.toLowerCase())
+    safeText(s.title).includes(safeText(searchValue))
   );
 
-  const filteredDoctors = doctorsData.filter((doctor) => {
-    const matchLocation = locationValue
-      ? doctor.address?.toLowerCase().includes(locationValue.toLowerCase())
+  const filteredDoctors = finalDoctorData.filter((doctor) => {
+    const doctorName = safeText(doctor.fullname);
+    const doctorSpecialization = safeText(doctor.specialization);
+    const doctorAddress = safeText(doctor.address);
+  
+    const locationText = safeText(locationValue);
+    const searchText = safeText(searchValue);
+  
+    const matchLocation = locationText
+      ? doctorAddress.includes(locationText)
       : true;
-
-    const matchSearch = searchValue
-      ? doctor.fullname?.toLowerCase().includes(searchValue.toLowerCase()) ||
-        doctor.specialization?.toLowerCase().includes(searchValue.toLowerCase())
+  
+    const matchSearch = searchText
+      ? doctorName.includes(searchText) ||
+        doctorSpecialization.includes(searchText)
       : false;
-
+  
     return matchLocation && matchSearch;
   });
-
   return (
     <div>
       <div
@@ -57,17 +67,22 @@ export default function LocationandSearch({
         style={{ width: "70%", height: "50px" }}
       >
         <div className="position-relative border" style={{ width: "30%" }}>
-          <input
+          <div className="d-flex align-items-center ">
+            <i className="bi bi-geo-alt-fill me-2 ms-2"></i>
+            <span >
+            <input
             type="text"
             className="p-2 w-100 fnpage-focus"
-            value={locationValue}
+            value={locationValue || ""}
             onClick={() => setDropdown("location")}
             onChange={(e) => {
               setLocationValue(e.target.value);
               setDropdown("location");
             }}
-            placeholder={states[0]}
+            placeholder="Search location"
           />
+            </span>
+          </div>
 
           {dropdown === "location" && (
             <div
@@ -106,11 +121,14 @@ export default function LocationandSearch({
         </div>
 
         <div className="position-relative border" style={{ width: "70%" }}>
-          <input
-          ref={searchInputRef}
+          <div className="d-flex align-items-center">
+              <i className="bi bi-search ms-2"></i>
+            <span>
+            <input
+            ref={searchInputRef}
             type="text"
-            className="p-2 w-100 fnpage-focus"
-            value={searchValue}
+            className="p-2 w-100 fnpage-focus ms-2"
+            value={searchValue || ""}
             placeholder="Search for doctors..."
             onClick={() => setDropdown("search")}
             onChange={(e) => {
@@ -118,6 +136,8 @@ export default function LocationandSearch({
               setDropdown("search");
             }}
           />
+            </span>
+          </div>
 
           {dropdown === "search" && (
             <div
@@ -133,20 +153,23 @@ export default function LocationandSearch({
               {searchValue && filteredDoctors.length > 0 ? (
                 filteredDoctors.map((doctor) => (
                   <Link
-                    to={`/Profile/${doctor._id}`}
-                    key={doctor._id}
-                    className="location-h-effect p-2 text-start d-block text-decoration-none text-dark"
-                    onClick={() => {
-                      setSearchValue(doctor.fullname);
-                      setDropdown(null);
-                    }}
-                  >
-                    <i className="bi bi-person-circle mx-3"></i>
-                    Dr. {doctor.fullname} - {doctor.specialization}
-                    <small className="d-block ms-5 text-muted">
-                      {doctor.address}
-                    </small>
-                  </Link>
+  to={`/FindDoctors?search=${encodeURIComponent(doctor.fullname || "")}${
+    locationValue ? `&location=${encodeURIComponent(locationValue)}` : ""
+  }`}
+  key={doctor.id || doctor._id}
+  className="location-h-effect p-2 text-start d-block text-decoration-none text-dark"
+  onClick={() => {
+    setSearchValue(doctor.fullname || "");
+    setDropdown(null);
+  }}
+>
+  <i className="bi bi-person-circle mx-3"></i>
+  Dr. {doctor.fullname} - {doctor.specialization}
+
+  <small className="d-block ms-5 text-muted">
+    {doctor.address}
+  </small>
+</Link>
                 ))
               ) : filteredSpecialization.length > 0 ? (
                 filteredSpecialization.map((special) => (

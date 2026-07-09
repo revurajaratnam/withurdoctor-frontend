@@ -1,0 +1,138 @@
+.schedule-card {
+    width: 100%;
+    max-width: 700px;
+    background-color: #fff;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 10px 0 25px;
+    margin: auto;
+  }
+  
+  .schedule-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .arrow-btn {
+    width: 35px;
+    height: 35px;
+    border: 1px solid #d6d6d6;
+    background-color: #fff;
+    color: #13bef0;
+    border-radius: 50%;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .date-tabs {
+    display: flex;
+    width: 80%;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .date-tab {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 8px 5px;
+    text-align: center;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+  }
+  
+  .date-tab h6 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #222;
+  }
+  
+  .date-tab p {
+    margin: 2px 0 0;
+    font-size: 11px;
+  }
+  
+  .active-date-tab {
+    border-bottom: 3px solid #13bef0;
+  }
+  
+  .available-text {
+    color: green;
+  }
+  
+  .not-available-text {
+    color: #777;
+  }
+  
+  .schedule-body {
+    text-align: center;
+    padding-top: 18px;
+  }
+  
+  .empty-icon {
+    font-size: 35px;
+    margin-bottom: 8px;
+  }
+  
+  .empty-text {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 12px;
+  }
+  
+  .next-btn {
+    width: 260px;
+    border: none;
+    background-color: #13bef0;
+    color: white;
+    padding: 7px;
+    font-size: 13px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  .call-btn {
+    width: 260px;
+    border: 1px solid #13bef0;
+    background-color: white;
+    color: #13bef0;
+    padding: 7px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  
+  .slot-title {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  
+  .slots-box {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .slot-btn {
+    border: 1px solid #13bef0;
+    background-color: white;
+    color: #13bef0;
+    padding: 7px 15px;
+    font-size: 13px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .slot-btn:hover,
+  .call-btn:hover {
+    background-color: #13bef0;
+    color: white;
+  }
+  
+  .next-btn:hover {
+    background-color: #0aa8d8;
+  }

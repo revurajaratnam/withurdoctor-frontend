@@ -32,11 +32,15 @@ const userSlice = createSlice({
       state.user = action.payload.user;
       state.email = action.payload.user?.email;
       state.token = action.payload.token;
-      state.isLoggedIn = true;
-      state.role = action.payload.role;
+      state.isLoggedIn = !!token;
+      state.role = user?.role || action.payload.role || null;
 
-      localStorage.setItem("token", action.payload.token);
+      if(token){
+        localStorage.setItem("token", action.payload.token);
+      }
+      if(user){
       localStorage.setItem("user", JSON.stringify(action.payload.user));
+      }
     },
 
     logout: (state) => {

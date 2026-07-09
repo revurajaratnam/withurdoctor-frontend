@@ -15,14 +15,19 @@ export const drDataApi = createApi({
             }),
             
         }),
-        getdrdata:build.query({
-            query:()=>({
-                url:"/drdata",
-                method:"GET"
-            })
+        getdrdata: build.query({
+            query:({cursor , search , location , id}={}) => {
+                const params = new URLSearchParams();
+                if(cursor) params.append("cursor" , cursor);
+                if(search) params.append("search",search);
+                if(location) params.append("location",location);
+                if(id) params.append("id",id);
+                return `/drdata?${params.toString()}`;
+
+            },
         })
     })
 
 });
 
-export const { useDrdataMutation , useGetdrdataQuery} = drDataApi;
+export const { useDrdataMutation ,useLazyGetdrdataQuery , useGetdrdataQuery} = drDataApi;
