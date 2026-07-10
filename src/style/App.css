@@ -170,7 +170,8 @@ html{
 }
 .popular-search{
     text-decoration: none;
-    color: rgb(114, 114, 114);
+    color: rgb(185, 184, 184);
+    margin-right: 100px;
 }
 .popular-search:hover{
     text-decoration: underline;
@@ -321,9 +322,20 @@ html{
       opacity: 1;
       transform: translateY(0);
     }
+
+  }
+
+  .findHome-align{
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    border: none;
    
-
-  
-  
-
+    
+    max-width: 1200px;
+    
+  }
+  .cursor-pointer{
+    cursor: pointer;
   }

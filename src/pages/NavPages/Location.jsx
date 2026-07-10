@@ -60,10 +60,10 @@ export default function LocationandSearch({
     return matchLocation && matchSearch;
   });
   return (
-    <div>
+    <div className="container d-flex flex-grow-1 flex-wrap  align-items-center justify-content-between p-2 w-100 ">
       <div
         ref={searchBoxRef}
-        className="d-flex justify-content-center align-items-start"
+        className="d-flex justify-content-center align-items-start bg-white"
         style={{ width: "70%", height: "50px" }}
       >
         <div className="position-relative border" style={{ width: "30%" }}>

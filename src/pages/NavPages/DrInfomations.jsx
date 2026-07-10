@@ -6,13 +6,15 @@ import Footer from "../../components/Footer";
 import LocationandSearch from "./Location";
 import AppointmentSchedule from "../Hero-Pages/Schedule";
 import ClinicandHospital from "../Hero-Pages/ClinicandHospital";
+import FilterDoctors from "./FilterDoctors";
 
 export default function FindDoctors() {
   const [searchParams] = useSearchParams();
+  const specilizationParam = searchParams.get("specialization") || "";
   const urlSearch = searchParams.get("search");
-  
-  const [locationValue, setLocationValue] = useState("");
+  const [locationValue, setLocationValue] = useState("Hyderabad");
   const [searchValue, setSearchValue] = useState(urlSearch);
+  const [selectedGender , setSelectedGender] = useState("")
   const [doctors, setDoctors] = useState([]);
   const [cursor, setCursor] = useState(null);
   const [hasMore, setHasMore] = useState(true);
@@ -33,7 +35,9 @@ export default function FindDoctors() {
         cursor: resetList ? null : cursor,
         search: searchValue,
         location: currentLocation,
-        urlSearch,
+        specialization : specilizationParam,
+        gender : selectedGender,
+      
       }).unwrap();
 
       const newData = Array.isArray(res?.data) ? res.data : [];
@@ -53,7 +57,7 @@ export default function FindDoctors() {
     setCursor(null);
     setHasMore(true);
     loadDoctors(true);
-  }, [searchValue, currentLocation, urlSearch]);
+  }, [searchValue, currentLocation, urlSearch , specilizationParam , selectedGender]);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -67,23 +71,34 @@ export default function FindDoctors() {
   }, [cursor, hasMore, loading]);
 
   return (
-    <div className="min-vh-100 d-flex flex-column">
-      <main className="flex-grow-1">
-        <div className="position-fixed top-0 start-0 w-100 bg-white" style={{ zIndex: 1050 }}>
+    <div className="min-vh-100 d-flex flex-column ">
+      <main className="flex-grow-1 " >
+        <div className="position-fixed  w-100 bg-white" style={{ zIndex: 1050 }}>
           <NavbarComp />
         </div>
 
-        <div style={{ marginTop: "100px", marginLeft: "100px" }}>
+        <div className="position-fixed start-1 end-0 w-100 bg-white" style={{ marginTop: "77px", marginLeft: "100px" ,zIndex:"10"}}>
           <LocationandSearch
             locationValue={locationValue}
             setLocationValue={setLocationValue}
             searchValue={searchValue}
             setSearchValue={setSearchValue}
             doctorsData={doctors}
+            wrapperStyle={{
+              width: "70%",
+              height: "50px",
+              marginLeft: "200px",
+            }}
+          />
+        </div>
+        <div className=" w-100">
+          <FilterDoctors 
+          selectedGender={ selectedGender}
+          onGenderChange={setSelectedGender}
           />
         </div>
 
-        <div className="container w-100" style={{ marginTop: "50px" }}>
+        <div className="container w-100" style={{ marginTop: "0px" }}>
           {doctors?.length > 0 ? (
             <h1>{doctors.length} Doctor's Available</h1>
           ) : !loading ? (
@@ -112,6 +127,7 @@ export default function FindDoctors() {
                       <h5 className="mb-1">{doctor.fullname}</h5>
                     </Link>
                     <p className="mb-1 text-muted">{doctor.specialization}</p>
+                    <p className="mb-1 text-muted">{doctor.gender}</p>
                     <p className="mb-1">{doctor.experience} experience overall</p>
                     <p className="mb-1 " >Address: {doctor.address}</p>
                     <p className="mb-0 fw-semibold">₹{doctor.consultation} Consultation Fee at Clinic</p>
