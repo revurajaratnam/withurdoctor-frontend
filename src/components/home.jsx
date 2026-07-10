@@ -15,6 +15,7 @@ export default function HomePage() {
   const [swap, setSwap] = useState(0);
   const [locationValue, setLocationValue] = useState("Hyderabad");
   const [searchValue, setSearchValue] = useState("");
+  const {data:drData} = useGetdrdataQuery();
 
   const doctorsData = Array.isArray(data)
     ? data
@@ -86,9 +87,11 @@ export default function HomePage() {
             statesList={states}
             specializationList={specialization}
             doctorsData={doctorsData}
+            drData = {drData}
             onSpecializationSelect={handleSpecializationSelect}
             onDoctorSelect={handleDoctorSelect}
             onSearchSubmit={handleSearchSubmit}
+
             wrapperStyle={{
               width: "70%",
               height: "50px",

@@ -4,7 +4,6 @@ import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
 export default function ClinicandHospital() {
   const [searchParams] = useSearchParams();
 
-  // Get doctor id from URL: /clinic?id=3
   const targetId = searchParams.get("id");
 
   const { data: doctorData, isLoading, isError, error } = useGetdrdataQuery();

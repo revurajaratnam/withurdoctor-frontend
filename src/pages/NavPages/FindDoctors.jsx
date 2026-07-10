@@ -5,14 +5,15 @@ import { useState, useRef, useEffect } from "react";
 import { states } from "../../utils/StatesAndCities";
 import { specialization } from "../../utils/drSpecial";
 import LocationandSearch from "./Location";
+import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
 
 
 
 export default function FindDrHome() {
   const [dropdown, setDropdown] = useState(null);
-  const [locationValue, setLocationValue] = useState("");
+  const [locationValue, setLocationValue] = useState("Hyderabad");
   const [searchValue, setSearchValue] = useState("");
-
+  const {data:doctorsData} = useGetdrdataQuery();
   
 
   
@@ -61,18 +62,20 @@ export default function FindDrHome() {
           Find and Book
         </h1>
 
-          <div className="w-100 d-flex justify-content-center" >
+          <div className="findHome-align" >
             <LocationandSearch
             locationValue={locationValue}
             setLocationValue={setLocationValue}
             searchValue={searchValue}
             setSearchValue={setSearchValue}
+            doctorsData={doctorsData}
+            
              />
           </div>
 
-        <div className="d-flex gap-5 justify-content-center align-items-center mt-3">
+        <div className="d-flex   align-items-center mt-3">
     
-            <p className="text-secondary mb-0">Popular searches:</p>
+            <p className="popular-search mb-0 ">Popular searches:</p>
           <Link to="/FindDoctors?search=Dermatologist" className="popular-search">
             Dermatologist
           </Link>
