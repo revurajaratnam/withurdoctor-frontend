@@ -10,11 +10,24 @@ import FilterDoctors from "./FilterDoctors";
 
 export default function FindDoctors() {
   const [searchParams] = useSearchParams();
+  const initialFilters = {
+    gender :"",
+    experience :"",
+    consultationFee:"",
+    cosultType:""
+
+  }
   const specilizationParam = searchParams.get("specialization") || "";
   const urlSearch = searchParams.get("search");
   const [locationValue, setLocationValue] = useState("Hyderabad");
   const [searchValue, setSearchValue] = useState(urlSearch);
-  const [selectedGender , setSelectedGender] = useState("")
+  const [dropFilter , setDropFilter] = useState(
+                                                     {
+                                                      gender : "",
+                                                      experience :"",
+                                                      price : "",
+                                                     }
+                                                        );
   const [doctors, setDoctors] = useState([]);
   const [cursor, setCursor] = useState(null);
   const [hasMore, setHasMore] = useState(true);
@@ -26,19 +39,29 @@ export default function FindDoctors() {
   const currentLocation = locationValue || urlLocation;
   const [triggerFetch] = useLazyGetdrdataQuery();
   const observerRef = useRef(null);
-
+  const requestIDRef = useRef(0);
+  const handleResetFilter =() => {
+    setDropFilter(initialFilters)
+  }                                                  
   const loadDoctors = async (resetList = false) => {
     if (loading) return;
     setLoading(true);
+    const thisRequestID = ++requestIDRef.current;
     try {
       const res = await triggerFetch({
         cursor: resetList ? null : cursor,
         search: searchValue,
         location: currentLocation,
         specialization : specilizationParam,
-        gender : selectedGender,
-      
+        gender : dropFilter.gender,
+        experienceMin : dropFilter.experience?.min ?? "",
+        experienceMax : dropFilter.experience?.max ?? "",
+        consultationFeeMin : dropFilter.consultationFee?.min ?? "",
+        consultationFeeMax : dropFilter.consultationFee?.max ?? "",
       }).unwrap();
+      if(thisRequestID !== requestIDRef.current){
+        return;
+      }
 
       const newData = Array.isArray(res?.data) ? res.data : [];
       setDoctors(prev => (resetList ? newData : [...prev, ...newData]));
@@ -57,12 +80,13 @@ export default function FindDoctors() {
     setCursor(null);
     setHasMore(true);
     loadDoctors(true);
-  }, [searchValue, currentLocation, urlSearch , specilizationParam , selectedGender]);
+  }, [searchValue, currentLocation, urlSearch , specilizationParam , dropFilter]);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting && hasMore && !loading) {
         loadDoctors(false);
+
       }
     });
     const node = observerRef.current;
@@ -93,8 +117,10 @@ export default function FindDoctors() {
         </div>
         <div className=" w-100">
           <FilterDoctors 
-          selectedGender={ selectedGender}
-          onGenderChange={setSelectedGender}
+          dropFilter={dropFilter}
+          setDropFilter ={setDropFilter}
+          onResetFilter={handleResetFilter}
+
           />
         </div>
 
@@ -112,25 +138,27 @@ export default function FindDoctors() {
               : "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png";
 
             return (
-              <div key={doctorId || index} className="d-flex flex-wrap align-items-center justify-content-between border-bottom py-4 w-100">
+              <div key={doctorId || index} className="d-flex flex-wrap align-items-center justify-content-between border-bottom py-4 w-100  viewProfile-Hover">
                 
                 <div className="d-flex align-items-center w-75">
                   <div className="text-center me-4">
                     <img src={profilePic} alt="profile" width={120} height={120}
                       style={{ borderRadius: "50%", objectFit: "cover", border: "5px solid white" }} />
                     <br />
-                    <Link to={`/viewProfile${doctor.id}`}>View Profile</Link>
+                  
+                    <Link to={`/viewProfile/${doctorId}`} className="hover-box">View Profile</Link>
+
                   </div>
 
                   <div className="">
-                    <Link to={`/viewprofile?id=${doctor.id}`} className="text-decoration-none text-dark">
-                      <h5 className="mb-1">{doctor.fullname}</h5>
+                    <Link to={`/viewprofile/${doctorId}`} className="text-decoration-none text-dark">
+                      <h5 className="mb-1"> Dr.{doctor.fullname}</h5>
                     </Link>
                     <p className="mb-1 text-muted">{doctor.specialization}</p>
                     <p className="mb-1 text-muted">{doctor.gender}</p>
                     <p className="mb-1">{doctor.experience} experience overall</p>
                     <p className="mb-1 " >Address: {doctor.address}</p>
-                    <p className="mb-0 fw-semibold">₹{doctor.consultation} Consultation Fee at Clinic</p>
+                    <p className="mb-0 fw-semibold">₹{doctor.consultationFee} Consultation Fee at Clinic</p>
                   </div>
                 </div>
 
@@ -155,7 +183,7 @@ export default function FindDoctors() {
                 {
                   clinicPh === doctorId && (
                     <div className="w-100">
-                      <ClinicandHospital doctorId = {doctorId} />
+                      <ClinicandHospital doctor = {doctor} />
                     </div>
                   )
                 }

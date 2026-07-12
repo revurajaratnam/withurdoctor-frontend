@@ -66,8 +66,8 @@ export default function LocationandSearch({
         className="d-flex justify-content-center align-items-start bg-white"
         style={{ width: "70%", height: "50px" }}
       >
-        <div className="position-relative border" style={{ width: "30%" }}>
-          <div className="d-flex align-items-center ">
+        <div className="position-relative border " style={{ width: "30%" }}>
+          <div className="d-flex align-items-center inputs-hovers ">
             <i className="bi bi-geo-alt-fill me-2 ms-2"></i>
             <span >
             <input
@@ -82,6 +82,13 @@ export default function LocationandSearch({
             placeholder="Search location"
           />
             </span>
+           { locationValue && (
+             <i className="bi bi-x-circle-fill text-secondary delete-location-icon "
+             onClick={() =>setLocationValue("")}
+           ></i>
+           )
+
+           }
           </div>
 
           {dropdown === "location" && (
@@ -121,13 +128,13 @@ export default function LocationandSearch({
         </div>
 
         <div className="position-relative border" style={{ width: "70%" }}>
-          <div className="d-flex align-items-center">
+          <div className="d-flex align-items-center  " >
               <i className="bi bi-search ms-2"></i>
             <span>
             <input
             ref={searchInputRef}
             type="text"
-            className="p-2 w-100 fnpage-focus ms-2"
+            className="p-2  fnpage-focus ms-2" style={{width:"560px"}}
             value={searchValue || ""}
             placeholder="Search for doctors..."
             onClick={() => setDropdown("search")}
@@ -137,6 +144,15 @@ export default function LocationandSearch({
             }}
           />
             </span>
+            {
+              searchValue && (
+            <i className="bi bi-x-circle-fill text-secondary delete-location-icon"
+                onMouseMove={(e)=> e.preventDefault("")}
+                onClick={() => setSearchValue()}
+            ></i>
+              )
+            }
+
           </div>
 
           {dropdown === "search" && (
