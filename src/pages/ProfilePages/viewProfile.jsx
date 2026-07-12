@@ -2,15 +2,13 @@ import { useParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import NavbarComp from "../../components/Navbar";
 import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
-
+import "../../style/viewProfile-page.css"
+import LocationandSearch from "../NavPages/Location";
+import AppointmentSchedule from "../Hero-Pages/Schedule";
 export default function ViewProfile() {
   const { id } = useParams();
-  
-  // FIX: Add the same arguments here so it fetches the full list!
-  const { data: drProfile, isLoading, error } = useGetdrdataQuery({
-    page: 1,
-    limit: 200
-  });
+
+  const { data: drProfile, isLoading, error } = useGetdrdataQuery({ id });
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -20,30 +18,32 @@ export default function ViewProfile() {
     return <h1>Something went wrong...</h1>;
   }
 
-  const doctorsData = drProfile?.doctors || [];
-
-  const selectedDoctor = doctorsData.find(
-    (doctor) => String(doctor._id) === String(id) || String(doctor.id) === String(id)
-  );
+  const doctors = Array.isArray(drProfile?.data) ? drProfile.data : [];
+  const selectedDoctor = doctors[0];
 
   if (!selectedDoctor) {
     return <h1>Doctor profile not found</h1>;
   }
 
+  const profilePic = selectedDoctor.profilephoto
+    ? `http://localhost:4545/uploads/${selectedDoctor.profilephoto}`
+    : "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png";
+
   return (
-    <div className="min-vh-100 d-flex flex-column">
-      <header>
+    <div className="min-vh-100 d-flex flex-column  ">
+      <header className="navBars-search">
         <NavbarComp />
+        <LocationandSearch />
       </header>
 
-      <main className="flex-grow-1 container py-4">
-        <div className="d-flex">
+      <main className="flex-grow-1 viewProfile-page">
+          <div className="d-flex  Doctor-profile-card">
           <div className="profile">
-            <img 
-              src={`http://localhost:4545/uploads/${selectedDoctor.profilephoto}`} 
+            <img
+              src={profilePic}
               width={150}
               className="object-fit rounded-5"
-              alt="" 
+              alt={selectedDoctor.fullname}
             />
           </div>
           <div className="ms-4">
@@ -51,10 +51,37 @@ export default function ViewProfile() {
             <p>{selectedDoctor.specialization}</p>
             <p>{selectedDoctor.experience} experience overall</p>
             <p>{selectedDoctor.address}</p>
-            <p>₹{selectedDoctor.consultation} Consultation Fee</p>
+            <p>₹{selectedDoctor.consultationFee} Consultation Fee</p>
           </div>
         </div>
+        <section className="schedule-appointment">
+          <AppointmentSchedule />
+        </section>
+        <section className="drinfo-drop-downs">
+        <div className=" drinfo-drop-downs-childs">
+          Info 
+          {
+
+          }
+        </div>
+        <div className=" drinfo-drop-downs-childs">
+          Stories 
+        </div>
+        <div className=" drinfo-drop-downs-childs">
+          Surguries & Treatments 
+        </div>
+        <div className=" drinfo-drop-downs-childs" >
+          photos & videos 
+        </div>
+        <div className=" drinfo-drop-downs-childs">
+          Consult Q&A
+        </div >
+        <div className=" drinfo-drop-downs-childs">
+         Healthfeed
+        </div>
+      </section>
       </main>
+      
 
       <footer>
         <Footer />

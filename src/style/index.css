@@ -3,6 +3,11 @@
     padding: 0;
     box-sizing: border-box;
 }
+.home-page{
+    @media (min-width) {
+        
+    }
+}
 
 .navbar-custom{
     position: fixed;
@@ -20,10 +25,42 @@
   }
 .filter-drop{
     width: 200px ;
-    padding-top: 5px;
+    padding-top: 15px;
     border-bottom: 1px solid rgb(231, 230, 230);
     cursor: pointer;
+    
+
+    
 }
 .filter-drop:hover{
     background-color: rgb(231, 230, 230);
 }
+.reset-filter-style{
+    color: white;
+    cursor: pointer;
+}
+.reset-filter-style:hover{
+    color: #ddd;
+}
+
+ .viewProfile-Hover{
+    position: relative;
+ }
+.hover-box{
+display: none;
+}
+.viewProfile-Hover:hover .hover-box{
+    position: absolute;
+    left: 20px;
+    display: block;
+}
+.filters-down{
+    background-color: white;
+}
+.inputs-hovers {
+    display: block;
+  }
+  
+  .delete-location-icon:focus .inputs-hovers {
+    display: none;
+  }
