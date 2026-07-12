@@ -61,6 +61,6 @@ display: none;
     display: block;
   }
   
-  .delete-location-icon:focus .inputs-hovers {
+  .delete-location-icon:focus:hover .inputs-hovers {
     display: none;
   }
