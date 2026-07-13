@@ -1,11 +1,17 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import NavbarComp from "../../components/Navbar";
 import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
 import "../../style/viewProfile-page.css"
 import LocationandSearch from "../NavPages/Location";
 import AppointmentSchedule from "../Hero-Pages/Schedule";
+import { useState } from "react";
+import ProfileBreadcrumb from "./Breadcrumb";
 export default function ViewProfile() {
+  const [searchParams] = useSearchParams();
+  const urlSearch = searchParams.get("search");
+  const [locationValue, setLocationValue] = useState("Hyderabad");
+  const [searchValue, setSearchValue] = useState(urlSearch);
   const { id } = useParams();
 
   const { data: drProfile, isLoading, error } = useGetdrdataQuery({ id });
@@ -25,22 +31,41 @@ export default function ViewProfile() {
     return <h1>Doctor profile not found</h1>;
   }
 
-  const profilePic = selectedDoctor.profilephoto
-    ? `http://localhost:4545/uploads/${selectedDoctor.profilephoto}`
-    : "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png";
+  // const profilePic = selectedDoctor.profilephoto
+  //   ? `http://localhost:4545/uploads/${selectedDoctor.profilephoto}`
+  //   : "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png";
 
   return (
     <div className="min-vh-100 d-flex flex-column  ">
       <header className="navBars-search">
         <NavbarComp />
-        <LocationandSearch />
-      </header>
+        <LocationandSearch 
+          locationValue={locationValue}
+          setLocationValue={setLocationValue}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          doctorsData={doctors}
+          wrapperStyle={{
+            width: "70%",
+            height: "50px",
+            marginLeft: "200px",
+          }}
+        />
 
+      </header>
+      <div>
+
+      </div>
       <main className="flex-grow-1 viewProfile-page">
+          <div className="breadcrumb-profile">
+          <ProfileBreadcrumb doctor={selectedDoctor} />
+
+          </div>
           <div className="d-flex  Doctor-profile-card">
+
           <div className="profile">
             <img
-              src={profilePic}
+              src={selectedDoctor.profileImage}
               width={150}
               className="object-fit rounded-5"
               alt={selectedDoctor.fullname}
@@ -55,7 +80,7 @@ export default function ViewProfile() {
           </div>
         </div>
         <section className="schedule-appointment">
-          <AppointmentSchedule />
+          {/* <AppointmentSchedule /> */}
         </section>
         <section className="drinfo-drop-downs">
         <div className=" drinfo-drop-downs-childs">

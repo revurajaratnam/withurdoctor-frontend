@@ -327,14 +327,9 @@ html{
 
   .findHome-align{
     width: 100%;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    border: none;
+    margin-left:300px;
+    max-width: 1300px;
    
-    
-    max-width: 1200px;
-    
   }
   .cursor-pointer{
     cursor: pointer;

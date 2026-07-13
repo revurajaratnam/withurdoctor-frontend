@@ -12,7 +12,9 @@ export default function VideoConsult() {
     const [swipe,setSwipe] = useState(0)
     const visible = Specialities.slice(swipe, swipe + 6);
     const visiblecommon = commonHealthConcerns.slice(start, start + 4);
-    const {data:drdata,isLoading,isSuccess} = useGetdrdataQuery();
+    const {data:doctorData,isLoading,isSuccess} = useGetdrdataQuery();
+
+    const drsdata = Array.isArray(doctorData?.data) ?  doctorData.data : [];
     if(isLoading){<h1>isLoading...</h1> }
     const previous = () => {
         if (swipe > 0) {
@@ -187,9 +189,9 @@ export default function VideoConsult() {
                     
                     <div className="  d-flex align-items-center overflow-auto   gap-5 ">
                         {
-                           drdata?.map((dr,i)=>
+                           drsdata?.map((dr,i)=>
                            {
-                            const profilePic = dr?.profilephoto
+                            const profilePic = dr.profilephoto
                      ? `http://localhost:4545/uploads/${dr.profilephoto}`
                      : "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png";
                             return (
