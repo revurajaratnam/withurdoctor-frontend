@@ -7,9 +7,10 @@ export default function Footer() {
         const handleonchange= (name) =>{
             setOpen(open===name?null:name)
         }
+        // #28328C
         
     return(
-       <div className="w-100" style={{background:"#28328C" ,color:"white"}}>
+       <div className="w-100" style={{background:"green" ,color:"white"}}>
    
         
             <div className="d-flex justify-content-between align-items-center p-2 ">
