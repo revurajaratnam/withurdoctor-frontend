@@ -60,15 +60,15 @@ export default function LocationandSearch({
     return matchLocation && matchSearch;
   });
   return (
-    <div className="container d-flex flex-grow-1 flex-wrap  align-items-center justify-content-between p-2 w-100 ">
+    <div className="bg-white  p-2  location-search-container" >
       <div
         ref={searchBoxRef}
         className="d-flex justify-content-center align-items-start bg-white"
-        style={{ width: "70%", height: "50px" }}
+        style={{ width: "100%" }}
       >
         <div className="position-relative border " style={{ width: "30%" }}>
-          <div className="d-flex align-items-center inputs-hovers ">
-            <i className="bi bi-geo-alt-fill me-2 ms-2"></i>
+          <div className="d-flex align-items-center location-icon ">
+            <i className="bi bi-geo-alt-fill me-2 ms-2  "></i>
             <span >
             <input
             type="text"
@@ -128,13 +128,13 @@ export default function LocationandSearch({
         </div>
 
         <div className="position-relative border" style={{ width: "70%" }}>
-          <div className="d-flex align-items-center  " >
+          <div className="d-flex align-items-center location-icon " >
               <i className="bi bi-search ms-2"></i>
             <span>
             <input
             ref={searchInputRef}
             type="text"
-            className="p-2  fnpage-focus ms-2" style={{width:"560px"}}
+            className="p-2  fnpage-focus ms-2 " style={{width:"560px"}}
             value={searchValue || ""}
             placeholder="Search for doctors..."
             onClick={() => setDropdown("search")}

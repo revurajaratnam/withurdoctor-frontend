@@ -1,13 +1,13 @@
 .viewProfile-page{
     background-color:#F0F0F5 ;
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 4fr ;
 }
 .Doctor-profile-card{
     background-color: white;
     width: 650px;
     height: 200px;
-    margin-top: 200px;
+    margin-top: 00px;
     margin-left: 120px;
 }
 .navBars-search{

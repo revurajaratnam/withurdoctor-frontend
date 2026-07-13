@@ -9,7 +9,7 @@ export default function FilterDoctors({
 
     const [open,setOpen] = useState("");
     const toggleDropdown = (name) => {
-        setOpen(open === name ? " " : name);
+        setOpen((open)=>(open === name ? " " : name));
     }
     
     const handleGenderClick = (gender) =>{
@@ -45,10 +45,10 @@ export default function FilterDoctors({
 
     return(
 
-        <div className="d-flex align-items-center ">
-            <div className=" position-relative  d-flex gap-5 bg-success w-100  align-items-center pt-2 " style={{marginTop:"150px"}}>
-               <div className="ms-5">
-                <p className="text-light cursor-pointer ps-2 " 
+        <div className="d-flex align-items-center    bg-white " >
+            <div className=" position-relative   d-flex gap-5 bg-success w-100  align-items-center pt-2 " style={{marginTop:"150px"}}>
+               <div className="ms-5 ">
+                <p className="text-light cursor-pointer ms-3 " 
                 style={{backgroundColor:"rgba(255,255,255,0.25)"}}
                 onClick={() => toggleDropdown("gender")}
                 >{dropFilter.gender || "Gender" } 
@@ -57,8 +57,8 @@ export default function FilterDoctors({
                 style={{filter:"invert(100%)",transform:open === "gender" ? "rotate(180deg)":"rotate(0deg)"}} />  </p>
                 {
                     open === "gender" && (
-                        <div className=" position-absolute bg-light "
-                        style={{width:"120px"}}
+                        <div className=" position-absolute  "
+                        style={{width:"120px",marginLeft:"20px"}}
                         >
                             <p className="filter-drop"
                             onClick={()=> handleGenderClick("Male")}
@@ -117,7 +117,7 @@ export default function FilterDoctors({
                 </p>
                 {
                     open === "patinetStories" && (
-                        <div className="position-absolute bg-white">
+                        <div className="position-absolute bg-light">
                             <p className="filter-drop">10+ Patient Stories</p>
                             <p className="filter-drop">50+ Patinet Stories</p>
                         </div>
@@ -139,6 +139,7 @@ export default function FilterDoctors({
     className="text-white cursor-pointer"
     onClick={()=>toggleDropdown("allfilters")}
     >All Filters
+
     <img src={caret} alt="" 
     width={15}
    style={{filter:"invert(100%)",transform:open === "allfilters" ? "rotate(180deg)":"rotate(0deg)"}}
@@ -147,7 +148,7 @@ export default function FilterDoctors({
 
 {
     open === "allfilters" && (
-        <div className="position-absolute start-0 w-100 bg-success p-3">
+        <div className="position-absolute  start-0 w-100 bg-success p-3">
           <div className="d-flex gap-5 text-white ms-5">
 
             <div className="d-flex flex-column gap-2">
@@ -230,8 +231,8 @@ export default function FilterDoctors({
                         open === "relevance" && (
                             <div className="position-absolute ">
                                 <p className="filter-drop "
-                                >Number of patient stories - High to Low
                                  onClick={() => handleExperinenceClick(20,50)}
+                                >Number of patient stories - High to Low
                                 </p>
                                 <p className="filter-drop"
                                   onClick={() => handleExperinenceClick(20,50)}

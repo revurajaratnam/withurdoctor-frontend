@@ -75,7 +75,7 @@ export default function FindDrHome() {
 
         <div className="d-flex   align-items-center mt-3">
     
-            <p className="popular-search mb-0 ">Popular searches:</p>
+            <p className="text-white mb-0 me-3 ">Popular searches:</p>
           <Link to="/FindDoctors?search=Dermatologist" className="popular-search">
             Dermatologist
           </Link>

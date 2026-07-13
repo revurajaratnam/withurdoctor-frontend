@@ -7,13 +7,14 @@ import LocationandSearch from "./Location";
 import AppointmentSchedule from "../Hero-Pages/Schedule";
 import ClinicandHospital from "../Hero-Pages/ClinicandHospital";
 import FilterDoctors from "./FilterDoctors";
-
+import Logo from "../../assets/Logo.png"
+import Appointment from "../Hero-Pages/Appointment";
 export default function FindDoctors() {
   const [searchParams] = useSearchParams();
   const initialFilters = {
     gender :"",
-    experience :"",
-    consultationFee:"",
+    experience :null,
+    consultationFee:null,
     cosultType:""
 
   }
@@ -95,13 +96,13 @@ export default function FindDoctors() {
   }, [cursor, hasMore, loading]);
 
   return (
-    <div className="min-vh-100 d-flex flex-column ">
-      <main className="flex-grow-1 " >
+    <div className="min-vh-100 d-flex flex-column  ">
+      <main className="flex-grow-1  " >
         <div className="position-fixed  w-100 bg-white" style={{ zIndex: 1050 }}>
           <NavbarComp />
         </div>
 
-        <div className="position-fixed start-1 end-0 w-100 bg-white" style={{ marginTop: "77px", marginLeft: "100px" ,zIndex:"10"}}>
+        <div className="position-fixed start-1 end-0 w-100 bg-white" style={{ marginTop: "77px", marginLeft: "100px" ,zIndex:"1050" }}>
           <LocationandSearch
             locationValue={locationValue}
             setLocationValue={setLocationValue}
@@ -115,16 +116,17 @@ export default function FindDoctors() {
             }}
           />
         </div>
+     
+
         <div className=" w-100">
+    
           <FilterDoctors 
           dropFilter={dropFilter}
           setDropFilter ={setDropFilter}
           onResetFilter={handleResetFilter}
 
           />
-        </div>
-
-        <div className="container w-100" style={{ marginTop: "0px" }}>
+        
           {doctors?.length > 0 ? (
             <h1>{doctors.length} Doctor's Available</h1>
           ) : !loading ? (
@@ -133,17 +135,22 @@ export default function FindDoctors() {
 
           {doctors?.map((doctor, index) => {
             const doctorId = doctor._id || doctor.id;
-            const profilePic = doctor?.profilephoto
-              ? `http://localhost:4545/uploads/${doctor.profilephoto}`
-              : "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png";
+            // const profilePic = doctor?.profilephoto
+            //   ? `http://localhost:4545/uploads/${doctor.profilephoto}`
+            //   : "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png";
 
             return (
-              <div key={doctorId || index} className="d-flex flex-wrap align-items-center justify-content-between border-bottom py-4 w-100  viewProfile-Hover">
+              <div key={doctorId || index} className="d-flex align-items-center border-bottom py-4 w-100  ">
                 
-                <div className="d-flex align-items-center w-75">
-                  <div className="text-center me-4">
-                    <img src={profilePic} alt="profile" width={120} height={120}
+                <div className="d-flex align-items-center w-75 m-5 container">
+                  <div className="text-center img-container ">
+                  <img src={Logo} alt="" width={180}
+                      className="top-image"
+                       />
+                    <img src={doctor.profileImage} alt="profile" width={120} height={120}
+                    className="base-image"
                       style={{ borderRadius: "50%", objectFit: "cover", border: "5px solid white" }} />
+                   
                     <br />
                   
                     <Link to={`/viewProfile/${doctorId}`} className="hover-box">View Profile</Link>
@@ -151,14 +158,16 @@ export default function FindDoctors() {
                   </div>
 
                   <div className="">
-                    <Link to={`/viewprofile/${doctorId}`} className="text-decoration-none text-dark">
+                    <Link to={`/viewprofile/${doctorId}`} className=" drname">
                       <h5 className="mb-1"> Dr.{doctor.fullname}</h5>
                     </Link>
                     <p className="mb-1 text-muted">{doctor.specialization}</p>
-                    <p className="mb-1 text-muted">{doctor.gender}</p>
                     <p className="mb-1">{doctor.experience} experience overall</p>
-                    <p className="mb-1 " >Address: {doctor.address}</p>
+                    <a className="address-name"><p className="mb-1 " >{doctor.city} {doctor.hospitalName}</p></a>
                     <p className="mb-0 fw-semibold">₹{doctor.consultationFee} Consultation Fee at Clinic</p>
+                    <p style={{color:"grey",filter:"opacity(20%)"}}>----------------------------------------------</p>
+                    <p className="btn btn-success ms-5"><i className="bi bi-hand-thumbs-up-fill me-3"></i>{String(doctor.rating).split(".") }%</p>
+
                   </div>
                 </div>
 
@@ -190,9 +199,11 @@ export default function FindDoctors() {
 
                 {openDoctorId === doctorId && (
                   <div className="w-100 mt-4 p-3 bg-light border rounded">
-                    <AppointmentSchedule doctorId={doctorId} />
+                      <Appointment doctorId={doctorId} />
                   </div>
                 )}
+
+
                 
               </div>
             );
