@@ -3,13 +3,14 @@ import { states } from "../../utils/StatesAndCities";
 import { specialization } from "../../utils/drSpecial";
 import { Link } from "react-router-dom";
 import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
-
+import "../../style/searchBars.css"
 export default function LocationandSearch({
   locationValue,
   setLocationValue,
   searchValue,
   setSearchValue,
   doctorsData = [],
+  className="",
 }) {
   const [dropdown, setDropdown] = useState(null);
   const searchBoxRef = useRef(null);
@@ -66,13 +67,13 @@ export default function LocationandSearch({
         className="d-flex justify-content-center align-items-start bg-white"
         style={{ width: "100%" }}
       >
-        <div className="position-relative border " style={{ width: "30%" }}>
+        <div className="position-relative border location-box " >
           <div className="d-flex align-items-center location-icon ">
             <i className="bi bi-geo-alt-fill me-2 ms-2  "></i>
             <span >
             <input
             type="text"
-            className="p-2 w-100 fnpage-focus"
+            className="p-2 w-100 fnpage-focus search-input"
             value={locationValue || ""}
             onClick={() => setDropdown("location")}
             onChange={(e) => {
@@ -134,7 +135,7 @@ export default function LocationandSearch({
             <input
             ref={searchInputRef}
             type="text"
-            className="p-2  fnpage-focus ms-2 " style={{width:"560px"}}
+            className="p-2  fnpage-focus ms-2  search-input" 
             value={searchValue || ""}
             placeholder="Search for doctors..."
             onClick={() => setDropdown("search")}

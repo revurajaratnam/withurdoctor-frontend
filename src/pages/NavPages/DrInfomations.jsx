@@ -140,9 +140,9 @@ export default function FindDoctors() {
             //   : "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png";
 
             return (
-              <div key={doctorId || index} className="d-flex align-items-center border-bottom py-4 w-100  ">
+              <div key={doctorId || index} className="d-flex align-items-center border-bottom py-4 w-100   ">
                 
-                <div className="d-flex align-items-center w-75 m-5 container">
+                <div className="d-flex align-items-center w-75 m-5 viewProfile-Hover ">
                   <div className="text-center img-container ">
                   <img src={Logo} alt="" width={180}
                       className="top-image"

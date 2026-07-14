@@ -1,12 +1,14 @@
 .viewProfile-page{
     background-color:#F0F0F5 ;
-    display: grid;
-    grid-template-columns: 4fr ;
+    margin-top: 60px;
+   display: grid;
+   grid-template-columns: 2fr 2fr;
 }
 .Doctor-profile-card{
+    display: flex;
     background-color: white;
-    width: 650px;
-    height: 200px;
+    width: 680px;
+    height: 250px;
     margin-top: 00px;
     margin-left: 120px;
 }
@@ -31,4 +33,16 @@
 }
 .schedule-appointment{
   margin-top: 150px;
+  width: 200px;
+  height: 500;
+  margin-bottom: 500px;
+ 
+}
+.profile{
+    height: 150px;
+    border-radius: 50%;
+}
+.profile-image{
+    height: 150px;
+    border-radius: 50%;
 }
