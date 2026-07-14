@@ -28,7 +28,7 @@ export default function FindDrHome() {
       </div>
 
       <div
-        className="find-hero d-flex flex-column justify-content-center align-items-center text-center"
+        className="find-hero d-flex flex-column justify-content-center align-items-center text-center background-images"
         style={{
           marginTop: "70px",
           width: "100%",
@@ -41,7 +41,7 @@ export default function FindDrHome() {
         }}
       >
         <h1
-          className="text-white"
+          className="text-white heading-texts"
           style={{
             fontSize: "50px",
             fontWeight: "bold",
@@ -52,7 +52,7 @@ export default function FindDrHome() {
         </h1>
 
         <h1
-          className="text-white"
+          className="text-white heading-texts"
           style={{
             fontSize: "30px",
             fontWeight: "bold",
