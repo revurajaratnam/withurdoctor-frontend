@@ -10,6 +10,7 @@ import caretup from '../assets/caret-up-svgrepo-com.svg'
 export default function NavbarComp() {
   const [drop, setDrop] = useState(null);
   const { user, email, isLoggedIn } = useSelector((state) => state.dr);
+  const [menuOpen, setMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const handleOnchage = (name) => {
     setDrop(drop === name ? null : name)
@@ -28,15 +29,24 @@ export default function NavbarComp() {
     <div>
       <Container>
         <div className=" container d-flex flex-grow-1 flex-wrap  align-items-center justify-content-between p-2 w-100 " style={{zIndex:"1000"}}>
-          <div className="d-flex gap-4 align-items-center">
+        <nav className="navbar">
+        <div className="d-flex gap-4 align-items-center">
             <Link to="/"> <img src={Logo} alt="WithUrDoctor Logo" width="100px" /></Link>
-
-            <Link to="/Finddrhome" className="text-decoration-none text-dark " style={{borderBottom:window.location.pathname === "/Finddrhome"?"5px solid #199FD9":"none"}}><b>Find Doctors</b></Link>
+            <button
+        className="menu-button"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        ☰
+      </button>
+           <div className={`navbar-items ${menuOpen ? "show-menu":""}`}>
+           <Link to="/Finddrhome" className="text-decoration-none text-dark " style={{borderBottom:window.location.pathname === "/Finddrhome"?"5px solid #199FD9":"none"}}><b>Find Doctors</b></Link>
             <Link to="/VideoConsult" className="text-decoration-none text-dark" style={{borderBottom:window.location.pathname === "/VideoConsult"?"5px solid #199FD9":"none"}}><b>Video Consult</b></Link>
             {/* <Link to="/Medicines" className="text-decoration-none text-dark"style={{borderBottom:window.location.pathname === "/Medicines"?"5px solid #199FD9":"none"}}><b>Medicines</b></Link> */}
             <Link to="/LabTests" className="text-decoration-none text-dark" style={{borderBottom:window.location.pathname === "/LabTests"?"5px solid #199FD9":"none"}}><b>Lab Tests</b></Link>
             <Link to="/Surgeries" className="text-decoration-none text-dark"style={{borderBottom:window.location.pathname === "/Surgeries"?"5px solid #199FD9":"none"}}><b>Surgeries</b></Link>
+           </div>
           </div>
+        </nav>
           <div className="d-flex gap-4 align-items-center  ">
             <div className="position-relative">
               <span

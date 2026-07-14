@@ -7,6 +7,7 @@ import LocationandSearch from "../NavPages/Location";
 import AppointmentSchedule from "../Hero-Pages/Schedule";
 import { useState } from "react";
 import ProfileBreadcrumb from "./Breadcrumb";
+import Appointment from "../Hero-Pages/Appointment";
 export default function ViewProfile() {
   const [searchParams] = useSearchParams();
   const urlSearch = searchParams.get("search");
@@ -51,37 +52,39 @@ export default function ViewProfile() {
             marginLeft: "200px",
           }}
         />
-
+        <ProfileBreadcrumb doctor={selectedDoctor} />
       </header>
       <div>
 
       </div>
-      <main className="flex-grow-1 viewProfile-page">
-          <div className="breadcrumb-profile">
-          <ProfileBreadcrumb doctor={selectedDoctor} />
+      <div className="breadcrumb-profile">
 
           </div>
+      <main className="flex-grow-1 viewProfile-page">
+          
           <div className="d-flex  Doctor-profile-card">
 
           <div className="profile">
             <img
               src={selectedDoctor.profileImage}
               width={150}
-              className="object-fit rounded-5"
+              height={100}
+              className="profile-image"
               alt={selectedDoctor.fullname}
             />
           </div>
           <div className="ms-4">
             <h1>Dr. {selectedDoctor.fullname}</h1>
-            <p>{selectedDoctor.specialization}</p>
+            <p className="text-success">{selectedDoctor.specialization}</p>
             <p>{selectedDoctor.experience} experience overall</p>
             <p>{selectedDoctor.address}</p>
             <p>₹{selectedDoctor.consultationFee} Consultation Fee</p>
           </div>
         </div>
-        <section className="schedule-appointment">
+        <div className="schedule-appointment">
           {/* <AppointmentSchedule /> */}
-        </section>
+          <Appointment />
+        </div>
         <section className="drinfo-drop-downs">
         <div className=" drinfo-drop-downs-childs">
           Info 

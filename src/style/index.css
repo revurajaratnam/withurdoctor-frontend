@@ -4,9 +4,9 @@
     box-sizing: border-box;
 }
 .home-page{
-    @media (min-width) {
-        
-    }
+   @media screen {
+    
+   }
 }
 
 .navbar-custom{
@@ -50,11 +50,13 @@
  }
 .hover-box{
 display: none;
+
 }
 .viewProfile-Hover:hover .hover-box{
     position: absolute;
     left: 20px;
     display: block;
+    top: 180px;
 }
 .filter-down{
     padding: 0;
@@ -89,7 +91,7 @@ display: block;
     text-decoration: underline;
 }
 .breadcrumb-profile{
-    margin-top: 150px;
+    margin-top: 100px;
     margin-left: 50px;
 }
 .breadcrumb-wrapper{

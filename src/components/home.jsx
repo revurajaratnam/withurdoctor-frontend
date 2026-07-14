@@ -97,11 +97,12 @@ export default function HomePage() {
               height: "50px",
               marginLeft: "200px",
             }}
+            className="home-search-bar"
           />
         </div>
 
         <div
-          className="d-flex mx-5 justify-content-center"
+          className="d-flex mx-5 justify-content-center doctors-conrainer"
           style={{ marginBottom: "100px" }}
         >
           {drinfo.map((dr, i) => (

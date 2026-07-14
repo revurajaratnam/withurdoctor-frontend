@@ -1,0 +1,29 @@
+.location-box {
+    width: 30%;
+  }
+  
+  .doctor-search-box {
+    width: 70%;
+  }
+  
+  .location-icon {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+  
+  .location-icon span {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .search-input {
+    width: 100%;
+    min-width: 0;
+  }
+  @media screen and (min-width:700px){
+    .doctors-conrainer{
+    width: 100%;
+    flex-wrap: nowrap;
+    }
+  }
