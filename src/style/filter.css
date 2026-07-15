@@ -1,0 +1,13 @@
+
+@media screen and (max-width:800px) {
+    .filter-parent{
+        width:100%;
+        
+    } 
+    .filter-items{
+        width:1000px;
+        height:100px;
+        gap: 10px;
+    }
+
+}

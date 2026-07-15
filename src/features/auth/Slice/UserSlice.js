@@ -27,20 +27,20 @@ const userSlice = createSlice({
 
   reducers: {
     setUser: (state, action) => {
-    //   console.log("login payload", action.payload);
+      console.log("login payload", action.payload);
 
       state.user = action.payload.user;
       state.email = action.payload.user?.email;
       state.token = action.payload.token;
       state.isLoggedIn = !!token;
-      state.role = user?.role || action.payload.role || null;
+      // state.role = user?.role || action.payload.role || null;
 
       if(token){
         localStorage.setItem("token", action.payload.token);
       }
-      if(user){
-      localStorage.setItem("user", JSON.stringify(action.payload.user));
-      }
+      // if(user){
+      // // localStorage.setItem("user", JSON.stringify(action.payload.user));
+      // }
     },
 
     logout: (state) => {

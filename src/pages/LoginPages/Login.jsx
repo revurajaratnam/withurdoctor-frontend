@@ -58,16 +58,14 @@ export default function Login() {
                 console.log(result);
                 setMessage("");
                 const token = result.token;
-                const user = result.user;
+                
                 
                 toast.success("Login Successful");
                 localStorage.setItem("token", token);
                 navigate("/", { state: { email: formdata.email } });
 
                 dispatch(setUser({ 
-                    user:user,
                     token: token,
-                    role: user?.role,
 
                  }));
                 
@@ -107,7 +105,7 @@ export default function Login() {
                 dispatch(setUser({ token: googleToken }));
 
                 // Navigate to profile, passing the email we got back from the backend
-                navigate("/Profile", { state: { email: result.user.email } });
+                navigate("/Profile", { state: { email: result } });
             } else {
                 setMessage(result.message || "Google Authentication failed on server");
             }
