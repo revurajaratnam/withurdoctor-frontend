@@ -41,6 +41,7 @@
     display: flex;
     align-items: center;
     gap: 25px;
+    margin-right: 150px;
   }
   .menu-button{
     display: none;
@@ -82,10 +83,15 @@
     }
     .navbar-logo{
       position: absolute;
-      margin-left: 50px;
+      margin-left: 0px;
     }
   
   }
+
+  .navbar-account{
+
+  }
+  
 
   @media screen and (max-width:200px) {
     .findHome-align{
@@ -103,7 +109,13 @@
       height: 200px;
     }
   }
+.navbar-logo{
+  margin-left: 150px;
+}
 
+.navbar-dropdown{
+  text-decoration: none;
+}
   
 
   
