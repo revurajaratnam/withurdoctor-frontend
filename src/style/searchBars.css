@@ -34,6 +34,7 @@
     justify-content: space-between;
     padding:15px 30px ;
     background:white ;
+    z-index: 1050;
   }
   
   .navbar-items{
@@ -47,14 +48,20 @@
     background: none;
     font-size: 28px;
     cursor: pointer;
-  }
+    left: 10px;
+    position: relative;
+    z-index: 1050;
 
+  }
+ 
   @media screen and (max-width:900px){
     .menu-button{
       display: block;
+      
     }
     .navbar{
       position: relative;
+
     }
     .navbar-items{
       display: none;
@@ -71,10 +78,16 @@
   
     .navbar-items.show-menu {
       display: flex;
+    
     }
+    .navbar-logo{
+      position: absolute;
+      margin-left: 50px;
+    }
+  
   }
 
-  @media screen and (min-width:200px) {
+  @media screen and (max-width:200px) {
     .findHome-align{
       display: flex;
       justify-content: center;

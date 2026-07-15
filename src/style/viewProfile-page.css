@@ -1,48 +1,405 @@
-.viewProfile-page{
-    background-color:#F0F0F5 ;
-    margin-top: 60px;
-   display: grid;
-   grid-template-columns: 2fr 2fr;
-}
-.Doctor-profile-card{
-    display: flex;
-    background-color: white;
-    width: 680px;
-    height: 250px;
-    margin-top: 00px;
-    margin-left: 120px;
-}
-.navBars-search{
-    position: fixed;
+* {
+    box-sizing: border-box;
+  }
+  
+  html,
+  body,
+  #root {
     width: 100%;
-    background-color: white;
-    z-index: 1000;
-
-}
-.drinfo-drop-downs{
+    min-height: 100%;
+    margin: 0;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    background-color: #f3f4f8;
+  }
+  
+  .profile-page-wrapper {
+    width: 100%;
+    background-color: #f3f4f8;
+  }
+  
+  .profile-status-message {
+    width: 100%;
+    min-height: 100vh;
     display: flex;
-    width: 700px;
-    gap: 50px;
-    margin-top: 10px;
-    margin-left: 120px; 
-    
-}
-.drinfo-drop-downs-childs{
-    background-color: white;
-    padding: 3px;
-}
-.schedule-appointment{
-  margin-top: 150px;
-  width: 200px;
-  height: 500;
-  margin-bottom: 500px;
- 
-}
-.profile{
-    height: 150px;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: #333333;
+    text-align: center;
+    background-color: #f3f4f8;
+  }
+  
+  .profile-header {
+    width: 100%;
+    flex-shrink: 0;
+  }
+  
+  .profile-search-wrapper {
+    width: min(1220px, calc(100% - 32px));
+    margin: 15px auto;
+  }
+  
+  .profile-breadcrumb-wrapper {
+    width: min(1220px, calc(100% - 32px));
+    margin: 0 auto;
+  }
+  
+  .viewProfile-page {
+    width: min(1220px, calc(100% - 32px));
+    margin: 24px auto;
+    flex: 1;
+  }
+  
+  .profile-page-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 370px;
+    gap: 18px;
+    align-items: start;
+  }
+  
+  .profile-left-section {
+    min-width: 0;
+  }
+  
+  .Doctor-profile-card {
+    min-height: 320px;
+    display: flex;
+    align-items: flex-start;
+    gap: 25px;
+    padding: 28px;
+    border: 1px solid #e8e8e8;
+    border-radius: 5px;
+    background-color: #ffffff;
+  }
+  
+  .profile-image-wrapper {
+    flex-shrink: 0;
+  }
+  
+  .profile-image {
+    width: 125px;
+    height: 125px;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+  }
+  
+  .profile-content {
+    min-width: 0;
+    flex: 1;
+  }
+  
+  .profile-content h1 {
+    margin: 0 0 10px;
+    color: #333333;
+    font-size: 26px;
+    font-weight: 600;
+  }
+  
+  .profile-content p {
+    margin: 7px 0;
+    color: #4d4d4d;
+    line-height: 1.5;
+  }
+  
+  .doctor-specialization {
+    color: #00a5ec !important;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+  
+  .consultation-fee {
+    font-weight: 600;
+  }
+  
+  .doctor-about {
+    max-width: 650px;
+    margin-top: 18px !important;
+  }
+  
+  .profile-verification {
+    margin-top: 22px;
+  }
+  
+  .profile-verification p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .verification-icon {
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
     border-radius: 50%;
-}
-.profile-image{
-    height: 150px;
-    border-radius: 50%;
-}
+    background-color: #1fad31;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  
+  .feedback-icon {
+    font-size: 17px;
+  }
+  
+  .drinfo-drop-downs {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 14px 0;
+  }
+  
+  .drinfo-drop-downs-childs {
+    min-height: 52px;
+    padding: 14px 18px;
+    border: none;
+    background-color: transparent;
+    color: #636578;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+  
+  .drinfo-drop-downs-childs:hover {
+    color: #00a5ec;
+    background-color: #ffffff;
+  }
+  
+  .active-profile-tab {
+    color: #00a5ec;
+    background-color: #ffffff;
+  }
+  
+  .doctor-information-card,
+  .doctor-details-card {
+    margin-bottom: 18px;
+    padding: 24px;
+    border: 1px solid #e8e8e8;
+    border-radius: 5px;
+    background-color: #ffffff;
+  }
+  
+  .doctor-information-card h2,
+  .doctor-details-card h2 {
+    margin: 0 0 12px;
+    color: #333333;
+    font-size: 19px;
+    font-weight: 600;
+  }
+  
+  .doctor-information-card h3 {
+    margin: 0;
+    color: #00a5ec;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .doctor-clinic-info {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 160px;
+    gap: 30px;
+    margin-top: 25px;
+  }
+  
+  .doctor-clinic-info p {
+    margin: 6px 0;
+    color: #4d4d4d;
+  }
+  
+  .rating {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 3px;
+    background-color: #28a745;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  .doctor-languages {
+    margin: 25px 0 0;
+    color: #555555;
+  }
+  
+  .doctor-details-card {
+    min-height: 650px;
+  }
+  
+  .doctor-details-card > p {
+    color: #5b5b5b;
+    line-height: 1.7;
+  }
+  
+  .doctor-detail-row {
+    margin-top: 32px;
+  }
+  
+  .doctor-detail-row h3 {
+    margin: 0 0 8px;
+    color: #333333;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  
+  .doctor-detail-row p {
+    margin: 0;
+    color: #5b5b5b;
+    line-height: 1.7;
+  }
+  
+  .schedule-appointment {
+    width: 100%;
+    position: sticky;
+    top: 20px;
+  }
+  
+  .appointment-heading {
+    margin: 0 0 12px;
+    color: #3d3d45;
+    font-size: 21px;
+    font-weight: 600;
+  }
+  
+  .appointment-component-wrapper {
+    width: 100%;
+  }
+  
+  .appointment-component-wrapper > * {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  .scroll-to-top {
+    position: fixed !important;
+    left: 50% !important;
+    bottom: 28px !important;
+    transform: translateX(-50%) !important;
+    z-index: 9999999 !important; 
+    width: 52px !important;
+    height: 52px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 !important;
+    padding: 0 0 4px !important;
+    border: 2px solid #ffffff !important;
+    border-radius: 50% !important;
+    background-color: #28328c !important;
+    color: #ffffff !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 31px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    cursor: pointer !important;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.4) !important;
+    animation: showScrollArrow 0.25s ease;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+  
+  .scroll-to-top:hover {
+    background-color: #151c65 !important;
+    transform: translateX(-50%) translateY(-4px) !important;
+  }
+  
+  .scroll-to-top:active {
+    transform: translateX(-50%) scale(0.94) !important;
+  }
+  
+  .scroll-to-top:focus-visible {
+    outline: 3px solid rgba(40, 50, 140, 0.4);
+    outline-offset: 3px;
+  }
+  
+  @keyframes showScrollArrow {
+    from {
+      opacity: 0;
+      transform: translate(-50%, 15px) scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0) scale(1);
+    }
+  }
+  
+  .profile-footer {
+    width: 100%;
+    margin-top: auto;
+    flex-shrink: 0;
+  }
+  
+  @media (max-width: 992px) {
+    .profile-page-layout {
+      grid-template-columns: 1fr;
+    }
+    .schedule-appointment {
+      position: static;
+    }
+    .doctor-clinic-info {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .profile-search-wrapper,
+    .profile-breadcrumb-wrapper,
+    .viewProfile-page {
+      width: calc(100% - 20px);
+    }
+    .viewProfile-page {
+      margin: 15px auto;
+    }
+    .Doctor-profile-card {
+      min-height: auto;
+      flex-direction: column;
+      gap: 18px;
+      padding: 20px;
+    }
+    .profile-image {
+      width: 110px;
+      height: 110px;
+    }
+    .profile-content h1 {
+      font-size: 22px;
+    }
+    .drinfo-drop-downs {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+    }
+    .drinfo-drop-downs-childs {
+      flex-shrink: 0;
+      padding: 14px 16px;
+    }
+    .doctor-information-card,
+    .doctor-details-card {
+      padding: 20px;
+    }
+    .doctor-clinic-info {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    .scroll-to-top {
+      bottom: 15px !important;
+      width: 47px !important;
+      height: 47px !important;
+      font-size: 28px !important;
+    }
+  }

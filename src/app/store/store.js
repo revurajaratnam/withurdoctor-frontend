@@ -5,6 +5,7 @@ import { resendOtpApi } from "../../features/auth/services/resendOTP";
 import { signinApi } from "../../features/auth/services/signinApi";
 import { drDataApi, useDrdataMutation } from "../../features/auth/services/drDataApi";
 import userReducer from "../../features/auth/Slice/UserSlice"
+import { setupListeners } from "@reduxjs/toolkit/query";
 
 export  const store = configureStore({
     reducer:{
@@ -26,4 +27,6 @@ export  const store = configureStore({
                                       resendOtpApi.middleware,
                                       drDataApi.middleware)
 })
+
+setupListeners(store.dispatch)
     

@@ -1,5 +1,6 @@
 import { useState } from "react"
 import caret from "../../assets/caret-down-svgrepo-com.svg"
+import "../../style/filter.css";
 
 export default function FilterDoctors({
     dropFilter,
@@ -45,9 +46,9 @@ export default function FilterDoctors({
 
     return(
 
-        <div className="d-flex align-items-center    bg-white " >
-            <div className=" position-relative   d-flex gap-5 bg-success w-100  align-items-center pt-2 " style={{marginTop:"150px"}}>
-               <div className="ms-5 ">
+        <div className="d-flex align-items-center    bg-white filter-parent " >
+            <div className=" position-relative  d-flex gap-2 bg-success w-100 filter-items  pt-2 " style={{marginTop:"150px"}}>
+               <div className="ms-5 filter-items-list ">
                 <p className="text-light cursor-pointer ms-3 " 
                 style={{backgroundColor:"rgba(255,255,255,0.25)"}}
                 onClick={() => toggleDropdown("gender")}
