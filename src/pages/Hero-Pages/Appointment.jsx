@@ -210,6 +210,9 @@ export default function DoctorAppointmentSlots({ doctorId, patientId }) {
             ) : null
           )}
       </div>
+      <div>
+      =
+      </div>
     </div>
   );
 }

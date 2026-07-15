@@ -36,7 +36,7 @@
 .find-doctors-content {
   width: 100%;
   /* Exactly matches Navbar (77px) + Search (50px) to prevent weird gaps */
-  padding-top: 127px; 
+  /* padding-top: 127px;  */
   margin-top: 0;
 }
 
@@ -361,4 +361,11 @@
   .doctor-dropdown-section {
     overflow-x: auto;
   }
+}
+
+.navbar-dropdown{
+  text-decoration: none;
+}
+.cursor-pointer{
+  cursor: pointer;
 }

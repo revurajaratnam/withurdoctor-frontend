@@ -140,11 +140,7 @@ html{
     
     background-color: #F0F0F5;
 }
-.profile-dropdown{
-    min-width: 230px;
-    width: max-content;
-   
-}
+
 .forProviders{
     min-width: 220px
 }

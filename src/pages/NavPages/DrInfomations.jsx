@@ -11,6 +11,7 @@ import FilterDoctors from "./FilterDoctors";
 import Logo from "../../assets/Logo.png";
 import Appointment from "../Hero-Pages/Appointment";
 import "../../style/profile-container.css";
+import Schedules from "../Hero-Pages/Schedules";
 
 export default function FindDoctors() {
   const [searchParams] = useSearchParams();
@@ -260,7 +261,8 @@ export default function FindDoctors() {
 
                 {openDoctorId === doctorId && (
                   <div className="doctor-dropdown-section appointment-dropdown">
-                    <Appointment doctorId={doctorId} />
+                    {/* <Appointment doctorId={doctorId} /> */}
+                    <Schedules doctorId={doctorId} />
                   </div>
                 )}
               </div>

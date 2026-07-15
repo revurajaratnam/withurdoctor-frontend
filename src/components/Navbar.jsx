@@ -182,12 +182,13 @@ export default function NavbarComp() {
                     src={drop === "profiledrop" ? caretup : caretdown}
                     width={15}
                     alt=""
+                    className="cursor-pointer"
                   />
                 </p>
 
                 {drop === "profiledrop" && (
-                  <div className="navbar-dropdown profile-dropdown">
-                    <div className="profile-header">
+                  <div className="position-absolute navbar-dropdown">
+                    <div className="profile-header"> 
                       <img
                         src="https://img.magnific.com/premium-vector/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-vector-illustration_561158-3407.jpg?semt=ais_hybrid&w=740&q=80"
                         width={50}
@@ -198,43 +199,43 @@ export default function NavbarComp() {
                       <span>{user?.email || email}</span>
                     </div>
 
-                    <Link to="/myappointments" onClick={closeMenu}>
+                    <Link to="/myappointments" onClick={closeMenu} className="navbar-dropdown" >
                       My Appointments
                     </Link>
 
-                    <Link to="/mytests" onClick={closeMenu}>
+                    <Link to="/mytests" onClick={closeMenu} className="navbar-dropdown" >
                       My Tests
                     </Link>
 
-                    <Link to="/medicine-orders" onClick={closeMenu}>
+                    <Link to="/medicine-orders" onClick={closeMenu} className="navbar-dropdown" >
                       My Medicine Orders
                     </Link>
 
-                    <Link to="/medical-records" onClick={closeMenu}>
+                    <Link to="/medical-records" onClick={closeMenu} className="navbar-dropdown" >
                       My Medical Records
                     </Link>
 
-                    <Link to="/online-consultations" onClick={closeMenu}>
+                    <Link to="/online-consultations" onClick={closeMenu} className="navbar-dropdown" >
                       My Online Consultations
                     </Link>
 
-                    <Link to="/feedback" onClick={closeMenu}>
+                    <Link to="/feedback" onClick={closeMenu} className="navbar-dropdown" >
                       My Feedback
                     </Link>
 
-                    <Link to="/profile" onClick={closeMenu}>
+                    <Link to="/profile" onClick={closeMenu} className="navbar-dropdown" >
                       View / Profile Update
                     </Link>
 
-                    <Link to="/settings" onClick={closeMenu}>
+                    <Link to="/settings" onClick={closeMenu} className="navbar-dropdown">
                       Settings
                     </Link>
 
-                    <Link to="/" onClick={handleLogout}>
+                    <Link to="/" onClick={handleLogout} className="navbar-dropdown" >
                       Logout
                     </Link>
 
-                    <Link to="/drprofile" onClick={closeMenu}>
+                    <Link to="/drprofile" onClick={closeMenu} className="navbar-dropdown">
                       Switch Products Account
                     </Link>
                   </div>
