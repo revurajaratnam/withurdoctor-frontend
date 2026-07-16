@@ -21,10 +21,12 @@
     width: 100%;
     min-width: 0;
   }
-  @media screen and (min-width:700px){
+  @media screen and (min-width:400px){
     .doctors-conrainer{
     width: 100%;
     flex-wrap: nowrap;
+    min-width: 400px;
+    height: 300px;
     }
   }
 
