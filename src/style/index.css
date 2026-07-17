@@ -72,7 +72,7 @@ display: block;
 }
 .location-search-container{
 
-    width: 900px;
+    width: 100%;
     z-index: 10000;
 }
 .drname{
