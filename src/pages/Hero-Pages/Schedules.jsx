@@ -1,4 +1,5 @@
 
+import { Link } from "react-router-dom"
 import { TimeSchedules } from "../../utils/TimeSchedules"
 
 export default function Schedules() {
@@ -17,9 +18,9 @@ export default function Schedules() {
                             </div>
                             {time.Time.map((times,index)=>(
                                 <div className="mb-2 col">
-                                    <div className=" btn btn-danger">
+                                    <Link className=" btn btn-danger" to="/appointment">
                                         {times}
-                                    </div>
+                                    </Link> 
                                 </div>
                             ))}
                         </div>
