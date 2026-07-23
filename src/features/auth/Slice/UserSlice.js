@@ -1,60 +1,78 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const token = localStorage.getItem("token");
-let savedUser = null;
-try{
-  const userData = localStorage.getItem("user");
-  if(userData && userData !== "undefined") {
-    savedUser = JSON.parse(userData);
+const getSavedUser = () => {
+  try {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  } catch (error) {
+    console.error("Unable to read saved user:", error);
+    return null;
   }
-}catch(error){
-    console.error("Error parsing user data from localStorage:", error);
-    localStorage.removeItem("user");
-    savedUser = null;
-}
+};
+
+const savedToken = localStorage.getItem("token");
+const savedUser = getSavedUser();
+const savedEmail = localStorage.getItem("email");
+
 const initialState = {
-  user: savedUser || null,
-  isLoggedIn: !! token ,
-  token: token || null,
-  email: savedUser?.email || null,
-  role: savedUser?.role || null,
+  user: savedUser,
+  email: savedUser?.email || savedEmail || "",
+  token: savedToken || null,
+
+  // Keep login active after page refresh
+  isLoggedIn: Boolean(savedToken),
 };
 
 const userSlice = createSlice({
-  name: "dr",
-
+  name: "user",
   initialState,
 
   reducers: {
     setUser: (state, action) => {
-      console.log("login payload", action.payload);
+      const token = action.payload?.token;
 
-      state.user = action.payload.user;
-      state.email = action.payload.user?.email;
-      state.token = action.payload.token;
-      state.isLoggedIn = !!token;
-      // state.role = user?.role || action.payload.role || null;
+      const receivedUser =
+        action.payload?.user ||
+        action.payload?.doctor ||
+        action.payload?.patient ||
+        null;
 
-      if(token){
-        localStorage.setItem("token", action.payload.token);
+      const receivedEmail =
+        receivedUser?.email ||
+        action.payload?.email ||
+        "";
+
+      state.token = token || null;
+      state.user = receivedUser || { email: receivedEmail };
+      state.email = receivedEmail;
+      state.isLoggedIn = Boolean(token);
+
+      if (token) {
+        localStorage.setItem("token", token);
       }
-      // if(user){
-      // // localStorage.setItem("user", JSON.stringify(action.payload.user));
-      // }
+
+      if (state.user) {
+        localStorage.setItem("user", JSON.stringify(state.user));
+      }
+
+      if (receivedEmail) {
+        localStorage.setItem("email", receivedEmail);
+      }
     },
 
     logout: (state) => {
       state.user = null;
-      state.email = null;
+      state.email = "";
       state.token = null;
-      state.role = null;
       state.isLoggedIn = false;
 
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      localStorage.removeItem("email");
     },
   },
 });
 
 export const { setUser, logout } = userSlice.actions;
+
 export default userSlice.reducer;

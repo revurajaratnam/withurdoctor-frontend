@@ -16,6 +16,11 @@ export default function DoctorDashboards() {
 
             </div>
             <div className="d-flex flex-column p-4 gap-4 " >
+              <Link 
+              to="/calender"
+              className="text-decoration-none text-white">
+              Calender
+              </Link>
             <Link to="/Profile"
             className="text-decoration-none text-white"
             >Profile</Link>

@@ -1,26 +1,34 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Logo from "../assets/Logo.png";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../features/auth/Slice/UserSlice";
+import Logo from "../assets/Logo.png";
 import caretdown from "../assets/caret-down-svgrepo-com.svg";
 import caretup from "../assets/caret-up-svgrepo-com.svg";
+import { logout } from "../features/auth/Slice/UserSlice";
+import "../style/searchBars.css";
 
 export default function NavbarComp() {
   const [drop, setDrop] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const { user, email, isLoggedIn } = useSelector((state) => state.dr);
+  
 
   const dispatch = useDispatch();
   const location = useLocation();
+
+  const displayName =
+    user?.fullname ||
+    user?.name ||
+    user?.email?.split("@")[0] ||
+    email?.split("@")[0] ||
+    "Profile";
 
   const handleOnChange = (name) => {
     setDrop((previous) => (previous === name ? null : name));
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
     dispatch(logout());
     setMenuOpen(false);
     setDrop(null);
@@ -33,14 +41,14 @@ export default function NavbarComp() {
 
   const activeStyle = (path) => ({
     borderBottom:
-      location.pathname === path ? "5px solid #199FD9" : "none",
+      location.pathname === path ? "4px solid #199fd9" : "4px solid transparent",
   });
 
   return (
     <header className="navbar-wrapper">
-      <nav className="navbar">
+      <nav className="navbar-container">
         <Link to="/" className="navbar-logo" onClick={closeMenu}>
-          <img src={Logo} alt="WithUrDoctor Logo" width="100" />
+          <img src={Logo} alt="WithUrDoctor Logo" />
         </Link>
 
         <button
@@ -55,197 +63,241 @@ export default function NavbarComp() {
         <div className={`navbar-items ${menuOpen ? "show-menu" : ""}`}>
           <Link
             to="/Finddrhome"
-            className="text-decoration-none text-dark"
+            className="navbar-main-link"
             style={activeStyle("/Finddrhome")}
             onClick={closeMenu}
           >
-            <b>Find Doctors</b>
+            Find Doctors
           </Link>
 
           <Link
             to="/VideoConsult"
-            className="text-decoration-none text-dark"
+            className="navbar-main-link"
             style={activeStyle("/VideoConsult")}
             onClick={closeMenu}
           >
-            <b>Video Consult</b>
+            Video Consult
           </Link>
 
           <Link
             to="/LabTests"
-            className="text-decoration-none text-dark"
+            className="navbar-main-link"
             style={activeStyle("/LabTests")}
             onClick={closeMenu}
           >
-            <b>Lab Tests</b>
+            Lab Tests
           </Link>
 
           <Link
             to="/Surgeries"
-            className="text-decoration-none text-dark"
+            className="navbar-main-link"
             style={activeStyle("/Surgeries")}
             onClick={closeMenu}
           >
-            <b>Surgeries</b>
+            Surgeries
           </Link>
 
-          <div className="position-relative">
-            <span
-              className="text-dark navbar-dropdown-title"
+          <div className="navbar-dropdown-wrapper">
+            <button
+              type="button"
+              className="navbar-dropdown-title"
               onClick={() => handleOnChange("forcorporates")}
             >
-              <span
-                className="badge rounded-pill me-1"
-                style={{
-                  background: "#28328C",
-                  fontSize: "9px",
-                  fontWeight: "normal",
-                }}
-              >
-                NEW
-              </span>
-
+              <span className="new-badge">NEW</span>
               For Corporates
-
               <img
                 src={drop === "forcorporates" ? caretup : caretdown}
-                width={15}
                 alt=""
               />
-            </span>
+            </button>
 
             {drop === "forcorporates" && (
-              <div className="navbar-dropdown">
-                <p>Health & Wellness Plans</p>
-                <p>Group Insurance</p>
+              <div className="navbar-menu-dropdown">
+                <Link to="/corporate-wellness" onClick={closeMenu}>
+                  Health & Wellness Plans
+                </Link>
+
+                <Link to="/group-insurance" onClick={closeMenu}>
+                  Group Insurance
+                </Link>
               </div>
             )}
           </div>
 
-          <div className="position-relative">
-            <span
-              className="text-dark navbar-dropdown-title"
+          <div className="navbar-dropdown-wrapper">
+            <button
+              type="button"
+              className="navbar-dropdown-title"
               onClick={() => handleOnChange("forproviders")}
             >
               For Providers
-
               <img
                 src={drop === "forproviders" ? caretup : caretdown}
-                width={15}
                 alt=""
               />
-            </span>
+            </button>
 
             {drop === "forproviders" && (
-              <div className="navbar-dropdown">
-                <p>WithUrDoctor Prime</p>
-                <p>Software for providers</p>
-                <p>List your practice for free</p>
+              <div className="navbar-menu-dropdown">
+                <Link to="/provider-prime" onClick={closeMenu}>
+                  WithUrDoctor Prime
+                </Link>
+
+                <Link to="/provider-software" onClick={closeMenu}>
+                  Software for providers
+                </Link>
+
+                <Link to="/list-practice" onClick={closeMenu}>
+                  List your practice for free
+                </Link>
               </div>
             )}
           </div>
 
-          <div className="position-relative">
-            <span
-              className="text-dark navbar-dropdown-title"
+          <div className="navbar-dropdown-wrapper">
+            <button
+              type="button"
+              className="navbar-dropdown-title"
               onClick={() => handleOnChange("security")}
             >
               Security & Help
-
-              <img
-                src={drop === "security" ? caretup : caretdown}
-                width={15}
-                alt=""
-              />
-            </span>
+              <img src={drop === "security" ? caretup : caretdown} alt="" />
+            </button>
 
             {drop === "security" && (
-              <div className="navbar-dropdown">
-                <p>Data security</p>
-                <p>Help</p>
+              <div className="navbar-menu-dropdown">
+                <Link to="/data-security" onClick={closeMenu}>
+                  Data security
+                </Link>
+
+                <Link to="/help" onClick={closeMenu}>
+                  Help
+                </Link>
               </div>
             )}
           </div>
 
-          <div className="position-relative navbar-account">
+          <div className="navbar-account">
             {isLoggedIn ? (
               <>
-                <p
-                  className="mb-0 navbar-dropdown-title"
+                <button
+                  type="button"
+                  className="navbar-dropdown-title account-button"
                   onClick={() => handleOnChange("profiledrop")}
                 >
-                  {user?.email?.split("@")[0] ||
-                    email?.split("@")[0] ||
-                    "Profile"}
+                  <span className="account-name">{displayName}</span>
 
                   <img
                     src={drop === "profiledrop" ? caretup : caretdown}
-                    width={15}
                     alt=""
-                    className="cursor-pointer"
                   />
-                </p>
+                </button>
 
                 {drop === "profiledrop" && (
-                  <div className="position-absolute navbar-dropdown">
-                    <div className="profile-header"> 
+                  <div className="navbar-profile-dropdown">
+                    <div className="profile-header">
                       <img
-                        src="https://img.magnific.com/premium-vector/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-vector-illustration_561158-3407.jpg?semt=ais_hybrid&w=740&q=80"
+                        src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
                         width={50}
                         height={50}
                         alt="Profile"
                       />
 
-                      <span>{user?.email || email}</span>
+                      <div>
+                        <strong>{displayName}</strong>
+                        <span>{user?.email || email || ""}</span>
+                      </div>
                     </div>
 
-                    <Link to="/myappointments" onClick={closeMenu} className="navbar-dropdown" >
+                    <Link
+                      to="/myappointments"
+                      onClick={closeMenu}
+                      className="profile-dropdown-link"
+                    >
                       My Appointments
                     </Link>
 
-                    <Link to="/mytests" onClick={closeMenu} className="navbar-dropdown" >
+                    <Link
+                      to="/mytests"
+                      onClick={closeMenu}
+                      className="profile-dropdown-link"
+                    >
                       My Tests
                     </Link>
 
-                    <Link to="/medicine-orders" onClick={closeMenu} className="navbar-dropdown" >
+                    <Link
+                      to="/medicine-orders"
+                      onClick={closeMenu}
+                      className="profile-dropdown-link"
+                    >
                       My Medicine Orders
                     </Link>
 
-                    <Link to="/medical-records" onClick={closeMenu} className="navbar-dropdown" >
+                    <Link
+                      to="/medical-records"
+                      onClick={closeMenu}
+                      className="profile-dropdown-link"
+                    >
                       My Medical Records
                     </Link>
 
-                    <Link to="/online-consultations" onClick={closeMenu} className="navbar-dropdown" >
+                    <Link
+                      to="/online-consultations"
+                      onClick={closeMenu}
+                      className="profile-dropdown-link"
+                    >
                       My Online Consultations
                     </Link>
 
-                    <Link to="/feedback" onClick={closeMenu} className="navbar-dropdown" >
+                    <Link
+                      to="/feedback"
+                      onClick={closeMenu}
+                      className="profile-dropdown-link"
+                    >
                       My Feedback
                     </Link>
 
-                    <Link to="/profile" onClick={closeMenu} className="navbar-dropdown" >
+                    <Link
+                      to="/profile"
+                      onClick={closeMenu}
+                      className="profile-dropdown-link"
+                    >
                       View / Profile Update
                     </Link>
 
-                    <Link to="/settings" onClick={closeMenu} className="navbar-dropdown">
+                    <Link
+                      to="/settings"
+                      onClick={closeMenu}
+                      className="profile-dropdown-link"
+                    >
                       Settings
                     </Link>
 
-                    <Link to="/" onClick={handleLogout} className="navbar-dropdown" >
-                      Logout
+                    <Link
+                      to="/drprofile"
+                      onClick={closeMenu}
+                      className="profile-dropdown-link"
+                    >
+                      Switch Products Account
                     </Link>
 
-                    <Link to="/drprofile" onClick={closeMenu} className="navbar-dropdown">
-                      Switch Products Account
+                    <Link
+                      to="/"
+                      onClick={handleLogout}
+                      className="profile-dropdown-link logout-link"
+                    >
+                      Logout
                     </Link>
                   </div>
                 )}
               </>
             ) : (
-              <Link to="/LoginAndSignupDashboard" onClick={closeMenu}>
-                <button type="button" id="login-signup-btn">
-                  Login / Signup
-                </button>
+              <Link
+                to="/LoginAndSignupDashboard"
+                onClick={closeMenu}
+                className="login-signup-link"
+              >
+                Login / Signup
               </Link>
             )}
           </div>
