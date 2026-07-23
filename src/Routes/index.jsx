@@ -7,6 +7,7 @@ import VerifyMobile from "../pages/LoginPages/VerifyMobile";
 import ViewProfile from "../pages/ProfilePages/viewProfile";
 import AppointmentSchedule from "../pages/Hero-Pages/Schedule";
 import BookAppointment from "../pages/Hero-Pages/BookAppointment";
+import Calender from "../pages/ProfilePages/Calender";
 
 function NetworkDelay(promise, ms = 2000) {
     return new Promise((resolve) => {
@@ -107,8 +108,12 @@ const Routers = createBrowserRouter([
         element: <ViewProfile />
     },
     {
-        path:"/appointment",
+        path:"/appointment/:doctorId",
         element: <BookAppointment />
+    },
+    {
+        path:"/calender",
+        element: <Calender />
     }
 ]);
 

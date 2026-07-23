@@ -65,7 +65,8 @@ export default function Login() {
                 navigate("/", { state: { email: formdata.email } });
 
                 dispatch(setUser({ 
-                    token: token,
+                    token: result.token,
+                    user: result.user,
 
                  }));
                 

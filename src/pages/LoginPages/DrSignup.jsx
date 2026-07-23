@@ -18,11 +18,14 @@ import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
         cpass:"",
     })
     const [verifybtn,setVerifyBtn]= useState(false);
-    const {data: drdata=[]} = useGetdrdataQuery(
+    const {data: drdata} = useGetdrdataQuery(
         undefined,{
             skip:!isDoctor
         }
     );
+    const doctors = Array.isArray(drdata?.data)? drdata.data:[];
+    const doctorsCount = doctors.length;
+
     const navigate = useNavigate();
 
         const handleVerifybtns = () =>{
@@ -61,7 +64,7 @@ import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
                     <div className="d-flex justify-content-between my-4 border-bottom">
                     <p>
               {isDoctor
-                ? `Joined ${drdata.length}+ doctors`
+                ? `Joined ${doctorsCount}+ doctors`
                 : "Join WithUrDoctor"}
             </p>
             {isDoctor ? (

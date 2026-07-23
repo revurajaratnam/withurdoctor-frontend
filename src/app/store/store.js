@@ -15,6 +15,7 @@ export  const store = configureStore({
         [resendOtpApi.reducerPath]:resendOtpApi.reducer,
         [drDataApi.reducerPath]:drDataApi.reducer,
     
+    
         
         dr: userReducer
 
