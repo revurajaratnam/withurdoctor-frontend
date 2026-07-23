@@ -15,35 +15,52 @@ export default function DoctorDashboards() {
             <div>
 
             </div>
-            <div className="d-flex flex-column p-4 gap-4 " >
+            <div className="d-flex flex-column p-4 gap-4  " >
               <Link 
               to="/calender"
-              className="text-decoration-none text-white">
-              Calender
+              className="text-decoration-none text-white d-flex">
+                <i className="bi bi-calendar2-check-fill"></i>
+              Calendar
               </Link>
             <Link to="/Profile"
-            className="text-decoration-none text-white"
-            >Profile</Link>
+            className="text-decoration-none text-white">
+            <i className="bi bi-person-fill"></i>
+
+              Profile</Link>
             <Link
 
             className="text-decoration-none text-white"
-            >Prime</Link>
+            >
+            <i className="bi bi-bell-fill"></i>
+
+              Prime</Link>
             <Link
 
             className="text-decoration-none text-white"
-            >Feedback</Link>
+            >
+            <i className="bi bi-hand-thumbs-up-fill"></i>
+
+              Feedback</Link>
             <Link
             
             className="text-decoration-none text-white"
-            >Reach</Link>
+            >
+            <i className="bi bi-megaphone-fill"></i>
+              
+              Reach</Link>
             <Link
             
             className="text-decoration-none text-white"
-            >Consult</Link>
+            >
+            <i className="bi bi-chat-left-quote-fill"></i>
+
+              Consult</Link>
             <Link
             
             className="text-decoration-none text-white"
-            >Health feed</Link>
+            >
+            <i className="bi bi-newspaper"></i>
+              Health feed</Link>
             </div>
           </div>
 
