@@ -199,8 +199,17 @@ export default function Appointments() {
       <NavbarComp />
 
       <main className="d-flex">
-        <section>
-              <h3>Dr.{selectedDoctor.fullname}</h3>
+        <section className="d-flex">
+              <img src={selectedDoctor.profileImage} alt="profile" 
+              width={100}
+              />
+              <section>
+              <p>Dr.{selectedDoctor.fullname}</p>
+              <span>{selectedDoctor.qualification} </span>
+              <span>{selectedDoctor.specialization}</span>
+
+              </section>
+
         </section>
         <section className="container mt-4 ">
           <h4>
