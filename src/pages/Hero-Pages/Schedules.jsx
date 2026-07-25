@@ -88,10 +88,6 @@ export default function Schedules({
       return;
     }
 
-    /*
-     * This is the page where the patient enters
-     * their information and confirms the booking.
-     */
     const appointmentPage = `/bookappointment/${doctorId}?date=${encodeURIComponent(
       selectedDate
     )}&time=${encodeURIComponent(slot)}`;
