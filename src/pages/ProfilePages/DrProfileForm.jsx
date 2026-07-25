@@ -7,29 +7,44 @@ import { useSelector } from "react-redux";
 import { useNavigate ,useLocation } from "react-router-dom";
 
 export default function Profileform() {
-    const {user,isLoggedIn} = useSelector((state)=>state.dr);
-    const{data,isLoading,Success,error} = useDashboardQuery()
+    const {user,token,isLoggedIn} = useSelector((state)=>state.dr);
+    const isDoctor = user?.role === "doctor";
+    const{data,isLoading,Success,error} = useDashboardQuery(undefined, { skip:!token || !isLoggedIn ||!isDoctor})
     const[drdata,{isLoad,success,err}] = useDrdataMutation();
     const {data:drsdata,loading,succ,e}= useGetdrdataQuery();
    
     const dispatch = useDispatch();
     const handelsubmit = async (e)=>{
         e.preventDefault();
-        const formdata = new FormData(e.target);
-
+          if(!isDoctor){
+            return;
+          }
         try {
-            const result = await drdata(formdata).unwrap();
-            console.log(result);
-            dispatch(setUser(result))
+          const formdata = new FormData(e.currentTarget);
+          const result = await drdata(formdata).unwrap();
+            
         } catch (error) {
             console.log(error);
            
         }
     }
     if(isLoading){ return <h1>Loading...</h1>}
-    if(error){return <h1 className="text-danger">unauthorized access</h1>}
+    if(error){return <h1 className="text-danger text-center">unauthorized access</h1>}
     
-    
+    if (!isDoctor) {
+      return (
+        <div>
+          <NavbarComp />
+  
+          <div className="container my-5">
+            <div className="alert alert-danger text-center">
+              Only doctors can access this page. You are logged in as a
+              patient.
+            </div>
+          </div>
+        </div>
+      );
+    }
 
    
     return(
@@ -37,6 +52,7 @@ export default function Profileform() {
             <div>
                 <NavbarComp></NavbarComp>
             </div>
+
             <div>
            
             <div className="container my-5">

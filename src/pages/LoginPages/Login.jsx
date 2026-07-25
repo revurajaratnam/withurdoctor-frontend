@@ -7,7 +7,7 @@ import { setUser } from "../../features/auth/Slice/UserSlice";
 import { GoogleLogin } from '@react-oauth/google';
 
 export default function Login() {
-    const [loginType, setLoginType] = useState("doctor");
+    const [loginType, setLoginType] = useState("patient");
     const [otpWithNum, SetOtpWithNum] = useState(false);
     const [requirefileds, setRequireFileds] = useState({})
     const [formdata, setFormdata] = useState({
@@ -38,49 +38,83 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+      
         const newErrors = {};
+      
         if (!formdata.email.trim()) {
-            newErrors.email = "Email ID field cannot be empty"
+          newErrors.email = "Email ID field cannot be empty";
         }
+      
         if (!formdata.pass.trim()) {
-            newErrors.pass = "Password field cannot be empty"
+          newErrors.pass = "Password field cannot be empty";
         }
-        setRequireFileds(newErrors)
+      
+        setRequireFileds(newErrors);
+      
         if (Object.keys(newErrors).length > 0) {
-            return;
+          return;
         }
+      
         try {
-            const result = loginType === "doctor" 
-            ? await data(formdata).unwrap()
-            : await UserData(formdata).unwrap();
-            if (result.success === true) {
-                
-                console.log(result);
-                setMessage("");
-                const token = result.token;
-                
-                
-                toast.success("Login Successful");
-                localStorage.setItem("token", token);
-                navigate("/", { state: { email: formdata.email } });
-
-                dispatch(setUser({ 
-                    token: result.token,
-                    user: result.user,
-
-                 }));
-                
-            } else {
-                localStorage.removeItem("token")
-                setMessage(result.message || "Login Failed");
-            }
+          console.log("Selected login type:", loginType);
+      
+          const result =
+            loginType === "patient"
+              ? await data(formdata).unwrap()
+              : await UserData(formdata).unwrap();
+      
+          console.log("Login result:", result);
+      
+          if (!result.success) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+      
+            setMessage(result.message || "Login failed");
+            return;
+          }
+      
+          // Remove any previous doctor/patient token
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+      
+          // Store new token
+          localStorage.setItem("token", result.token);
+          localStorage.setItem(
+            "user",
+            JSON.stringify(result.user)
+          );
+      
+          // Update Redux before navigating
+          dispatch(
+            setUser({
+              token: result.token,
+              user: result.user,
+            })
+          );
+      
+          const decodedPayload = JSON.parse(
+            atob(result.token.split(".")[1])
+          );
+      
+          console.log("New login token payload:", decodedPayload);
+      
+          setMessage("");
+          toast.success(
+            `${loginType === "doctor" ? "doctor" : "patient"} login successful`
+          );
+      
+          navigate("/");
         } catch (error) {
-            localStorage.removeItem("token")
-            setMessage(error.data?.message || "An error occurred");
-            console.log(error);
+          console.error("Login error:", error);
+      
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+      
+          setMessage(
+            error?.data?.message || "An error occurred"
+          );
         }
-
-    };
+      };
    
 
     const handleGoogleSuccess = async (credentialResponse) => {

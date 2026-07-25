@@ -5,23 +5,24 @@ import { useParams, useSearchParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import NavbarComp from "../../components/Navbar";
 import LocationandSearch from "../NavPages/Location";
-import Appointment from "../Hero-Pages/Appointment";
+// import Appointment from "../Hero-Pages/Appointment";
 import ProfileBreadcrumb from "./Breadcrumb";
 
 import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
 
 import "../../style/viewProfile-page.css";
+import Schedules from "../Hero-Pages/Schedules";
 
 const FALLBACK_IMAGE =
   "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png";
 
-export default function ViewProfile() {
+export default function ViewProfile({doctorId}) {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
 
   const scrollContainerRef = useRef(null);
   
-  const [locationValue, setLocationValue] = useState("Hyderabad");
+  const [locationValue, setLocationValue] = useState();
   const [searchValue, setSearchValue] = useState(
     searchParams.get("search") || ""
   );
@@ -110,10 +111,10 @@ export default function ViewProfile() {
       onScroll={handleScroll}
       style={{ height: "100vh", overflowY: "auto", overflowX: "hidden" }}
     >
-      <header className="profile-header">
-        <NavbarComp />
 
-        <div className="profile-search-wrapper">
+      <header >
+    <NavbarComp />
+        <div >
           <LocationandSearch
             locationValue={locationValue}
             setLocationValue={setLocationValue}
@@ -265,7 +266,7 @@ export default function ViewProfile() {
           <aside className="schedule-appointment">
             <h2 className="appointment-heading">Pick a time slot</h2>
             <div className="appointment-component-wrapper">
-              <Appointment doctor={selectedDoctor} />
+             <Schedules doctorId={doctorId} />
             </div>
           </aside>
         </div>

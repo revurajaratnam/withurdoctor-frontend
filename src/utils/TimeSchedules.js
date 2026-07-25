@@ -56,6 +56,9 @@ export  const  TimeSchedules=[
                         "06:15 PM",
                         "06:30 PM",
                         "06:45 PM",
+                        "07:00 PM", 
+                        "07:15 PM", 
+                        "07:30 PM",
                     ]
                 }
                             ]

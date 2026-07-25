@@ -12,11 +12,11 @@ const getSavedUser = () => {
 
 const savedToken = localStorage.getItem("token");
 const savedUser = getSavedUser();
-const savedEmail = localStorage.getItem("email");
+// const savedEmail = localStorage.getItem("email");
 
 const initialState = {
   user: savedUser,
-  email: savedUser?.email || savedEmail || "",
+  // email: savedUser?.email || savedEmail || "",
   token: savedToken || null,
 
   // Keep login active after page refresh
@@ -35,6 +35,7 @@ const userSlice = createSlice({
         action.payload?.user ||
         action.payload?.doctor ||
         action.payload?.patient ||
+        action.payload?.fullname ||
         null;
 
       const receivedEmail =
@@ -55,9 +56,9 @@ const userSlice = createSlice({
         localStorage.setItem("user", JSON.stringify(state.user));
       }
 
-      if (receivedEmail) {
-        localStorage.setItem("email", receivedEmail);
-      }
+      // if (receivedEmail) {
+      //   localStorage.setItem("email", receivedEmail);
+      // }
     },
 
     logout: (state) => {
