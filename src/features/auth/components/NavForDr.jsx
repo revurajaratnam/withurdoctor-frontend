@@ -6,16 +6,18 @@ export default function NavForDr() {
         <div>
             <div className='d-flex align-items-center justify-content-between m-4'>
                 <div>
-                    <img src={Logo} width={70} height={50}/>
+                    <Link to="/"><img src={Logo} width={85} height={50}/></Link>
                 </div>
                <div className='d-flex gap-3'>
                <div>
                     <p>For Clinics & Hospitals</p>
 
-                    {/* <Link>Software for clinics</Link>
+                        <section className='d-flex flex-column'>
+                        <Link>Software for clinics</Link>
                     <Link>Software for hospitals</Link>
                     <Link>Advertising</Link>
-                    <Link>List your practice for Free</Link> */}
+                    <Link>List your practice for Free</Link>
+                        </section>
                 </div>
                 <div>
                     <p>Profile</p>

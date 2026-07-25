@@ -10,6 +10,7 @@ import BookAppointment from "../pages/Hero-Pages/BookAppointment";
 import Calender from "../pages/ProfilePages/Calender";
 import Appointments from "../pages/Hero-Pages/Appointment";
 import Schedules from "../pages/Hero-Pages/Schedules";
+import AppointmentsDashboard from "../features/auth/components/appointmentsDashboard";
 
 function NetworkDelay(promise, ms = 2000) {
     return new Promise((resolve) => {
@@ -95,7 +96,11 @@ const Routers = createBrowserRouter([
     },
     {
         path: "/myappointments",
-        element: <MyAppointments />
+        element: <MyAppointments />,
+        children:[
+           { index:true,
+           element: <AppointmentsDashboard />},
+    ]
     },
     {
         path: "/newconsultation",

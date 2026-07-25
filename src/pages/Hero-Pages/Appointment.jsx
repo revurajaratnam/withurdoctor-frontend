@@ -198,8 +198,11 @@ export default function Appointments() {
     <div>
       <NavbarComp />
 
-      <main>
-        <section className="container mt-4">
+      <main className="d-flex">
+        <section>
+              <h3>Dr.{selectedDoctor.fullname}</h3>
+        </section>
+        <section className="container mt-4 ">
           <h4>
             Appointment with Dr.{" "}
             {selectedDoctor.fullname}
