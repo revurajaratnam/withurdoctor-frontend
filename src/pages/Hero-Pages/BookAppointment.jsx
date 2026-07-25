@@ -63,8 +63,8 @@ import NavbarComp from "../../components/Navbar";
     return "Booking failed. Please try again.";
   }
   
-  export default function BookAppointment() {
-    const { doctorId } = useParams();
+  export default function BookAppointment({doctorId}) {
+    // const { doctorId } = useParams();
     const [searchParams] = useSearchParams();
   
     const selectedDate = searchParams.get("date");

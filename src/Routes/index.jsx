@@ -5,9 +5,11 @@ import HomePage from "../components/home";
 import LoginAndSignupDashboard from "../pages/LoginPages/LoginSignup";
 import VerifyMobile from "../pages/LoginPages/VerifyMobile";
 import ViewProfile from "../pages/ProfilePages/viewProfile";
-import AppointmentSchedule from "../pages/Hero-Pages/Schedule";
+// import AppointmentSchedule from "../pages/Hero-Pages/Schedules";
 import BookAppointment from "../pages/Hero-Pages/BookAppointment";
 import Calender from "../pages/ProfilePages/Calender";
+import Appointments from "../pages/Hero-Pages/Appointment";
+import Schedules from "../pages/Hero-Pages/Schedules";
 
 function NetworkDelay(promise, ms = 2000) {
     return new Promise((resolve) => {
@@ -114,6 +116,14 @@ const Routers = createBrowserRouter([
     {
         path:"/calender",
         element: <Calender />
+    },
+    {
+        path:"/bookappointment/:doctorId",
+        element: <Appointments/>
+    },
+    {
+        path:"/schedule/:doctorId",
+        element:<Schedules />
     }
 ]);
 

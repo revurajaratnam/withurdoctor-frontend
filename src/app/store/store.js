@@ -6,6 +6,7 @@ import { signinApi } from "../../features/auth/services/signinApi";
 import { drDataApi, useDrdataMutation } from "../../features/auth/services/drDataApi";
 import userReducer from "../../features/auth/Slice/UserSlice"
 import { setupListeners } from "@reduxjs/toolkit/query";
+import {  AppointmentBookingApi } from "../../features/auth/services/AppoApi";
 
 export  const store = configureStore({
     reducer:{
@@ -14,6 +15,7 @@ export  const store = configureStore({
         [VerifyEmailApi.reducerPath] : VerifyEmailApi.reducer,
         [resendOtpApi.reducerPath]:resendOtpApi.reducer,
         [drDataApi.reducerPath]:drDataApi.reducer,
+        [AppointmentBookingApi.reducerPath] : AppointmentBookingApi.reducer,
     
     
         
@@ -26,7 +28,9 @@ export  const store = configureStore({
                                       signinApi.middleware,
                                       VerifyEmailApi.middleware,
                                       resendOtpApi.middleware,
-                                      drDataApi.middleware)
+                                      drDataApi.middleware,
+                                      AppointmentBookingApi.middleware,
+                                    )
 })
 
 setupListeners(store.dispatch)

@@ -5,7 +5,7 @@ import NavbarComp from "../../components/Navbar";
 import { useLazyGetdrdataQuery } from "../../features/auth/services/drDataApi";
 import Footer from "../../components/Footer";
 import LocationandSearch from "./Location";
-import AppointmentSchedule from "../Hero-Pages/Schedule";
+// import AppointmentSchedule from "../Hero-Pages/Schedule";
 import ClinicandHospital from "../Hero-Pages/ClinicandHospital";
 import FilterDoctors from "./FilterDoctors";
 import Logo from "../../assets/Logo.png";
@@ -262,7 +262,7 @@ export default function FindDoctors() {
                 {openDoctorId === doctorId && (
                   <div className="doctor-dropdown-section appointment-dropdown">
                     {/* <Appointment doctorId={doctorId} /> */}
-                    <Schedules doctorId={doctorId} />
+                    <Schedules doctorId={doctorId} doctorEmail={doctor.email} doctorName ={doctor.fullname} />
                   </div>
                 )}
               </div>

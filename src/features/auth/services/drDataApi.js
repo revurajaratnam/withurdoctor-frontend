@@ -2,6 +2,7 @@ import {
     createApi,
     fetchBaseQuery,
   } from "@reduxjs/toolkit/query/react";
+  import { baseQueryWithAutoLogout } from "./baseQuery";
   
   export const drDataApi = createApi({
     reducerPath: "drDataApi",

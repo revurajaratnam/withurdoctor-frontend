@@ -77,7 +77,7 @@ export default function Footer() {
 
         <div className="text-center ">
             <img src={Logo} alt="" />
-            <p className=" text-secondary">Copyright © 2026 WithUrDoctor. All RIghts reseved.</p>
+            <p className=" text-secondary mb-0">Copyright © 2026 WithUrDoctor. All RIghts reseved.</p>
         </div>
 
        </div>
