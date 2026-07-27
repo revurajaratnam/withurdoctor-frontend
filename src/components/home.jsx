@@ -91,7 +91,6 @@ export default function HomePage() {
             onSpecializationSelect={handleSpecializationSelect}
             onDoctorSelect={handleDoctorSelect}
             onSearchSubmit={handleSearchSubmit}
-
             wrapperStyle={{
               width: "70%",
               height: "50px",

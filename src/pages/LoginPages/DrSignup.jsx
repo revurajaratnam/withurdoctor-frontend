@@ -9,6 +9,7 @@ import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
 
 
  const  SignUp= ({view="drsignup"}) => {
+
     const isDoctor = view ==="drsignup"
     const [signupData, { isLoading, isSuccess, error }] = useSignUpMutation();
     const [formdata, setFormdata] = useState({
@@ -17,6 +18,7 @@ import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
         pass: "",
         cpass:"",
     })
+    const [errorMessage, setErrorMessage] = useState("");
     const [verifybtn,setVerifyBtn]= useState(false);
     const {data: drdata} = useGetdrdataQuery(
         undefined,{
@@ -36,19 +38,42 @@ import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
     const handleSubmit = async (e) => {
         e.preventDefault();
         // const formdata = new FormData(e.target);
+        setErrorMessage("")
 
+        if(
+            !formdata.fullname.trim() ||
+            !formdata.email.trim() || 
+            !formdata.pass.trim() ||
+            !formdata.cpass.trim() 
+        ){
+            const message = "Please fill in all fileds";
+            setErrorMessage(message);
+            toast.error(message);
+            return;
+        }
           
         try {
-            const result = await signupData(formdata).unwrap();
+            const response = await signupData(formdata).unwrap();
+            const result = typeof response === "string" ? JSON.parse(response) : response;
             console.log( result)
-             toast.success("The OTP has been sent.! Please check your email")
-            navigate("/VerifyEmail",{
-                state:{email:formdata.email}
-            })
+            console.log(typeof result)
+
+            console.log( result?.success)
+            if(result?.success){
+             toast.success(result?.message || "The OTP has been sent.! Please check your email")
+                navigate("/VerifyEmail",{
+                    state:{email:formdata.email.trim()}
+                })
+            }
+            if(result?.success ===  false){
+                setErrorMessage(result?.message)
+            toast.success(result?.message || "Signup failed");
+            }
+           
 
         } catch (error) {
+            
             console.log(error);
-            toast.error(error?.data?.message || "Signup failed");
         }
     }
 
@@ -127,12 +152,18 @@ import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
                <span style={{fontSize:"10px"}}>Receive relevant offers and 
                 promotional communication <br />from WithUrDoctor</span>
                </label>
-
+             
                
              <button type="submit"
                 className="my-5 btn btn-info w-100 text-white"
                 disabled={isLoading}
                 >{isLoading?"Sending OTP":"Send OTP"}</button>
+                  {
+                        errorMessage && (
+                            <p className="f-5 alert-danger p-2 rounded">{errorMessage}</p>
+                        )
+                    }
+                   
                 </div>
                
                 

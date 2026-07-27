@@ -3,7 +3,6 @@ import { states } from "../../utils/StatesAndCities";
 import { specialization } from "../../utils/drSpecial";
 import { Link } from "react-router-dom";
 import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
-import "../../style/searchBars.css";
 
 export default function LocationandSearch({
   locationValue,
@@ -15,10 +14,16 @@ export default function LocationandSearch({
   wrapperStyle = {},
 }) {
   const [dropdown, setDropdown] = useState(null);
+  const [doctorLimt , setDoctorLimit] = useState(5);
+  const [specializationLimit, setSpecializationLimit] = useState(5);
   const searchBoxRef = useRef(null);
   const searchInputRef = useRef(null);
   const { data } = useGetdrdataQuery();
 
+  useEffect(()=>{
+    setDoctorLimit(5);
+    setSpecializationLimit(5)
+  },[searchValue,locationValue])
   useEffect(() => {
     const handleClickOutSide = (e) => {
       if (searchBoxRef.current && !searchBoxRef.current.contains(e.target)) {
@@ -57,7 +62,7 @@ export default function LocationandSearch({
       : true;
 
     const matchSearch = searchText
-      ? doctorName.includes(searchText) || doctorSpecialization.includes(searchText)
+      ? doctorName.includes(searchText)
       : true;
 
     return matchLocation && matchSearch;
@@ -168,45 +173,118 @@ export default function LocationandSearch({
               }}
             >
               {searchValue && filteredDoctors.length > 0 ? (
-                filteredDoctors.map((doctor) => (
-                  <Link
-                    to={`/FindDoctors?search=${encodeURIComponent(doctor.fullname || "")}${
-                      locationValue ? `&location=${encodeURIComponent(locationValue)}` : ""
-                    }`}
-                    key={doctor.id || doctor._id}
-                    className="location-h-effect p-2 text-start d-block text-decoration-none text-dark"
-                    onClick={() => {
-                      setSearchValue(doctor.fullname || "");
-                      setDropdown(null);
-                    }}
-                  >
-                    <i className="bi bi-person-circle mx-3"></i>
-                    Dr. {doctor.fullname} - {doctor.specialization}
-                    <small className="d-block ms-5 text-muted">
-                      {doctor.address}
-                    </small>
-                  </Link>
-                ))
-              ) : filteredSpecialization.length > 0 ? (
-                filteredSpecialization.map((special) => (
-                  <Link
-                    to={`/FindDoctors?id=${special.id}&location=${encodeURIComponent(
-                      locationValue || ""
-                    )}`}
-                    key={special.id}
-                    className="location-h-effect p-2 text-start d-block text-decoration-none text-dark"
-                    onClick={() => {
-                      setSearchValue(special.title);
-                      setDropdown(null);
-                    }}
-                  >
-                    <i className="bi bi-search mx-3"></i>
-                    {special.title}
-                  </Link>
-                ))
-              ) : (
-                <div className="p-2 text-start">No doctors available</div>
-              )}
+  <>
+    {filteredDoctors
+      .slice(0, doctorLimit)
+      .map((doctor) => (
+        <Link
+          to={`/FindDoctors?search=${encodeURIComponent(
+            doctor.fullname || ""
+          )}${
+            locationValue
+              ? `&location=${encodeURIComponent(
+                  locationValue
+                )}`
+              : ""
+          }`}
+          key={doctor.id || doctor._id}
+          className="location-h-effect p-2 text-start d-block text-decoration-none text-dark"
+          onClick={() => {
+            setSearchValue(doctor.fullname || "");
+            setDropdown(null);
+          }}
+        >
+          <i className="bi bi-person-circle mx-3"></i>
+
+          Dr. {doctor.fullname} -{" "}
+          {doctor.specialization}
+
+          <small className="d-block ms-5 text-muted">
+            {doctor.address ||
+              doctor.city ||
+              doctor.hospitalName}
+          </small>
+        </Link>
+      ))}
+
+    {doctorLimit < filteredDoctors.length && (
+      <button
+        type="button"
+        className="btn btn-link text-decoration-none w-100 py-2 border-top"
+        onClick={() =>
+          setDoctorLimit((previousLimit) => previousLimit + 5)
+        }
+      >
+        Show More Doctors
+      </button>
+    )}
+
+    {doctorLimit > 5 && (
+      <button
+        type="button"
+        className="btn btn-link text-decoration-none w-100 py-2"
+        onClick={() => setDoctorLimit(5)}
+      >
+        Show Less
+      </button>
+    )}
+  </>
+) : filteredSpecialization.length > 0 ? (
+  <>
+    {filteredSpecialization
+      .slice(0, specializationLimit)
+      .map((special) => (
+        <Link
+          to={`/FindDoctors?search=${encodeURIComponent(
+            special.title
+          )}&specialization=${encodeURIComponent(
+            special.title
+          )}&location=${encodeURIComponent(
+            locationValue || ""
+          )}`}
+          key={special.id}
+          className="location-h-effect p-2 text-start d-block text-decoration-none text-dark"
+          onClick={() => {
+            setSearchValue(special.title);
+            setDropdown(null);
+          }}
+        >
+          <i className="bi bi-search mx-3"></i>
+
+          {special.title}
+        </Link>
+      ))}
+
+    {specializationLimit <
+      filteredSpecialization.length && (
+      <button
+        type="button"
+        className="btn btn-link text-decoration-none w-100 py-2 border-top"
+        onClick={() =>
+          setSpecializationLimit(
+            (previousLimit) => previousLimit + 5
+          )
+        }
+      >
+        Show More Specializations
+      </button>
+    )}
+
+    {specializationLimit > 5 && (
+      <button
+        type="button"
+        className="btn btn-link text-decoration-none w-100 py-2"
+        onClick={() => setSpecializationLimit(5)}
+      >
+        Show Less
+      </button>
+    )}
+  </>
+) : (
+  <div className="p-2 text-start">
+    No doctors available
+  </div>
+)}
             </div>
           )}
         </div>

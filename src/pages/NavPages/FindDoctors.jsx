@@ -14,9 +14,6 @@ export default function FindDrHome() {
   const [locationValue, setLocationValue] = useState("Hyderabad");
   const [searchValue, setSearchValue] = useState("");
   const {data:doctorsData} = useGetdrdataQuery();
-  
-
-  
 
   return (
     <div className="min-vh-100 d-flex flex-column">
