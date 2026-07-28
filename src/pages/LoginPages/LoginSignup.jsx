@@ -38,7 +38,6 @@ export default function LoginAndSignupDashboard({ view = "usersignup" }) {
           <div>{view === "login" ? <Login /> : <SignUp view={view}/> }</div>
         </div>
       </main>
-
       <Footer />
     </div>
   );
