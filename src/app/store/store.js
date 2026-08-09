@@ -16,7 +16,7 @@ export  const store = configureStore({
         [resendOtpApi.reducerPath]:resendOtpApi.reducer,
         [drDataApi.reducerPath]:drDataApi.reducer,
         [AppointmentBookingApi.reducerPath] : AppointmentBookingApi.reducer,
-    
+
     
         
         dr: userReducer
@@ -30,6 +30,7 @@ export  const store = configureStore({
                                       resendOtpApi.middleware,
                                       drDataApi.middleware,
                                       AppointmentBookingApi.middleware,
+                                
                                     )
 })
 

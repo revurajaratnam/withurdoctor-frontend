@@ -4,6 +4,7 @@ import NavbarComp from "../../components/Navbar";
 import { Link } from "react-router-dom";
 import Footer from "../../components/Footer";
 
+
 export default function LoginAndSignupDashboard({ view = "usersignup" }) {
   return (
     <div className="min-vh-100 d-flex flex-column">
@@ -37,6 +38,7 @@ export default function LoginAndSignupDashboard({ view = "usersignup" }) {
         <div className="d-flex container justify-content-center">
           <div>{view === "login" ? <Login /> : <SignUp view={view}/> }</div>
         </div>
+       
       </main>
       <Footer />
     </div>
