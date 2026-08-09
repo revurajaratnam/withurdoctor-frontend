@@ -14,7 +14,7 @@ export default function LocationandSearch({
   wrapperStyle = {},
 }) {
   const [dropdown, setDropdown] = useState(null);
-  const [doctorLimt , setDoctorLimit] = useState(5);
+  const [doctorLimit , setDoctorLimit] = useState(5);
   const [specializationLimit, setSpecializationLimit] = useState(5);
   const searchBoxRef = useRef(null);
   const searchInputRef = useRef(null);
