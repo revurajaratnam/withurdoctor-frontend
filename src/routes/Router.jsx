@@ -62,7 +62,7 @@ const Routers = createBrowserRouter([
     { path: "/schedule/:doctorId", element:<Schedules /> }
 ]);
 
-export default function AppRouters() {    
+export default function MyRouter() {    
     return (
         <Suspense fallback={<div className="loading-screen">Loading please wait...</div>}>
             <RouterProvider router={Routers} />
