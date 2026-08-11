@@ -23,9 +23,9 @@ const Surgeries = lazy(() => import("../pages/Services/Surgeries"));
 const Forcorporates = lazy(() => import("../pages/Forcorporates"));
 const LabTests = lazy(() => import("../pages/Services/LapTests"));
 const Profileform = lazy(() => import("../pages/Doctors/DrProfileForm"));
-const DoctorDashboards = lazy(() => import("../pages/Dashboardpages/Drdashboard"));
+const DoctorDashboards = lazy(() => import("../pages/Dashboardpages/DrDashboard"));
 const MyAppointments = lazy(() => import("../features/components/Myappointments"));
-const Consult = lazy(() => import("../pages/DashboardPages/consult"));
+const Consult = lazy(() => import("../pages/Dashboardpages/consult"));
 const FindDrHome = lazy(() => NetworkDelay(import("../pages/Doctors/FindDoctors"),1000));
 const FindDoctors = lazy(() => NetworkDelay(import("../pages/Doctors/DrInfomations"), 1000));
 const DrProfilePage = lazy(() => import("../pages/Doctors/DrProfilePage"));
@@ -62,7 +62,7 @@ const Routers = createBrowserRouter([
     { path: "/schedule/:doctorId", element:<Schedules /> }
 ]);
 
-export default function MyRouter() {    
+export default function AppRoutes() {
     return (
         <Suspense fallback={<div className="loading-screen">Loading please wait...</div>}>
             <RouterProvider router={Routers} />
