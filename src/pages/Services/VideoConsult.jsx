@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import NavbarComp from "../../components/Navbar";
-import { Specialities } from "../../utils/info";
+import { Specialities } from "../../constants/info";
 import { useState } from "react";
-import { commonHealthConcerns } from "../../utils/info";
+import { commonHealthConcerns } from "../../constants/info";
 import MobileImage from "../../assets/Gemini_Generated_Image_jj7n4hjj7n4hjj7n-Photoroom.png"
 import caret from '../../assets/caret-circle-right-fill-svgrepo-com.svg'
-import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
+import { useGetdrdataQuery } from "../../features/auth/api/drDataApi";
 import Footer from "../../components/Footer"
 export default function VideoConsult() {
     const [start, setStart] = useState(0)

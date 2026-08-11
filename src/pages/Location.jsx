@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { states } from "../../utils/StatesAndCities";
-import { specialization } from "../../utils/drSpecial";
+import { states } from "../constants/StatesAndCities";
+import { specialization } from "../constants/drSpecial";
 import { Link } from "react-router-dom";
-import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
+import { useGetdrdataQuery } from "../features/auth/api/drDataApi";
 
 export default function LocationandSearch({
   locationValue,

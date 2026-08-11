@@ -6,8 +6,8 @@ import {
 import { useSelector } from "react-redux";
 
 import NavbarComp from "../../components/Navbar";
-import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
-import { useAppointmentBookingMutation } from "../../features/auth/services/AppoApi";
+import { useGetdrdataQuery } from "../../features/auth/api/drDataApi";
+import { useAppointmentBookingMutation } from "../../features/auth/api/AppoApi";
 
 const fallbackImage =
   "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png";

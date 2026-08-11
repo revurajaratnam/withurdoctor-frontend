@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import Footer from "../../components/Footer";
 import NavbarComp from "../../components/Navbar";
 import { useState, useRef, useEffect } from "react";
-import { states } from "../../utils/StatesAndCities";
-import { specialization } from "../../utils/drSpecial";
-import LocationandSearch from "./Location";
-import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
+import { states } from "../../constants/StatesAndCities";
+import { specialization } from "../../constants/drSpecial";
+import LocationandSearch from "../Location";
+import { useGetdrdataQuery } from "../../features/auth/api/drDataApi";
 
 
 

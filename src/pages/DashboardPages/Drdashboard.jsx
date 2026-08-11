@@ -1,28 +1,70 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import NavbarComp from "../../components/Navbar";
-import { useDashboardQuery } from "../../features/auth/services/signinApi";
-export default function DrDashBoard() {
-    const {data,isLoading, error} = useDashboardQuery();
-    const location = useLocation();
-    const emailname = location.state?.email
 
-    const handleLogout = () =>{
-        localStorage.removeItem("token")
-    }
-    if(isLoading){return <h2>Loading...</h2>}
-    if(error){return <h2>Unauthorized Access</h2>}
+
+
+export default function DoctorDashboards() {
+    
 
     return(
-
         <div>
+          <div>
+            <NavbarComp></NavbarComp>
+          </div>
+          <div  style={{backgroundColor:"#28328C",color:"white",width:"100px",margin:"30px"}}>
             <div>
-                <NavbarComp ></NavbarComp>
-                <Link to={"/"}><button onClick={handleLogout}>Logout</button></Link>
+
             </div>
-            {/* <div>{JSON.stringify(data)}</div> */}
-            <h1>Welcome Dr {emailname.split("@")[0]} </h1>
+            <div className="d-flex flex-column p-4 gap-4  " >
+              <Link 
+              to="/calender"
+              className="text-decoration-none text-white d-flex">
+                <i className="bi bi-calendar2-check-fill"></i>
+              Calendar
+              </Link>
+            <Link to="/Profile"
+            className="text-decoration-none text-white">
+            <i className="bi bi-person-fill"></i>
+
+              Profile</Link>
+            <Link
+
+            className="text-decoration-none text-white"
+            >
+            <i className="bi bi-bell-fill"></i>
+
+              Prime</Link>
+            <Link
+
+            className="text-decoration-none text-white"
+            >
+            <i className="bi bi-hand-thumbs-up-fill"></i>
+
+              Feedback</Link>
+            <Link
             
+            className="text-decoration-none text-white"
+            >
+            <i className="bi bi-megaphone-fill"></i>
+              
+              Reach</Link>
+            <Link
+            
+            className="text-decoration-none text-white"
+            >
+            <i className="bi bi-chat-left-quote-fill"></i>
+
+              Consult</Link>
+            <Link
+            
+            className="text-decoration-none text-white"
+            >
+            <i className="bi bi-newspaper"></i>
+              Health feed</Link>
+            </div>
+          </div>
+
+
         </div>
     )
 }

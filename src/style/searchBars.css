@@ -21,13 +21,13 @@
     width: 100%;
     min-width: 0;
   }
-  @media screen and (max-width:1100px){
+  /* @media screen and (max-width:1100px){
     .doctors-conrainer{
     width: 100%;
     flex-wrap: nowrap;
     height: 300px;
     }
-  }
+  } */
 
   .navbar{
     display: flex;
@@ -475,6 +475,220 @@
     min-width: 100%;
   }
 }
+/* =========================================
+   DOCTORS - DESKTOP
+========================================= */
+
+.doctors-conrainer {
+  width: 100%;
+  max-width: 1400px;
+
+  margin: 0 auto 100px;
+  padding: 20px;
+
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(0, 200px));
+
+  justify-content: center;
+
+  gap: 20px;
+
+  overflow: hidden;
+}
+
+.doctor-card-link {
+  width: 100%;
+  min-width: 0;
+
+  text-decoration: none;
+}
+
+.doctor-card {
+  width: 100%;
+  min-width: 0;
+
+  overflow: hidden;
+
+  border-radius: 15px;
+}
+
+.doctor-card-image {
+  width: 100%;
+  height: 180px;
+
+  padding: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px 15px 0 0;
+
+  box-shadow: 1px 2px 10px 3px rgba(0, 0, 0, 0.25);
+}
+
+.doctor-card-image img {
+  width: 150px;
+  height: 150px;
+
+  max-width: 100%;
+
+  object-fit: contain;
+}
+
+.doctor-card-info {
+  width: 100%;
+  min-height: 100px;
+
+  padding: 10px 5px;
+
+  text-align: center;
+
+  background: white;
+
+  border-radius: 0 0 15px 15px;
+
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.25);
+}
+
+.doctor-card-info h5 {
+  margin: 0 0 5px;
+
+  font-size: 17px;
+}
+
+.doctor-card-info p {
+  margin: 0;
+
+  color: #777;
+
+  font-size: 13px;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media screen and (max-width: 900px) {
+
+  .doctors-conrainer {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 12px;
+
+    padding: 15px 10px;
+  }
+
+  .doctor-card-image {
+    height: 150px;
+  }
+
+  .doctor-card-image img {
+    width: 120px;
+    height: 120px;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media screen and (max-width: 576px) {
+
+  .doctors-conrainer {
+    width: 100%;
+
+    padding: 10px 5px;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 6px;
+
+    margin-bottom: 50px;
+  }
+
+  .doctor-card-link {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .doctor-card {
+    width: 100%;
+  }
+
+  .doctor-card-image {
+    width: 100%;
+
+    height: auto;
+
+    aspect-ratio: 1 / 1;
+
+    padding: 5px;
+  }
+
+  .doctor-card-image img {
+    width: 100%;
+
+    height: 100%;
+
+    max-width: 100%;
+
+    object-fit: contain;
+  }
+
+  .doctor-card-info {
+    min-height: 70px;
+
+    padding: 6px 2px;
+  }
+
+  .doctor-card-info h5 {
+    font-size: 12px;
+
+    line-height: 1.2;
+  }
+
+  .doctor-card-info p {
+    font-size: 10px;
+
+    line-height: 1.2;
+  }
+
+}
+
+
+/* =========================================
+   VERY SMALL MOBILE
+========================================= */
+
+@media screen and (max-width: 380px) {
+
+  .doctors-conrainer {
+    padding-left: 3px;
+    padding-right: 3px;
+
+    gap: 4px;
+  }
+
+  .doctor-card-info {
+    min-height: 65px;
+  }
+
+  .doctor-card-info h5 {
+    font-size: 11px;
+  }
+
+  .doctor-card-info p {
+    font-size: 9px;
+  }
+
+}
+
   
+
 
   

@@ -3,7 +3,7 @@ import { createApi ,fetchBaseQuery } from "@reduxjs/toolkit/query/react";
        export const resendOtpApi =createApi({
             reducerPath:"resendOtpApi",
             baseQuery:fetchBaseQuery({
-                baseUrl:"http://localhost:4545",
+                baseUrl:"https://localhost:4545",
             }),
             endpoints:(build) =>({
                 resendOTP : build.mutation({

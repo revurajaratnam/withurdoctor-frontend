@@ -1,16 +1,15 @@
 import React, { lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import HomePage from "../components/home";
-import LoginAndSignupDashboard from "../pages/LoginPages/LoginSignup";
-import VerifyMobile from "../pages/LoginPages/VerifyMobile";
-import ViewProfile from "../pages/ProfilePages/viewProfile";
-// import AppointmentSchedule from "../pages/Hero-Pages/Schedules";
+import HomePage from "../pages/home";
+import LoginAndSignupDashboard from "../pages/Auth/LoginSignup";
+import VerifyMobile from "../pages/Auth/VerifyMobile";
+import ViewProfile from "../pages/Doctors/viewProfile";
 import BookAppointment from "../pages/Hero-Pages/BookAppointment";
-import Calender from "../pages/ProfilePages/Calender";
+import Calender from "../components/Calender";
 import Appointments from "../pages/Hero-Pages/Appointment";
 import Schedules from "../pages/Hero-Pages/Schedules";
-import AppointmentsDashboard from "../features/auth/components/appointmentsDashboard";
+import AppointmentsDashboard from "../features/components/appointmentsDashboard";
 
 function NetworkDelay(promise, ms = 2000) {
     return new Promise((resolve) => {
@@ -18,20 +17,20 @@ function NetworkDelay(promise, ms = 2000) {
     }).then(() => promise);
 }
 
-const VideoConsult = lazy(() => import("../pages/NavPages/VideoConsult"));
-const Medicines = lazy(() => import("../pages/NavPages/Medicines"));
-const Surgeries = lazy(() => import("../pages/NavPages/Surgeries"));
-const Forcorporates = lazy(() => import("../pages/NavPages/Forcorporates"));
-const LabTests = lazy(() => import("../pages/NavPages/LapTests"));
-const Profileform = lazy(() => import("../pages/ProfilePages/DrProfileForm"));
-const DoctorDashboards = lazy(() => import("../pages/ProfilePages/DrDashboard"));
-const MyAppointments = lazy(() => import("../features/auth/components/Myappointments"));
-const Consult = lazy(() => import("../pages/DashboardPages/consult"));
-const FindDrHome = lazy(() => NetworkDelay(import("../pages/NavPages/FindDoctors"),1000));
+const VideoConsult = lazy(() => import("../pages/Services/VideoConsult"));
+const Medicines = lazy(() => import("../pages/Services/Medicines"));
+const Surgeries = lazy(() => import("../pages/Services/Surgeries"));
+const Forcorporates = lazy(() => import("../pages/Forcorporates"));
+const LabTests = lazy(() => import("../pages/Services/LapTests"));
+const Profileform = lazy(() => import("../pages/Doctors/DrProfileForm"));
+const DoctorDashboards = lazy(() => import("../pages/Dashboardpages/DrDashboard"));
+const MyAppointments = lazy(() => import("../features/components/Myappointments"));
+const Consult = lazy(() => import("../pages/Dashboardpages/consult"));
+const FindDrHome = lazy(() => NetworkDelay(import("../pages/Doctors/FindDoctors"),1000));
 
-const FindDoctors = lazy(() => NetworkDelay(import("../pages/NavPages/DrInfomations"), 1000));
+const FindDoctors = lazy(() => NetworkDelay(import("../pages/Doctors/DrInfomations"), 1000));
 
-const DrProfilePage = lazy(() => import("../pages/Hero-Pages/DrProfilePage"));
+const DrProfilePage = lazy(() => import("../pages/Doctors/DrProfilePage"));
 
 const Routers = createBrowserRouter([
     {

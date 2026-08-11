@@ -7,7 +7,7 @@ import {
   import {
     useAppointmentMutation,
     useGetdrdataQuery,
-  } from "../../features/auth/services/drDataApi";
+  } from "../../features/auth/api/drDataApi";
 import NavbarComp from "../../components/Navbar";
   
   const fallbackImage =

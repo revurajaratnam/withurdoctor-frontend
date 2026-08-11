@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
+import { useGetdrdataQuery } from "../../features/auth/api/drDataApi";
 
 export default function ClinicandHospital( {
   doctor

@@ -1,10 +1,10 @@
 
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { useSignUpMutation } from "../../features/auth/services/signupApi"
+import { useSignUpMutation } from "../../features/auth/api/signupApi"
 import { ToastContainer ,toast } from "react-toastify";
 import VerifyMobile from "./VerifyMobile";
-import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
+import { useGetdrdataQuery } from "../../features/auth/api/drDataApi";
 
 
 

@@ -1,8 +1,8 @@
 
-import NavbarComp from "../../components/Navbar"
-import Footer from "../../components/Footer"
-import { TimeSchedules } from "../../utils/TimeSchedules"
-import "../../style/calender.css"
+import NavbarComp from "./Navbar"
+import Footer from "./Footer"
+import { TimeSchedules } from "../constants/TimeSchedules"
+import "../style/calender.css"
 import {useEffect, useState } from "react"
 
    function convertSlotToMinutes(timeString) {
