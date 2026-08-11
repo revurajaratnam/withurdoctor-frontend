@@ -1,22 +1,22 @@
 import { createApi ,fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { baseQueryWithAutoLogout } from "./baseQuery";
+import { baseQueryWithAutoLogout } from "../../auth/api/baseQuery";
 
 export const signinApi=createApi({
     reducerPath:"signinApi",
     
     baseQuery: baseQueryWithAutoLogout,
-    // baseQuery:fetchBaseQuery({
-    //     baseUrl:"http://localhost:4545",
-    //     //this is the autorization
-    //     prepareHeaders:(headers) => {
-    //         const tokens = localStorage.getItem("token");
-    //         // console.log(tokens);
-    //         if(tokens){
-    //             headers.set("Authorization",`Bearer ${tokens}`)
-    //         }
-    //         return headers;
-    //     }
-    // }),
+    baseQuery:fetchBaseQuery({
+        baseUrl:"http://localhost:4545",
+        //this is the autorization
+        prepareHeaders:(headers) => {
+            const tokens = localStorage.getItem("token");
+            // console.log(tokens);
+            if(tokens){
+                headers.set("Authorization",`Bearer ${tokens}`)
+            }
+            return headers;
+        }
+    }),
     endpoints:(build)=>({
         Signin:build.mutation({
             query:(DrData) =>({

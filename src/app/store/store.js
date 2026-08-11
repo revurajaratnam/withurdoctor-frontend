@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { signupApi } from "../../features/auth/services/signupApi";
-import { VerifyEmailApi } from "../../features/auth/services/VerifyEmail";
-import { resendOtpApi } from "../../features/auth/services/resendOTP";
-import { signinApi } from "../../features/auth/services/signinApi";
-import { drDataApi, useDrdataMutation } from "../../features/auth/services/drDataApi";
+import {signinApi} from "../../features/auth/api/signinApi"
+import {signupApi} from "../../features/auth/api/signupApi"
+import { VerifyEmailApi } from "../../features/auth/api/VerifyEmail";
+import { resendOtpApi } from "../../features/auth/api/resendOTP";
+import { drDataApi, useDrdataMutation } from "../../features/auth/api/drDataApi";
 import userReducer from "../../features/auth/Slice/UserSlice"
 import { setupListeners } from "@reduxjs/toolkit/query";
-import {  AppointmentBookingApi } from "../../features/auth/services/AppoApi";
+import {  AppointmentBookingApi } from "../../features/auth/api/AppoApi";
 
 export  const store = configureStore({
     reducer:{

@@ -4,11 +4,11 @@ import { useParams, useSearchParams } from "react-router-dom";
 
 import Footer from "../../components/Footer";
 import NavbarComp from "../../components/Navbar";
-import LocationandSearch from "../NavPages/Location";
+import LocationandSearch from "../Location";
 // import Appointment from "../Hero-Pages/Appointment";
-import ProfileBreadcrumb from "./Breadcrumb";
+import ProfileBreadcrumb from "../../components/Breadcrumb";
 
-import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
+import { useGetdrdataQuery } from "../../features/auth/api/drDataApi";
 
 import "../../style/viewProfile-page.css";
 import Schedules from "../Hero-Pages/Schedules";

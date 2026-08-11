@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useGetdrdataQuery } from "../features/auth/services/drDataApi";
-import NavbarComp from "./Navbar";
-import Footer from "./Footer";
-import { drinfo, healthConcern, BookanAppoitment } from "../../src/utils/info";
-import { states } from "../utils/StatesAndCities";
-import { specialization } from "../utils/drSpecial";
-import LocationandSearch from "../pages/NavPages/Location";
+import { useGetdrdataQuery } from "../features/auth/api/drDataApi";
+import NavbarComp from "../components/Navbar";
+import Footer from "../components/Footer";
+import { drinfo, healthConcern, BookanAppoitment } from "../constants/info";
+import { states } from "../constants/StatesAndCities";
+import { specialization } from "../constants/drSpecial";
+import LocationandSearch from "./Location";
 
 export default function HomePage() {
   const { data } = useGetdrdataQuery();

@@ -2,7 +2,7 @@ import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { logout } from "../Slice/UserSlice";
 
 const rawBaseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:4545",
+  baseUrl: "/api",
 
   prepareHeaders: (headers, { getState }) => {
     const reduxToken = getState()?.dr?.token;

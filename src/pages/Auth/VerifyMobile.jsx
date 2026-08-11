@@ -1,10 +1,10 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../../style/App.css"
 import { ToastContainer ,toast } from "react-toastify";
-import { useVerifyMutation } from "../../features/auth/services/VerifyEmail";
+import { useVerifyMutation } from "../../features/auth/api/VerifyEmail";
 import NavbarComp from "../../components/Navbar";
 import { useState } from "react";
-import { useResendOTPMutation } from "../../features/auth/services/resendOTP";
+import { useResendOTPMutation } from "../../features/auth/api/resendOTP";
 
 
 

@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { TimeSchedules } from "../../utils/TimeSchedules";
+import { TimeSchedules } from "../../constants/TimeSchedules";
 import "../../style/calender.css";
 
 function convertSlotToMinutes(timeString) {

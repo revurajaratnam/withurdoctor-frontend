@@ -1,6 +1,6 @@
 import React from "react";import NavbarComp from "../../components/Navbar";
-import { useDashboardQuery } from "../../features/auth/services/signinApi";
-import { useDrdataMutation, useGetdrdataQuery } from "../../features/auth/services/drDataApi";
+import { useDashboardQuery } from "../../features/auth/api/signinApi";
+import { useDrdataMutation, useGetdrdataQuery } from "../../features/auth/api/drDataApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../features/auth/Slice/UserSlice";
 import { useSelector } from "react-redux";

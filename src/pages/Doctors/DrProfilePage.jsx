@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import NavbarComp from "../../components/Navbar";
-import { useGetdrdataQuery } from "../../features/auth/services/drDataApi";
-import LocationandSearch from "../NavPages/Location";
+import { useGetdrdataQuery } from "../../features/auth/api/drDataApi";
+import LocationandSearch from "../Location";
 
 export default function DrProfilePage({drlist}) {
     const {data:drdata,isLoading,isSuccess} = useGetdrdataQuery();

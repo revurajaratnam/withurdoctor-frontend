@@ -1,116 +1,392 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-.home-page{
-   @media screen {
-    
-   }
+/* =========================
+   GLOBAL RESET
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.navbar-custom{
-    position: fixed;
-    top: -80px;
-    left: 0;
-    width: 100%;
-    height: 70px;
-    background-color: white;
-    z-index: 1000;
-    transition: top 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+html {
+  width: 100%;
+  overflow-x: hidden;
 }
+
+body {
+  width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+/* =========================
+   HOME PAGE
+========================= */
+
+.home-page {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar-custom {
+  position: fixed;
+  top: -80px;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background-color: #fff;
+  z-index: 1000;
+  transition: top 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  align-items: center;
+}
+
 .navbar-custom.navbar-show {
-    top: 0;
+  top: 0;
+}
+
+/* =========================
+   FILTER
+========================= */
+
+.filter-drop {
+  padding: 5px 10px;
+  cursor: pointer;
+  margin: 0;
+  background-color: #fff;
+  border: 1px solid grey;
+  border-radius: 4px;
+}
+
+.filter-drop:hover {
+  background-color: rgb(231, 230, 230);
+}
+
+.reset-filter-style {
+  color: white;
+  cursor: pointer;
+}
+
+.reset-filter-style:hover {
+  text-decoration: underline;
+}
+
+.filter-down {
+  padding: 0;
+  background-color: white;
+}
+
+/* =========================
+   PROFILE HOVER
+========================= */
+
+.viewProfile-Hover {
+  position: relative;
+}
+
+.hover-box {
+  display: none;
+}
+
+.viewProfile-Hover:hover .hover-box {
+  position: absolute;
+  left: 20px;
+  top: 100%;
+  margin-top: 10px;
+  display: block;
+  z-index: 100;
+}
+
+/* =========================
+   LOCATION
+========================= */
+
+.location-search-container {
+  width: 100%;
+  max-width: 100%;
+  z-index: 10000;
+}
+
+.location-icon {
+  position: relative;
+}
+
+.delete-location-icon {
+  cursor: pointer;
+  display: none;
+}
+
+.location-icon:hover .delete-location-icon {
+  display: block;
+}
+
+/* =========================
+   DOCTOR NAME
+========================= */
+
+.drname {
+  text-decoration: none;
+}
+
+.drname:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   ADDRESS
+========================= */
+
+.address-name {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.address-name:hover {
+  color: black;
+  text-decoration: underline;
+}
+
+/* =========================
+   BREADCRUMB
+========================= */
+
+.breadcrumb-profile {
+  margin-top: 100px;
+  margin-left: 50px;
+  margin-right: 20px;
+}
+
+.breadcrumb-wrapper {
+  color: gray;
+  text-decoration: none;
+}
+
+.breadcrumb-wrapper:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   IMAGE
+========================= */
+
+.img-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+.base-image {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.top-image {
+  position: absolute;
+  top: 80px;
+  left: 5px;
+  z-index: 10;
+  max-width: 100%;
+  height: auto;
+}
+
+/* =====================================================
+   TABLET
+   768px - 1024px
+===================================================== */
+
+@media screen and (max-width: 1024px) {
+
+  .navbar-custom {
+    height: 65px;
   }
-.filter-drop{
-    padding: 5px;
-    cursor: pointer;
-    margin: 0;
-   
-    background-color: white;
-    border: 1px solid  grey;
-    
 
-    
-}
-.filter-drop:hover{
-    background-color: rgb(231, 230, 230);
-}
-.reset-filter-style{
-    color: white;
-    cursor: pointer;
-}
-.reset-filter-style:hover{
-    color: #ddd;
-}
+  .breadcrumb-profile {
+    margin-top: 90px;
+    margin-left: 25px;
+    margin-right: 20px;
+  }
 
- .viewProfile-Hover{
-    position: relative;
- }
-.hover-box{
-display: none;
-
-}
-.viewProfile-Hover:hover .hover-box{
-    position: absolute;
-    left: 20px;
-    display: block;
-    top: 180px;
-}
-.filter-down{
-    padding: 0;
-    background-color: white;
-    
-}
-.delete-location-icon{
-cursor: pointer;
-display: none;
-}
-.location-icon:hover .delete-location-icon{
-display: block;
-}
-.location-search-container{
-
-    width: 100%;
-    z-index: 10000;
-}
-.drname{
-    text-decoration: none;
-}
-.drname:hover{
-    text-decoration: underline;
-}
-.address-name{
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-.address-name:hover{
-    color: black;
-    text-decoration: underline;
-}
-.breadcrumb-profile{
-    margin-top: 100px;
-    margin-left: 50px;
-}
-.breadcrumb-wrapper{
-    color: gray;
-    text-decoration: none;
-}
-.breadcrumb-wrapper:hover{
-    text-decoration: underline;
-}
-.img-container{
-    position: relative;
-
-}
-.base-image{
-    display: block;
-}
-.top-image{
-    position: absolute;
-    top: 80px;
-    z-index: 10;
+  .top-image {
+    top: 60px;
     left: 5px;
+  }
+
+  .location-search-container {
+    width: 100%;
+  }
+
+}
+
+/* =====================================================
+   MOBILE
+   767px and below
+===================================================== */
+
+@media screen and (max-width: 767px) {
+
+  /* Prevent horizontal scrolling */
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .home-page {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* -------------------------
+     NAVBAR
+  ------------------------- */
+
+  .navbar-custom {
+    width: 100%;
+    height: 60px;
+    padding: 0 10px;
+  }
+
+  /* -------------------------
+     LOCATION SEARCH
+  ------------------------- */
+
+  .location-search-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 10px;
+  }
+
+  /* -------------------------
+     FILTER
+  ------------------------- */
+
+  .filter-drop {
+    width: 100%;
+    max-width: 100%;
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .filter-down {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* -------------------------
+     BREADCRUMB
+  ------------------------- */
+
+  .breadcrumb-profile {
+    margin-top: 80px;
+    margin-left: 15px;
+    margin-right: 15px;
+    font-size: 14px;
+    overflow-wrap: break-word;
+  }
+
+  /* -------------------------
+     ADDRESS
+  ------------------------- */
+
+  .address-name {
+    display: block;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  /* -------------------------
+     DOCTOR NAME
+  ------------------------- */
+
+  .drname {
+    display: inline-block;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  /* -------------------------
+     PROFILE HOVER
+  ------------------------- */
+
+  .viewProfile-Hover:hover .hover-box {
+    left: auto;
+    right: 0;
+    top: 100%;
+    max-width: calc(100vw - 30px);
+    margin-top: 5px;
+  }
+
+  /* -------------------------
+     IMAGE
+  ------------------------- */
+
+  .img-container {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .base-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .top-image {
+    top: 30px;
+    left: 5px;
+    max-width: 40%;
+    height: auto;
+  }
+
+}
+
+/* =====================================================
+   SMALL MOBILE
+   480px and below
+===================================================== */
+
+@media screen and (max-width: 480px) {
+
+  .navbar-custom {
+    height: 56px;
+    padding: 0 8px;
+  }
+
+  .breadcrumb-profile {
+    margin-top: 70px;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 13px;
+  }
+
+  .location-search-container {
+    padding: 0 8px;
+  }
+
+  .filter-drop {
+    font-size: 13px;
+    padding: 7px 8px;
+  }
+
+  .top-image {
+    top: 20px;
+    left: 3px;
+    max-width: 35%;
+  }
+
 }
