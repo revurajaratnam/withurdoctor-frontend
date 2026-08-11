@@ -45,7 +45,7 @@ const Routers = createBrowserRouter([
     { path: "/VerifyEmail", element: <VerifyMobile /> },
     { path: "/userRegistration", element: <LoginAndSignupDashboard view="usersignup" /> },
     { path: "/Profile", element: <Profileform /> },
-    { path: "/drprofile", element: <DoctorDashboards /> },
+    // { path: "/drprofile", element: <DoctorDashboards /> },
     { 
         path: "/myappointments", 
         element: <MyAppointments />,
@@ -53,7 +53,7 @@ const Routers = createBrowserRouter([
             { index: true, element: <AppointmentsDashboard /> }
         ]
     },
-    { path: "/newconsultation", element: <Consult /> },
+    // { path: "/newconsultation", element: <Consult /> },
     { path: "/doctor/:doctorName", element: <DrProfilePage /> },
     { path: "/viewProfile/:id", element: <ViewProfile /> },
     { path: "/appointment/:doctorId", element: <BookAppointment /> },
