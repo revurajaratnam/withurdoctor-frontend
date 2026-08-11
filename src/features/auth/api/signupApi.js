@@ -12,7 +12,7 @@ export const signupApi= createApi({
                 method:"POST",
                 body: DoctorsData,
                 responseHandler:'text'
-            }),
+            }),  
            
 
         })
