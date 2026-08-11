@@ -31,7 +31,7 @@ const FindDrHome = lazy(() => NetworkDelay(import("../pages/Doctors/FindDoctors"
 const FindDoctors = lazy(() => NetworkDelay(import("../pages/Doctors/DrInfomations"), 1000));
 
 const DrProfilePage = lazy(() => import("../pages/Doctors/DrProfilePage"));
-
+    
 const Routers = createBrowserRouter([
     {
         path: "/",
