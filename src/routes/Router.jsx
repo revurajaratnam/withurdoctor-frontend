@@ -25,7 +25,7 @@ const LabTests = lazy(() => import("../pages/Services/LapTests"));
 const Profileform = lazy(() => import("../pages/Doctors/DrProfileForm"));
 const DoctorDashboards = lazy(() => import("../pages/Dashboardpages/Drdashboard"));
 const MyAppointments = lazy(() => import("../features/components/Myappointments"));
-const Consult = lazy(() => import("../pages/Dashboardpages/consult"));
+const Consult = lazy(() => import("../pages/Dashboardpages/Consultation"));
 const FindDrHome = lazy(() => NetworkDelay(import("../pages/Doctors/FindDoctors"),1000));
 const FindDoctors = lazy(() => NetworkDelay(import("../pages/Doctors/DrInfomations"), 1000));
 const DrProfilePage = lazy(() => import("../pages/Doctors/DrProfilePage"));
