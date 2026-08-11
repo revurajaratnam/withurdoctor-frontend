@@ -1,6 +1,9 @@
-import { StrictMode } from 'react'
+import React from 'react'
 import { createRoot } from 'react-dom/client'
-import AppRouters from './routes/Router.jsx'
+
+// We are renaming it here to MyRouter to bypass any cache
+import MyRouter from './routes/Router.jsx' 
+
 import './style/App.css'
 import './style/index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,7 +16,7 @@ const CLIENT_ID = '216590359988-7o09rnoeif1545flgl6qt1mtbtit9006.apps.googleuser
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <GoogleOAuthProvider clientId={CLIENT_ID}>
-      <AppRouters />
+      <MyRouter />
     </GoogleOAuthProvider>
   </Provider>
 )
