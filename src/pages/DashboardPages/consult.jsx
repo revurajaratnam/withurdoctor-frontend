@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import Logo from "../../assets/Logo.png";
-import { CommonHealthConcernsinfo, DrProfission, VideoConsult } from "../../utils/DrProfission";
-import { consultDoctor } from "../../utils/images";
+import { CommonHealthConcernsinfo, DrProfission, VideoConsult } from "../../constants/DrProfission";
+import { consultDoctor } from "../../constants/images";
 
 // import "./Consult.css";
 
