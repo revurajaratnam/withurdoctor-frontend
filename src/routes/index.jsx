@@ -97,7 +97,7 @@ const Routers = createBrowserRouter([
         path: "/myappointments",
         element: <MyAppointments />,
         children:[
-           { path:true,
+           { index:true,
            element: <AppointmentsDashboard />},
     ]
     },
