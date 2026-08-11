@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import AppRouters from './routes/index.jsx'
+import AppRouters from './routes/Router.jsx'
 import './style/App.css'
 import './style/index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
