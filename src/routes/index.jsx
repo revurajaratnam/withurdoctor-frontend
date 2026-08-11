@@ -27,108 +27,39 @@ const DoctorDashboards = lazy(() => import("../pages/Dashboardpages/DrDashboard"
 const MyAppointments = lazy(() => import("../features/components/Myappointments"));
 const Consult = lazy(() => import("../pages/Dashboardpages/consult"));
 const FindDrHome = lazy(() => NetworkDelay(import("../pages/Doctors/FindDoctors"),1000));
-
 const FindDoctors = lazy(() => NetworkDelay(import("../pages/Doctors/DrInfomations"), 1000));
-
 const DrProfilePage = lazy(() => import("../pages/Doctors/DrProfilePage"));
     
 const Routers = createBrowserRouter([
-    {
-        path: "/",
-        element: <HomePage />
-    },
-    {
-        path: "/FindDoctors",
-        element: <FindDoctors />
-    },
-    {
-        path: '/Finddrhome',
-        element: <FindDrHome />
-    },
-    {
-        path: "/VideoConsult",
-        element: <VideoConsult />
-    },
-    {
-        path: "/Medicines",
-        element: <Medicines />
-    },
-    {
-        path: "/LabTests",
-        element: <LabTests />
-    },
-    {
-        path: "/Surgeries",
-        element: <Surgeries />
-    },
-    {
-        path: "/forcorporates",
-        element: <Forcorporates />
-    },
-    {
-        path: "/LoginAndSignupDashboard",
-        element: <LoginAndSignupDashboard />
-    },
-    {
-        path: "/Login",
-        element: <LoginAndSignupDashboard view="login" />
-    },
-    {
-        path: "/Signup",
-        element: <LoginAndSignupDashboard view="drsignup" />
-    },
-    {
-        path: "/VerifyEmail",
-        element: <VerifyMobile />
-    },
-    {
-        path: "/userRegistration",
-        element: <LoginAndSignupDashboard view="usersignup" />
-    },
-    {
-        path: "/Profile",
-        element: <Profileform />
-    },
-    {
-        path: "/drprofile",
-        element: <DoctorDashboards />
-    },
-    {
-        path: "/myappointments",
+    { path: "/", element: <HomePage /> },
+    { path: "/FindDoctors", element: <FindDoctors /> },
+    { path: '/Finddrhome', element: <FindDrHome /> },
+    { path: "/VideoConsult", element: <VideoConsult /> },
+    { path: "/Medicines", element: <Medicines /> },
+    { path: "/LabTests", element: <LabTests /> },
+    { path: "/Surgeries", element: <Surgeries /> },
+    { path: "/forcorporates", element: <Forcorporates /> },
+    { path: "/LoginAndSignupDashboard", element: <LoginAndSignupDashboard /> },
+    { path: "/Login", element: <LoginAndSignupDashboard view="login" /> },
+    { path: "/Signup", element: <LoginAndSignupDashboard view="drsignup" /> },
+    { path: "/VerifyEmail", element: <VerifyMobile /> },
+    { path: "/userRegistration", element: <LoginAndSignupDashboard view="usersignup" /> },
+    { path: "/Profile", element: <Profileform /> },
+    { path: "/drprofile", element: <DoctorDashboards /> },
+    { 
+        path: "/myappointments", 
         element: <MyAppointments />,
-        children:[
-           { index:true,
-           element: <AppointmentsDashboard />},
-    ]
+        children: [
+            { index: true, element: <AppointmentsDashboard /> }
+        ]
     },
-    {
-        path: "/newconsultation",
-        element: <Consult />
-    },
-    {
-        path: "/doctor/:doctorName",
-        element: <DrProfilePage />
-    },
-    {
-        path:"/viewProfile/:id",
-        element: <ViewProfile />
-    },
-    {
-        path:"/appointment/:doctorId",
-        element: <BookAppointment />
-    },
-    {
-        path:"/calender",
-        element: <Calender />
-    },
-    {
-        path:"/bookappointment/:doctorId",
-        element: <Appointments/>
-    },
-    {
-        path:"/schedule/:doctorId",
-        element:<Schedules />
-    }
+    { path: "/newconsultation", element: <Consult /> },
+    { path: "/doctor/:doctorName", element: <DrProfilePage /> },
+    { path: "/viewProfile/:id", element: <ViewProfile /> },
+    { path: "/appointment/:doctorId", element: <BookAppointment /> },
+    { path: "/calender", element: <Calender /> },
+    { path: "/bookappointment/:doctorId", element: <Appointments/> },
+    { path: "/schedule/:doctorId", element:<Schedules /> }
 ]);
 
 export default function AppRouters() {
