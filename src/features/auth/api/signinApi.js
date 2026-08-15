@@ -20,7 +20,7 @@ export const signinApi=createApi({
     endpoints:(build)=>({
         Signin:build.mutation({
             query:(DrData) =>({
-                url:"/Login",
+                url:"/login",
                 method:"POST",
                 body:DrData
             })
