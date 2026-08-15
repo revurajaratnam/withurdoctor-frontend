@@ -2,7 +2,7 @@ import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { logout } from "../Slice/UserSlice";
 
 const rawBaseQuery = fetchBaseQuery({
-  baseUrl: "https://withurdoctor.onrender.com/",
+  baseUrl: import.meta.env.VITE_API_URL,
 
   prepareHeaders: (headers, { getState }) => {
     const reduxToken = getState()?.dr?.token;

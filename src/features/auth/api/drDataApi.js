@@ -4,7 +4,7 @@ import { baseQueryWithAutoLogout } from "./baseQuery";
 export const drDataApi = createApi({
   reducerPath: "drDataApi",
 
-  baseQuery: 'https://withurdoctor.onrender.com',
+  baseQuery: import.meta.env.VITE_API_URL,
 
   tagTypes: ["Doctors", "Appointments"],
 

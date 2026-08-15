@@ -6,7 +6,7 @@ export const signinApi=createApi({
     
     baseQuery: baseQueryWithAutoLogout,
     baseQuery:fetchBaseQuery({
-        baseUrl:"https://withurdoctor.onrender.com",
+        baseUrl:import.meta.env.VITE_API_URL,
         //this is the autorization
         prepareHeaders:(headers) => {
             const tokens = localStorage.getItem("token");
