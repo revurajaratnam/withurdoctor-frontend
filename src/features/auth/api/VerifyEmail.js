@@ -4,7 +4,7 @@ import { createApi , fetchBaseQuery } from "@reduxjs/toolkit/query/react";
     export const VerifyEmailApi = createApi({
         reducerPath:"VerifyEmailApi",
         baseQuery:fetchBaseQuery({
-            baseUrl:"https://localhost:4545",
+            baseUrl:"https://withurdoctor.onrender.com",
         }),
         endpoints:(build) =>({
             verify:build.mutation({

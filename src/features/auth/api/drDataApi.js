@@ -4,7 +4,7 @@ import { baseQueryWithAutoLogout } from "./baseQuery";
 export const drDataApi = createApi({
   reducerPath: "drDataApi",
 
-  baseQuery: baseQueryWithAutoLogout,
+  baseQuery: 'https://withurdoctor.onrender.com',
 
   tagTypes: ["Doctors", "Appointments"],
 

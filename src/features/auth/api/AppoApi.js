@@ -5,7 +5,7 @@ import { createApi , fetchBaseQuery} from "@reduxjs/toolkit/query/react";
       export const AppointmentBookingApi=  createApi({
                 reducerPath:"AppointmentBooking",
                 baseQuery: fetchBaseQuery({
-                    baseUrl:"http://localhost:4545",
+                    baseUrl:"https://withurdoctor.onrender.com",
                     prepareHeaders : (headers ,{getState}) =>{
                         const reduxToken = getState()?.dr?.token;
       const localToken = localStorage.getItem("token");
