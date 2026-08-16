@@ -51,9 +51,16 @@ import { useGetdrdataQuery } from "../../features/auth/api/drDataApi";
             toast.error(message);
             return;
         }
+        const payload = {
+            fullname: formdata.fullname.trim(),
+            email:formdata.email.trim(),
+            pass:formdata.pass.trim(),
+            cpass:formdata.cpass.trim(),
+            role: isDoctor ? "doctor" : "user",
+        };
           
         try {
-            const response = await signupData(formdata).unwrap();
+            const response = await signupData(payload).unwrap();
             const result = typeof response === "string" ? JSON.parse(response) : response;
             console.log( result)
             console.log(typeof result)
@@ -67,7 +74,7 @@ import { useGetdrdataQuery } from "../../features/auth/api/drDataApi";
             }
             if(result?.success ===  false){
                 setErrorMessage(result?.message)
-            toast.success(result?.message || "Signup failed");
+                toast.error(result?.message || "Signup failed");
             }
            
 
