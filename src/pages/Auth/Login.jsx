@@ -1,255 +1,282 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSigninMutation, useUserLoginMutation } from "../../features/auth/api/signinApi";
-import { ToastContainer, toast } from "react-toastify";
+import { useSigninMutation } from "../../features/auth/api/signinApi";
+import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../features/auth/Slice/UserSlice";
-import { GoogleLogin } from '@react-oauth/google';
 
 export default function Login() {
-    const [loginType, setLoginType] = useState("");
-    const [otpWithNum, SetOtpWithNum] = useState(false);
-    const [requirefileds, setRequireFileds] = useState({})
-    const [formdata, setFormdata] = useState({
-        email: "",
-        pass: "",
+  const [otpWithNum, setOtpWithNum] = useState(false);
+
+  const [requirefileds, setRequireFileds] = useState({});
+
+  const [formdata, setFormdata] = useState({
+    email: "",
+    pass: "",
+  });
+
+  const [message, setMessage] = useState("");
+
+  // ONE LOGIN API ONLY
+  const [loginData, { isLoading }] = useSigninMutation();
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleOnchange = (e) => {
+    setFormdata({
+      ...formdata,
+      [e.target.name]: e.target.value,
     });
 
-    const [message, setMessage] = useState("");
+    setRequireFileds({
+      ...requirefileds,
+      [e.target.name]: "",
+    });
+  };
 
-    const [data, { isLoading: isDoctorLoading }] = useSigninMutation();
-    const [UserData,{isLoading: isUserLoading}] = useUserLoginMutation();
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const handleOnchange = (e) => {
-        setFormdata({
-            ...formdata,
-            [e.target.name]: e.target.value
-        })
-        setRequireFileds({
-            ...requirefileds,
-            [e.target.name]: "",
-        })
+  const handelPassword = () => {
+    setOtpWithNum(!otpWithNum);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const newErrors = {};
+
+    if (!formdata.email.trim()) {
+      newErrors.email = "Email ID field cannot be empty";
     }
-    const handelPassword = () => {
-        SetOtpWithNum(!otpWithNum);
-    };
 
+    if (!otpWithNum && !formdata.pass.trim()) {
+      newErrors.pass = "Password field cannot be empty";
+    }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-      
-        const newErrors = {};
-      
-        if (!formdata.email.trim()) {
-          newErrors.email = "Email ID field cannot be empty";
-        }
-      
-        if (!formdata.pass.trim()) {
-          newErrors.pass = "Password field cannot be empty";
-        }
-      
-        setRequireFileds(newErrors);
-      
-        if (Object.keys(newErrors).length > 0) {
-          return;
-        }
-      
-        try {
-          console.log("Selected login type:", loginType);
-      
-          const result =
-            loginType === "patient"
-              ? await data(formdata).unwrap()
-              : await UserData(formdata).unwrap();
-      
-          console.log("Login result:", result);
-      
-          if (!result.success) {
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
-      
-            setMessage(result.message || "Login failed");
-            return;
-          }
-      
-          // Remove any previous doctor/patient token
-          localStorage.removeItem("token");
-          localStorage.removeItem("user");
-      
-          // Store new token
-          localStorage.setItem("token", result.token);
-          localStorage.setItem(
-            "user",
-            JSON.stringify(result.user)
-          );
-      
-          // Update Redux before navigating
-          dispatch(
-            setUser({
-              token: result.token,
-              user: result.user,
-            })
-          );
-      
-          const decodedPayload = JSON.parse(
-            atob(result.token.split(".")[1])
-          );
-      
-          console.log("New login token payload:", decodedPayload);
-      
-          setMessage("");
-          toast.success(
-            `${loginType === "doctor" ? "doctor" : "patient"} login successful`
-          );
-      
-          navigate("/");
-        } catch (error) {
-          console.error("Login error:", error);
-      
-          localStorage.removeItem("token");
-          localStorage.removeItem("user");
-      
-          setMessage(
-            error?.data?.message || "An error occurred"
-          );
-        }
+    setRequireFileds(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      return;
+    }
+
+    try {
+      setMessage("");
+
+      // ONE LOGIN PAYLOAD
+      const payload = {
+        email: formdata.email.trim(),
+        pass: formdata.pass,
       };
-   
 
-    const handleGoogleSuccess = async (credentialResponse) => {
-        try {
+      console.log("Login payload:", payload);
 
-            const googleToken = credentialResponse.credential;
+      // CALL ONLY ONE LOGIN API
+      const result = await loginData(payload).unwrap();
 
+      console.log("Login result:", result);
 
-            const response = await fetch("http://localhost:4545/api/auth/google", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ token: googleToken })
-            });
+      if (!result.success) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
 
-            const result = await response.json();
+        setMessage(result.message || "Login failed");
+        return;
+      }
 
-            if (response.ok) {
-                toast.success("Google Login Successful!");
+      // Remove previous login data
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
 
-                // Store token in Redux and LocalStorage just like standard login
-                // (Using the Google token here, or ideally a JWT your backend creates)
-                localStorage.setItem("token", googleToken);
-                dispatch(setUser({ token: googleToken }));
+      // Store new token and user
+      localStorage.setItem("token", result.token);
 
-                // Navigate to profile, passing the email we got back from the backend
-                navigate("/Profile", { state: { email: result } });
-            } else {
-                setMessage(result.message || "Google Authentication failed on server");
-            }
+      localStorage.setItem(
+        "user",
+        JSON.stringify(result.user)
+      );
 
-        } catch (error) {
-            console.error("Error sending token to backend:", error);
-            setMessage("Server error during Google login");
-        }
-    };
+      // Update Redux
+      dispatch(
+        setUser({
+          token: result.token,
+          user: result.user,
+        })
+      );
 
-    const isLoading = isDoctorLoading || isUserLoading;
+      // Check JWT
+      const decodedPayload = JSON.parse(
+        atob(result.token.split(".")[1])
+      );
 
-    return (
-        <div>
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <div className="login-form container border p-5 mt-2">
-                        <label
-                            className="py-2 "
-                        >Mobile Number / Email ID</label> <br />
-                        <input
-                            type="text"
-                            id="email-input"
-                            name="email"
-                            value={formdata.email}
-                            placeholder="Mobile Number / Email ID"
-                            onChange={handleOnchange}
-                            className={`w-100 p-1 my-2 email-focus ${requirefileds.email ? "border border-danger" : "border border-secondary"
-                                }`}
+      console.log(
+        "New login token payload:",
+        decodedPayload
+      );
 
-                        />
-                        {requirefileds.email && (
-                            <p className="text-danger" style={{ fontSize: "13px" }}>
-                                {requirefileds.email}
-                            </p>
-                        )}
+      console.log(
+        "Logged in user role:",
+        result.user.role
+      );
 
-                        <label
-                            className="py-2"
-                            style={{ color: otpWithNum ? "gray" : "black" }}>Password</label> <br />
-                        <input
-                            type="password"
-                            id="password-input"
-                            name="pass"
-                            value={formdata.pass}
-                            placeholder="Password"
-                            disabled={otpWithNum}
-                            onChange={handleOnchange}
-                            className={`border border-secondary w-100 p-1 password-focus ${requirefileds.pass?'border border-danger':'border border-secondary'}`}
-                        /> 
-                        {
-                            requirefileds.pass &&(
-                                <p className="text-danger" style={{fontSize:"13px"}}>
-                                    {requirefileds.pass}
-                                </p>
-                            )
-                        }
+      setMessage("");
 
-                        <label className="d-flex align-items-center gap-2" style={{ fontSize: "11px" }}>
-                            <input type="checkbox" className="my-3 rounded-0 checkbox-30days" />
-                            <span className="d-flex gap-5  ">
-                                <span >Remember me for 30 days
-                                </span>
-                                <Link className={`text-decoration-none mx-2 ${otpWithNum ? 'text-info disabled' : 'text-info'}`} >Forgot password?</Link>
-                            </span>
+      toast.success(
+        `${result.user.role} login successful`
+      );
 
-                        </label>
-                        <label className="d-flex align-items-center gap-2 " style={{ fontSize: "11px" }}>
-                            <input
-                                type="checkbox"
-                                onClick={handelPassword}
-                                className="my-3 mb-3 rounded-0 checkbox-30days "
-                            />
-                            <span> Login with OTP instead of password </span>
-                        </label>
-                        <br />
+      // AUTOMATIC REDIRECT BASED ON DATABASE ROLE
+      if (result.user.role === "doctor") {
+        navigate("/drprofile");
+      } else if (result.user.role === "patient") {
+        navigate("/");
+      }
 
-                        <button type="submit" disabled={isLoading}
-                            className="btn btn-info text-white w-100 p-2 mb-4 " style={{boxShadow:"0,0,0"}}
-                        >
-                            {isLoading ? "Logging in..." : "Login"}
-                        </button>
-                        <div style={{ marginBottom: "20px" }}>
-                            {/* <GoogleLogin
-                                type="standard"
-                                theme="outline"
-                                size="large"
-                                text="signin_with"
-                                shape="rectangular"
-                                logo_alignment="left"
-                                width="300"
-                                locale="en"
-                                onSuccess={handleGoogleSuccess}
-                                onError={() => {
-                                    console.log("Login Failed");
-                                    toast.error("Google Login popup was closed or failed.");
-                                }}
-                            /> */}
-                            {message && <p className="alert alert-danger" style={{ color: "red", marginTop: "10px" }}>{message}</p>}
+    } catch (error) {
+      console.error("Login error:", error);
 
-                        </div>
-                    </div>
-                </form>
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
 
+      setMessage(
+        error?.data?.message || "An error occurred"
+      );
+    }
+  };
 
-            </div>
-           
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <div className="login-form container border p-5 mt-2">
+
+          <label className="py-2">
+            Mobile Number / Email ID
+          </label>
+
+          <br />
+
+          <input
+            type="text"
+            id="email-input"
+            name="email"
+            value={formdata.email}
+            placeholder="Mobile Number / Email ID"
+            onChange={handleOnchange}
+            className={`w-100 p-1 my-2 email-focus ${
+              requirefileds.email
+                ? "border border-danger"
+                : "border border-secondary"
+            }`}
+          />
+
+          {requirefileds.email && (
+            <p
+              className="text-danger"
+              style={{ fontSize: "13px" }}
+            >
+              {requirefileds.email}
+            </p>
+          )}
+
+          <label
+            className="py-2"
+            style={{
+              color: otpWithNum ? "gray" : "black",
+            }}
+          >
+            Password
+          </label>
+
+          <br />
+
+          <input
+            type="password"
+            id="password-input"
+            name="pass"
+            value={formdata.pass}
+            placeholder="Password"
+            disabled={otpWithNum}
+            onChange={handleOnchange}
+            className={`w-100 p-1 password-focus ${
+              requirefileds.pass
+                ? "border border-danger"
+                : "border border-secondary"
+            }`}
+          />
+
+          {requirefileds.pass && (
+            <p
+              className="text-danger"
+              style={{ fontSize: "13px" }}
+            >
+              {requirefileds.pass}
+            </p>
+          )}
+
+          <label
+            className="d-flex align-items-center gap-2"
+            style={{ fontSize: "11px" }}
+          >
+            <input
+              type="checkbox"
+              className="my-3 rounded-0 checkbox-30days"
+            />
+
+            <span className="d-flex gap-5">
+              <span>
+                Remember me for 30 days
+              </span>
+
+              <Link
+                className={`text-decoration-none mx-2 ${
+                  otpWithNum
+                    ? "text-info disabled"
+                    : "text-info"
+                }`}
+              >
+                Forgot password?
+              </Link>
+            </span>
+          </label>
+
+          <label
+            className="d-flex align-items-center gap-2"
+            style={{ fontSize: "11px" }}
+          >
+            <input
+              type="checkbox"
+              checked={otpWithNum}
+              onChange={handelPassword}
+              className="my-3 mb-3 rounded-0 checkbox-30days"
+            />
+
+            <span>
+              Login with OTP instead of password
+            </span>
+          </label>
+
+          <br />
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="btn btn-info text-white w-100 p-2 mb-4"
+          >
+            {isLoading ? "Logging in..." : "Login"}
+          </button>
+
+          {message && (
+            <p
+              className="alert alert-danger"
+              style={{
+                color: "red",
+                marginTop: "10px",
+              }}
+            >
+              {message}
+            </p>
+          )}
+
         </div>
-           
-
-    );
+      </form>
+    </div>
+  );
 }
