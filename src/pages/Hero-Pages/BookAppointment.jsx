@@ -28,7 +28,7 @@ function getProfileImage(doctor) {
     return image;
   }
 
-  return `http://localhost:4545/uploads/${image}`;
+  return `https://withurdoctor.onrender.com/uploads/${image}`;
 }
 
 
@@ -53,8 +53,14 @@ function formatSelectedDate(dateValue) {
 
 
 function getErrorMessage(error) {
+  console.log("Full booking error:", error);
+
   if (error?.data?.message) {
     return error.data.message;
+  }
+
+  if (error?.data?.error) {
+    return error.data.error;
   }
 
   if (error?.error) {
@@ -83,17 +89,37 @@ export default function BookAppointment() {
   let storedUser = null;
 
   try {
-    const storedUserString = localStorage.getItem("user");
+    const storedUserString =
+      localStorage.getItem("user");
 
     storedUser = storedUserString
       ? JSON.parse(storedUserString)
       : null;
 
   } catch (error) {
-    console.error("Invalid user data in localStorage:", error);
+    console.error(
+      "Invalid user data in localStorage:",
+      error
+    );
   }
 
-  console.log("Logged in user:", storedUser);
+
+  console.log(
+    "Logged in user:",
+    storedUser
+  );
+
+
+  // IMPORTANT
+  // Your backend sends `id`, not `_id`
+  const patientId =
+    storedUser?.id || storedUser?._id;
+
+
+  console.log(
+    "Patient ID:",
+    patientId
+  );
 
 
   const [
@@ -153,6 +179,18 @@ export default function BookAppointment() {
   // CONFIRM APPOINTMENT
   const handleConfirmAppointment = async () => {
 
+    console.log(
+      "Doctor ID from URL:",
+      doctorId
+    );
+
+
+    console.log(
+      "Selected doctor:",
+      selectedDoctor
+    );
+
+
     if (!doctorId) {
       alert("Doctor ID not found.");
       return;
@@ -165,8 +203,12 @@ export default function BookAppointment() {
     }
 
 
-    if (!storedUser?._id) {
-      console.error("Patient ID not found:", storedUser);
+    if (!patientId) {
+
+      console.error(
+        "Patient ID not found:",
+        storedUser
+      );
 
       alert(
         "Your login information is missing. Please logout and login again."
@@ -190,21 +232,18 @@ export default function BookAppointment() {
 
 
       // PATIENT INFORMATION
-      patientId:
-        storedUser._id,
+      patientId: patientId,
 
       patientName:
-        storedUser.name || "",
+        storedUser?.name || "",
 
       patientEmail:
-        storedUser.email || "",
+        storedUser?.email || "",
 
 
       // APPOINTMENT INFORMATION
       bookedFor: "myself",
 
-      // IMPORTANT:
-      // These names match your earlier appointment payload
       appointmentDate:
         selectedDate,
 
@@ -244,11 +283,11 @@ export default function BookAppointment() {
         "Appointment booking failed:",
         error
       );
+
     }
   };
 
 
-  // LOADING
   if (doctorLoading) {
     return (
       <div className="container py-5 text-center">
@@ -267,7 +306,6 @@ export default function BookAppointment() {
   }
 
 
-  // DOCTOR FETCH ERROR
   if (doctorFailed) {
 
     console.error(
@@ -294,7 +332,6 @@ export default function BookAppointment() {
   }
 
 
-  // DOCTOR NOT FOUND
   if (!selectedDoctor) {
 
     return (
@@ -511,11 +548,13 @@ export default function BookAppointment() {
                     !doctorId ||
                     !selectedDate ||
                     !selectedTime ||
-                    !storedUser?._id ||
+                    !patientId ||
                     isBooking
                   }
 
-                  onClick={handleConfirmAppointment}
+                  onClick={
+                    handleConfirmAppointment
+                  }
                 >
 
                   {isBooking
