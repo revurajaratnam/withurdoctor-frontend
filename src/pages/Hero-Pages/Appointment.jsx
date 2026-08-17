@@ -6,11 +6,19 @@ import {
 import { useSelector } from "react-redux";
 
 import NavbarComp from "../../components/Navbar";
-import { useGetdrdataQuery } from "../../features/auth/api/drDataApi";
-import { useAppointmentBookingMutation } from "../../features/auth/api/AppoApi";
+
+import {
+  useGetdrdataQuery,
+} from "../../features/auth/api/drDataApi";
+
+import {
+  useAppointmentBookingMutation,
+} from "../../features/auth/api/AppoApi";
+
 
 const fallbackImage =
   "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png";
+
 
 function getDoctorImage(doctor) {
   const image =
@@ -28,6 +36,7 @@ function getDoctorImage(doctor) {
 
   return `http://localhost:4545/uploads/${image}`;
 }
+
 
 function getDoctorsArray(response) {
   if (Array.isArray(response)) {
@@ -48,6 +57,7 @@ function getDoctorsArray(response) {
 
   return [];
 }
+
 
 function getSingleDoctor(response) {
   if (!response || Array.isArray(response)) {
@@ -91,6 +101,7 @@ function getSingleDoctor(response) {
   return null;
 }
 
+
 function doctorIdMatches(doctor, doctorId) {
   if (!doctor || !doctorId) {
     return false;
@@ -107,13 +118,19 @@ function doctorIdMatches(doctor, doctorId) {
   ];
 
   return availableIds.some(
-    (id) => id && String(id) === String(doctorId)
+    (id) =>
+      id &&
+      String(id) === String(doctorId)
   );
 }
 
+
 export default function Appointments() {
+
   const { doctorId } = useParams();
+
   const [searchParams] = useSearchParams();
+
 
   const appointmentDate =
     searchParams.get("date") || "";
@@ -121,30 +138,42 @@ export default function Appointments() {
   const timeSlot =
     searchParams.get("time") || "";
 
+
+  // GET LOGGED-IN USER FROM REDUX
   const { user, token } = useSelector(
     (state) => state.dr
   );
 
-  const [selectedPatientType, setSelectedPatientType] =
-    useState("myself");
 
-  const [patientDetails, setPatientDetails] = useState({
+  const [
+    selectedPatientType,
+    setSelectedPatientType,
+  ] = useState("myself");
+
+
+  const [
+    patientDetails,
+    setPatientDetails,
+  ] = useState({
     fullName: "",
     mobile: "",
     email: "",
   });
 
-  const [bookingMessage, setBookingMessage] =
-    useState("");
 
-  const [bookingError, setBookingError] =
-    useState("");
+  const [
+    bookingMessage,
+    setBookingMessage,
+  ] = useState("");
 
-  /*
-   * Important:
-   * Pass the doctor ID to the API instead of requesting
-   * the normal paginated doctors list.
-   */
+
+  const [
+    bookingError,
+    setBookingError,
+  ] = useState("");
+
+
+  // GET DOCTOR DATA
   const {
     data: doctorResponse,
     isLoading: isDoctorLoading,
@@ -159,7 +188,9 @@ export default function Appointments() {
       skip: !doctorId,
     }
   );
-  const doctorinfo = Array.isArray(doctorResponse)?doctorResponse:Array.isArray(doctorResponse?.data) ? doctorResponse.data : [];
+
+
+  // APPOINTMENT MUTATION
   const [
     appointmentBooking,
     {
@@ -167,301 +198,540 @@ export default function Appointments() {
     },
   ] = useAppointmentBookingMutation();
 
+
+  // AUTO FILL LOGGED-IN USER DETAILS
   useEffect(() => {
+
     if (selectedPatientType === "myself") {
+
       setPatientDetails({
         fullName:
           user?.fullname ||
           user?.fullName ||
           user?.name ||
           "",
+
         mobile:
           user?.mobile ||
           user?.phone ||
           user?.mobileNumber ||
           "",
-        email: user?.email || "",
+
+        email:
+          user?.email || "",
       });
+
     } else {
+
       setPatientDetails({
         fullName: "",
         mobile: "",
         email: "",
       });
-    }
-  }, [selectedPatientType, user]);
 
+    }
+
+  }, [
+    selectedPatientType,
+    user,
+  ]);
+
+
+  // FIND SELECTED DOCTOR
   const selectedDoctor = useMemo(() => {
+
     const singleDoctor =
       getSingleDoctor(doctorResponse);
 
+
     if (
       singleDoctor &&
-      doctorIdMatches(singleDoctor, doctorId)
+      doctorIdMatches(
+        singleDoctor,
+        doctorId
+      )
     ) {
       return singleDoctor;
     }
 
+
     const doctors =
       getDoctorsArray(doctorResponse);
 
+
     return (
-      doctors.find((doctor) =>
-        doctorIdMatches(doctor, doctorId)
+      doctors.find(
+        (doctor) =>
+          doctorIdMatches(
+            doctor,
+            doctorId
+          )
       ) || null
     );
-  }, [doctorResponse, doctorId]);
 
+  }, [
+    doctorResponse,
+    doctorId,
+  ]);
+
+
+  // CHANGE PATIENT TYPE
   const handlePatientTypeChange = (type) => {
+
     setSelectedPatientType(type);
+
     setBookingMessage("");
+
     setBookingError("");
+
   };
 
+
+  // HANDLE INPUT CHANGE
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
 
-    setPatientDetails((previousData) => ({
-      ...previousData,
-      [name]: value,
-    }));
+    const {
+      name,
+      value,
+    } = event.target;
+
+
+    setPatientDetails(
+      (previousData) => ({
+        ...previousData,
+        [name]: value,
+      })
+    );
+
   };
 
+
+  // SUBMIT APPOINTMENT
   const handleSubmit = async (event) => {
+
     event.preventDefault();
 
+
     setBookingMessage("");
+
     setBookingError("");
 
+
+    // CHECK LOGIN
     if (!token) {
+
       setBookingError(
         "Please log in before booking an appointment."
       );
+
       return;
     }
 
+
+    // CHECK DOCTOR ID
     if (!doctorId) {
+
       setBookingError(
         "Doctor ID is missing. Please select the doctor again."
       );
+
       return;
     }
 
+
+    // CHECK DOCTOR
     if (!selectedDoctor) {
+
       setBookingError(
         "Doctor details are unavailable. Please select the doctor again."
       );
+
       return;
     }
 
-    if (!appointmentDate || !timeSlot) {
+
+    // CHECK DATE
+    if (!appointmentDate) {
+
       setBookingError(
-        "Appointment date or time slot is missing. Please select the slot again."
+        "Appointment date is missing."
       );
+
       return;
     }
 
-    if (!patientDetails.fullName.trim()) {
+
+    // CHECK TIME
+    if (!timeSlot) {
+
+      setBookingError(
+        "Appointment time slot is missing."
+      );
+
+      return;
+    }
+
+
+    // CHECK NAME
+    if (
+      !patientDetails.fullName.trim()
+    ) {
+
       setBookingError(
         "Please enter the patient's full name."
       );
+
       return;
     }
 
-    if (!patientDetails.mobile.trim()) {
+
+    // CHECK MOBILE
+    if (
+      !patientDetails.mobile.trim()
+    ) {
+
       setBookingError(
         "Please enter the patient's mobile number."
       );
+
       return;
     }
 
-    if (!/^[6-9]\d{9}$/.test(
-      patientDetails.mobile.trim()
-    )) {
+
+    // VALIDATE MOBILE
+    if (
+      !/^[6-9]\d{9}$/.test(
+        patientDetails.mobile.trim()
+      )
+    ) {
+
       setBookingError(
         "Please enter a valid 10-digit mobile number."
       );
+
       return;
     }
 
-    if (!patientDetails.email.trim()) {
+
+    // CHECK EMAIL
+    if (
+      !patientDetails.email.trim()
+    ) {
+
       setBookingError(
         "Please enter the patient's email address."
       );
+
       return;
     }
 
+
+    // GET PATIENT ID
+    const patientId =
+      user?._id ||
+      user?.id ||
+      user?.userId ||
+      "";
+
+
+    // CHECK PATIENT ID
+    if (!patientId) {
+
+      console.error(
+        "Patient ID not found."
+      );
+
+      console.log(
+        "Redux user:",
+        user
+      );
+
+
+      setBookingError(
+        "Patient ID not found. Please logout and login again."
+      );
+
+      return;
+    }
+
+
+    // CREATE APPOINTMENT PAYLOAD
     const appointmentPayload = {
+
       doctorId:
         selectedDoctor?._id ||
         selectedDoctor?.id ||
         selectedDoctor?.doctorId ||
         doctorId,
 
-      /*
-       * Normally, the backend should read patientId
-       * from the verified JWT token.
-       */
+
       doctorName:
         selectedDoctor?.fullname ||
+        selectedDoctor?.fullName ||
+        selectedDoctor?.name ||
         "",
-      
-      doctorEmail:
-      selectedDoctor?.email ||
-      "",
-      patientId:
-        user?._id ||
-        user?.id ||
-        user?.userId,
 
-      bookedFor: selectedPatientType,
+
+      doctorEmail:
+        selectedDoctor?.email ||
+        "",
+
+
+      patientId: patientId,
+
+
+      bookedFor:
+        selectedPatientType,
+
 
       patientName:
         patientDetails.fullName.trim(),
 
+
       patientMobile:
         patientDetails.mobile.trim(),
+
 
       patientEmail:
         patientDetails.email.trim(),
 
-      appointmentDate,
-      timeSlot,
+
+      appointmentDate:
+        appointmentDate,
+
+
+      timeSlot:
+        timeSlot,
     };
+
 
     console.log(
       "Doctor ID from URL:",
       doctorId
     );
 
+
     console.log(
       "Selected doctor:",
       selectedDoctor
     );
+
+
+    console.log(
+      "Redux user:",
+      user
+    );
+
 
     console.log(
       "Appointment payload:",
       appointmentPayload
     );
 
+
     try {
+
       const response =
         await appointmentBooking(
           appointmentPayload
         ).unwrap();
 
-      setBookingMessage(
-        response?.message ||
-          "Appointment booked successfully."
+
+      console.log(
+        "Appointment booking success:",
+        response
       );
 
+
+      setBookingMessage(
+        response?.message ||
+        "Appointment booked successfully."
+      );
+
+
       setBookingError("");
+
+
     } catch (error) {
+
       console.error(
         "Appointment booking failed:",
         error
       );
 
+
+      console.error(
+        "Backend response:",
+        error?.data
+      );
+
+
       setBookingError(
         error?.data?.message ||
-          error?.data?.error ||
-          error?.message ||
-          "Appointment booking failed. Please try again."
+        error?.data?.error ||
+        error?.error ||
+        "Appointment booking failed. Please try again."
       );
+
     }
+
   };
 
+
+  // DOCTOR ID MISSING
   if (!doctorId) {
+
     return (
       <div>
+
         <NavbarComp />
 
         <div className="container mt-5">
+
           <div className="alert alert-danger">
+
             Doctor ID is missing from the URL.
+
           </div>
+
         </div>
+
       </div>
     );
+
   }
 
-  if (isDoctorLoading || isDoctorFetching) {
+
+  // LOADING
+  if (
+    isDoctorLoading ||
+    isDoctorFetching
+  ) {
+
     return (
       <div>
+
         <NavbarComp />
 
         <div className="container mt-5">
-          <p>Loading doctor details...</p>
+
+          <p>
+            Loading doctor details...
+          </p>
+
         </div>
+
       </div>
     );
+
   }
 
+
+  // DOCTOR API ERROR
   if (isDoctorError) {
+
     return (
       <div>
+
         <NavbarComp />
 
         <div className="container mt-5">
+
           <div className="alert alert-danger">
+
             <h5>
               Failed to load doctor details
             </h5>
 
+
             <p className="mb-1">
+
               Doctor ID: {doctorId}
+
             </p>
+
 
             <p className="mb-0">
-              {doctorError?.data?.message ||
+
+              {
+                doctorError?.data?.message ||
                 doctorError?.error ||
-                "Unable to connect to the server."}
+                "Unable to connect to the server."
+              }
+
             </p>
+
           </div>
+
         </div>
+
       </div>
     );
+
   }
 
+
+  // DOCTOR NOT FOUND
   if (!selectedDoctor) {
+
     return (
       <div>
+
         <NavbarComp />
 
         <div className="container mt-5">
+
           <div className="alert alert-danger">
-            <h5>Doctor not found</h5>
 
-            <p className="mb-1">
+            <h5>
+              Doctor not found
+            </h5>
+
+
+            <p>
+
               Doctor ID: {doctorId}
+
             </p>
 
-            <p className="mb-0">
-              The doctor API did not return a doctor
-              matching this ID.
-            </p>
           </div>
+
         </div>
+
       </div>
     );
+
   }
 
+
   return (
+
     <div>
+
       <NavbarComp />
 
+
       <main className="container mt-4">
+
         <div className="row g-4">
+
+
+          {/* DOCTOR DETAILS */}
+
           <section className="col-lg-4">
+
             <div className="card p-3">
+
               <div className="d-flex align-items-center gap-3">
+
+
                 <img
-                  src={getDoctorImage(selectedDoctor)}
-                  alt={
-                    selectedDoctor?.fullname
-                      ? `Dr. ${selectedDoctor.fullname}`
-                      : "Doctor profile"
+                  src={
+                    getDoctorImage(
+                      selectedDoctor
+                    )
                   }
+                  alt="Doctor profile"
                   width="100"
                   height="100"
                   style={{
@@ -474,62 +744,122 @@ export default function Appointments() {
                   }}
                 />
 
+
                 <div>
+
                   <h5 className="mb-1">
+
                     Dr.{" "}
-                    {selectedDoctor?.fullname ||
+
+                    {
+                      selectedDoctor?.fullname ||
                       selectedDoctor?.fullName ||
                       selectedDoctor?.name ||
-                      "Doctor"}
+                      "Doctor"
+                    }
+
                   </h5>
 
+
                   <p className="mb-1">
-                    {selectedDoctor?.qualification ||
-                      "Qualification not provided"}
+
+                    {
+                      selectedDoctor?.qualification ||
+                      "Qualification not provided"
+                    }
+
                   </p>
+
 
                   <p className="mb-0 text-muted">
-                    {selectedDoctor?.specialization ||
-                      "Specialization not provided"}
+
+                    {
+                      selectedDoctor?.specialization ||
+                      "Specialization not provided"
+                    }
+
                   </p>
+
                 </div>
+
               </div>
+
             </div>
+
           </section>
 
+
+          {/* APPOINTMENT FORM */}
+
           <section className="col-lg-8">
+
+
             <h4>
+
               Appointment with Dr.{" "}
-              {selectedDoctor?.fullname ||
+
+              {
+                selectedDoctor?.fullname ||
                 selectedDoctor?.fullName ||
-                selectedDoctor?.name}
+                selectedDoctor?.name
+              }
+
             </h4>
 
+
             <div className="card p-3 my-3">
+
+
               <p className="mb-2">
+
                 <strong>
                   Appointment date:
-                </strong>{" "}
-                {appointmentDate ||
-                  "Not selected"}
+                </strong>
+
+                {" "}
+
+                {
+                  appointmentDate ||
+                  "Not selected"
+                }
+
               </p>
 
+
               <p className="mb-0">
-                <strong>Time slot:</strong>{" "}
-                {timeSlot || "Not selected"}
+
+                <strong>
+                  Time slot:
+                </strong>
+
+                {" "}
+
+                {
+                  timeSlot ||
+                  "Not selected"
+                }
+
               </p>
+
             </div>
+
 
             <hr />
 
-            <h2>Patient Details</h2>
+
+            <h2>
+              Patient Details
+            </h2>
+
+
+            {/* MYSELF */}
 
             <div className="mb-2">
+
               <input
                 type="radio"
                 id="myself"
                 name="who"
-                value="myself"
                 checked={
                   selectedPatientType ===
                   "myself"
@@ -541,23 +871,27 @@ export default function Appointments() {
                 }
               />
 
+
               <label
                 htmlFor="myself"
                 className="ms-2"
               >
-                {user?.fullname ||
-                  user?.fullName ||
-                  user?.name ||
-                  "Myself"}
+
+                Myself
+
               </label>
+
             </div>
 
+
+            {/* SOMEONE ELSE */}
+
             <div className="mb-3">
+
               <input
                 type="radio"
                 id="someone"
                 name="who"
-                value="someone"
                 checked={
                   selectedPatientType ===
                   "someone"
@@ -569,30 +903,34 @@ export default function Appointments() {
                 }
               />
 
+
               <label
                 htmlFor="someone"
                 className="ms-2"
               >
+
                 Someone Else
+
               </label>
+
             </div>
 
-            <form onSubmit={handleSubmit}>
-              {selectedPatientType ===
-                "someone" && (
-                <p>
-                  Please provide the
-                  patient&apos;s information:
-                </p>
-              )}
+
+            <form
+              onSubmit={handleSubmit}
+            >
+
+
+              {/* FULL NAME */}
 
               <div className="mb-3">
+
                 <label htmlFor="fullName">
-                  Patient&apos;s Full Name
-                  <sup className="text-danger">
-                    *
-                  </sup>
+
+                  Patient's Full Name
+
                 </label>
+
 
                 <input
                   id="fullName"
@@ -602,45 +940,58 @@ export default function Appointments() {
                   style={{
                     maxWidth: "400px",
                   }}
-                  placeholder="Enter patient full name"
                   value={
                     patientDetails.fullName
                   }
-                  onChange={handleInputChange}
+                  onChange={
+                    handleInputChange
+                  }
                 />
+
               </div>
 
+
+              {/* MOBILE */}
+
               <div className="mb-3">
+
                 <label htmlFor="mobile">
+
                   Mobile
-                  <sup className="text-danger">
-                    *
-                  </sup>
+
                 </label>
+
 
                 <input
                   id="mobile"
                   name="mobile"
                   type="tel"
-                  inputMode="numeric"
                   maxLength={10}
                   className="form-control"
                   style={{
                     maxWidth: "400px",
                   }}
-                  placeholder="Enter 10-digit mobile number"
-                  value={patientDetails.mobile}
-                  onChange={handleInputChange}
+                  value={
+                    patientDetails.mobile
+                  }
+                  onChange={
+                    handleInputChange
+                  }
                 />
+
               </div>
 
+
+              {/* EMAIL */}
+
               <div className="mb-3">
+
                 <label htmlFor="email">
+
                   Patient Email
-                  <sup className="text-danger">
-                    *
-                  </sup>
+
                 </label>
+
 
                 <input
                   id="email"
@@ -650,37 +1001,58 @@ export default function Appointments() {
                   style={{
                     maxWidth: "400px",
                   }}
-                  placeholder="Enter patient email ID"
-                  value={patientDetails.email}
-                  onChange={handleInputChange}
+                  value={
+                    patientDetails.email
+                  }
+                  onChange={
+                    handleInputChange
+                  }
                   readOnly={
                     selectedPatientType ===
                     "myself"
                   }
                 />
+
               </div>
 
+
+              {/* ERROR */}
+
               {bookingError && (
+
                 <div
                   className="alert alert-danger"
                   style={{
                     maxWidth: "400px",
                   }}
                 >
+
                   {bookingError}
+
                 </div>
+
               )}
 
+
+              {/* SUCCESS */}
+
               {bookingMessage && (
+
                 <div
                   className="alert alert-success"
                   style={{
                     maxWidth: "400px",
                   }}
                 >
+
                   {bookingMessage}
+
                 </div>
+
               )}
+
+
+              {/* SUBMIT */}
 
               <button
                 type="submit"
@@ -691,14 +1063,23 @@ export default function Appointments() {
                 }}
                 disabled={isBooking}
               >
-                {isBooking
-                  ? "Booking Appointment..."
-                  : "Confirm Clinic Visit"}
+
+                {
+                  isBooking
+                    ? "Booking Appointment..."
+                    : "Confirm Clinic Visit"
+                }
+
               </button>
+
             </form>
+
           </section>
+
         </div>
+
       </main>
+
     </div>
   );
 }
