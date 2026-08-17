@@ -10,63 +10,180 @@ import Calender from "../components/Calender";
 import Appointments from "../pages/Hero-Pages/Appointment";
 import Schedules from "../pages/Hero-Pages/Schedules";
 import AppointmentsDashboard from "../features/components/appointmentsDashboard";
-import Doctordashboards from "../pages/Dashboardpages/Drdashboard";
 
-function NetworkDelay(promise, ms = 2000) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, ms);
-    }).then(() => promise);
-}
+const VideoConsult = lazy(() =>
+  import("../pages/Services/VideoConsult")
+);
 
-const VideoConsult = lazy(() => import("../pages/Services/VideoConsult"));
-const Medicines = lazy(() => import("../pages/Services/Medicines"));
-const Surgeries = lazy(() => import("../pages/Services/Surgeries"));
-const Forcorporates = lazy(() => import("../pages/Forcorporates"));
-const LabTests = lazy(() => import("../pages/Services/LapTests"));
-const Profileform = lazy(() => import("../pages/Doctors/DrProfileForm"));
-// const DoctorDashboards = lazy(() => import("../pages/Dashboardpages/Drdashboard"));
-const MyAppointments = lazy(() => import("../features/components/Myappointments"));
-// const Consult = lazy(() => import("../pages/Dashboardpages/Consultation"));
-const FindDrHome = lazy(() => NetworkDelay(import("../pages/Doctors/FindDoctors"),1000));
-const FindDoctors = lazy(() => NetworkDelay(import("../pages/Doctors/DrInfomations"), 1000));
-const DrProfilePage = lazy(() => import("../pages/Doctors/DrProfilePage"));
-    
+const Medicines = lazy(() =>
+  import("../pages/Services/Medicines")
+);
+
+const Surgeries = lazy(() =>
+  import("../pages/Services/Surgeries")
+);
+
+const Forcorporates = lazy(() =>
+  import("../pages/Forcorporates")
+);
+
+const LabTests = lazy(() =>
+  import("../pages/Services/LapTests")
+);
+
+const Profileform = lazy(() =>
+  import("../pages/Doctors/DrProfileForm")
+);
+
+const Doctordashboards = lazy(() =>
+  import("../pages/Dashboardpages/Drdashboard")
+);
+
+const MyAppointments = lazy(() =>
+  import("../features/components/Myappointments")
+);
+
+const FindDrHome = lazy(() =>
+  import("../pages/Doctors/FindDoctors")
+);
+
+const FindDoctors = lazy(() =>
+  import("../pages/Doctors/DrInfomations")
+);
+
+const DrProfilePage = lazy(() =>
+  import("../pages/Doctors/DrProfilePage")
+);
+
 const Routers = createBrowserRouter([
-    { path: "/", element: <HomePage /> },
-    { path: "/FindDoctors", element: <FindDoctors /> },
-    { path: '/Finddrhome', element: <FindDrHome /> },
-    { path: "/VideoConsult", element: <VideoConsult /> },
-    { path: "/Medicines", element: <Medicines /> },
-    { path: "/LabTests", element: <LabTests /> },
-    { path: "/Surgeries", element: <Surgeries /> },
-    { path: "/forcorporates", element: <Forcorporates /> },
-    { path: "/LoginAndSignupDashboard", element: <LoginAndSignupDashboard /> },
-    { path: "/Login", element: <LoginAndSignupDashboard view="login" /> },
-    { path: "/Signup", element: <LoginAndSignupDashboard view="drsignup" /> },
-    { path: "/VerifyEmail", element: <VerifyMobile /> },
-    { path: "/userRegistration", element: <LoginAndSignupDashboard view="usersignup" /> },
-    { path: "/profile", element: <Profileform /> },
-    { path: "/drprofile", element: <Doctordashboards /> },
-    { 
-        path: "/myappointments", 
-        element: <MyAppointments />,
-        children: [
-            { index: true, element: <AppointmentsDashboard /> }
-        ]
-    },
-    // { path: "/newconsultation", element: <Consult /> },
-    { path: "/doctor/:doctorName", element: <DrProfilePage /> },
-    { path: "/viewProfile/:id", element: <ViewProfile /> },
-    { path: "/appointment/:doctorId", element: <BookAppointment /> },
-    { path: "/calender", element: <Calender /> },
-    { path: "/bookappointment/:doctorId", element: <Appointments/> },
-    { path: "/schedule/:doctorId", element:<Schedules /> }
+  {
+    path: "/",
+    element: <HomePage />,
+  },
+
+  {
+    path: "/FindDoctors",
+    element: <FindDoctors />,
+  },
+
+  {
+    path: "/Finddrhome",
+    element: <FindDrHome />,
+  },
+
+  {
+    path: "/VideoConsult",
+    element: <VideoConsult />,
+  },
+
+  {
+    path: "/Medicines",
+    element: <Medicines />,
+  },
+
+  {
+    path: "/LabTests",
+    element: <LabTests />,
+  },
+
+  {
+    path: "/Surgeries",
+    element: <Surgeries />,
+  },
+
+  {
+    path: "/forcorporates",
+    element: <Forcorporates />,
+  },
+
+  {
+    path: "/LoginAndSignupDashboard",
+    element: <LoginAndSignupDashboard />,
+  },
+
+  {
+    path: "/Login",
+    element: <LoginAndSignupDashboard view="login" />,
+  },
+
+  {
+    path: "/Signup",
+    element: <LoginAndSignupDashboard view="drsignup" />,
+  },
+
+  {
+    path: "/VerifyEmail",
+    element: <VerifyMobile />,
+  },
+
+  {
+    path: "/userRegistration",
+    element: <LoginAndSignupDashboard view="usersignup" />,
+  },
+
+  {
+    path: "/profile",
+    element: <Profileform />,
+  },
+
+  // DOCTOR DASHBOARD
+  {
+    path: "/drprofile",
+    element: <Doctordashboards />,
+  },
+
+  {
+    path: "/myappointments",
+    element: <MyAppointments />,
+    children: [
+      {
+        index: true,
+        element: <AppointmentsDashboard />,
+      },
+    ],
+  },
+
+  {
+    path: "/doctor/:doctorName",
+    element: <DrProfilePage />,
+  },
+
+  {
+    path: "/viewProfile/:id",
+    element: <ViewProfile />,
+  },
+
+  {
+    path: "/appointment/:doctorId",
+    element: <BookAppointment />,
+  },
+
+  {
+    path: "/calender",
+    element: <Calender />,
+  },
+
+  {
+    path: "/bookappointment/:doctorId",
+    element: <Appointments />,
+  },
+
+  {
+    path: "/schedule/:doctorId",
+    element: <Schedules />,
+  },
 ]);
 
 export default function AppRoutes() {
-    return (
-        <Suspense fallback={<div className="loading-screen">Loading please wait...</div>}>
-            <RouterProvider router={Routers} />
-        </Suspense>
-    );
+  return (
+    <Suspense
+      fallback={
+        <div className="loading-screen">
+          Loading please wait...
+        </div>
+      }
+    >
+      <RouterProvider router={Routers} />
+    </Suspense>
+  );
 }
