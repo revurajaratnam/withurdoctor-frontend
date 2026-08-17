@@ -7,7 +7,7 @@ import { setUser } from "../../features/auth/Slice/UserSlice";
 import { GoogleLogin } from '@react-oauth/google';
 
 export default function Login() {
-    const [loginType, setLoginType] = useState("patient");
+    const [loginType, setLoginType] = useState("");
     const [otpWithNum, SetOtpWithNum] = useState(false);
     const [requirefileds, setRequireFileds] = useState({})
     const [formdata, setFormdata] = useState({
