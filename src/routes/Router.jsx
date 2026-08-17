@@ -44,8 +44,8 @@ const Routers = createBrowserRouter([
     { path: "/Signup", element: <LoginAndSignupDashboard view="drsignup" /> },
     { path: "/VerifyEmail", element: <VerifyMobile /> },
     { path: "/userRegistration", element: <LoginAndSignupDashboard view="usersignup" /> },
-    { path: "/Profile", element: <Profileform /> },
-    // { path: "/drprofile", element: <DoctorDashboards /> },
+    { path: "/profile", element: <Profileform /> },
+    { path: "/drprofile", element: <DoctorDashboards /> },
     { 
         path: "/myappointments", 
         element: <MyAppointments />,

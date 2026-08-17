@@ -127,7 +127,7 @@ export default function Login() {
       if (result.user.role === "doctor") {
         navigate("/drprofile");
       } else if (result.user.role === "patient") {
-        navigate("/");
+        navigate("/profile");
       }
 
     } catch (error) {
