@@ -3,7 +3,7 @@ import NavbarComp from "../../components/Navbar";
 
 
 
-export default function DoctorDashboards() {
+export default function Doctordashboards() {
     
 
     return(

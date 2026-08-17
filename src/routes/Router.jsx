@@ -10,6 +10,7 @@ import Calender from "../components/Calender";
 import Appointments from "../pages/Hero-Pages/Appointment";
 import Schedules from "../pages/Hero-Pages/Schedules";
 import AppointmentsDashboard from "../features/components/appointmentsDashboard";
+import Doctordashboards from "../pages/Dashboardpages/Drdashboard";
 
 function NetworkDelay(promise, ms = 2000) {
     return new Promise((resolve) => {
@@ -45,7 +46,7 @@ const Routers = createBrowserRouter([
     { path: "/VerifyEmail", element: <VerifyMobile /> },
     { path: "/userRegistration", element: <LoginAndSignupDashboard view="usersignup" /> },
     { path: "/profile", element: <Profileform /> },
-    { path: "/drprofile", element: <DoctorDashboards /> },
+    { path: "/drprofile", element: <Doctordashboards /> },
     { 
         path: "/myappointments", 
         element: <MyAppointments />,
