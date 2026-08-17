@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import NavbarComp from "../../components/Navbar";
 
-export default function Doctordashboards() {
+export default function DoctorDashboard() {
   return (
     <div>
       <NavbarComp />

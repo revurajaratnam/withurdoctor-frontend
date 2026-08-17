@@ -11,6 +11,7 @@ import Appointments from "../pages/Hero-Pages/Appointment";
 import Schedules from "../pages/Hero-Pages/Schedules";
 import AppointmentsDashboard from "../features/components/appointmentsDashboard";
 
+
 const VideoConsult = lazy(() =>
   import("../pages/Services/VideoConsult")
 );
@@ -35,8 +36,8 @@ const Profileform = lazy(() =>
   import("../pages/Doctors/DrProfileForm")
 );
 
-const Doctordashboards = lazy(() =>
-  import("../pages/Dashboardpages/Drdashboard")
+const DoctorDashboard = lazy(() =>
+  import("../pages/DashboardPages/DoctorDashboard")
 );
 
 const MyAppointments = lazy(() =>
@@ -129,7 +130,7 @@ const Routers = createBrowserRouter([
   // DOCTOR DASHBOARD
   {
     path: "/drprofile",
-    element: <Doctordashboards />,
+    element: <DoctorDashboard />,
   },
 
   {
