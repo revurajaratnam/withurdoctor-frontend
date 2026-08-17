@@ -11,6 +11,7 @@ import {
 
 import NavbarComp from "../../components/Navbar";
 
+
 const fallbackImage =
   "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png";
 
@@ -70,22 +71,27 @@ function getErrorMessage(error) {
 
 export default function BookAppointment() {
 
-  // GET DOCTOR ID FROM URL
   const { doctorId } = useParams();
 
-  // GET DATE AND TIME
   const [searchParams] = useSearchParams();
 
   const selectedDate = searchParams.get("date");
   const selectedTime = searchParams.get("time");
 
 
-  // GET LOGGED-IN USER FROM LOCALSTORAGE
-  const storedUserString = localStorage.getItem("user");
+  // GET LOGGED-IN USER
+  let storedUser = null;
 
-  const storedUser = storedUserString
-    ? JSON.parse(storedUserString)
-    : null;
+  try {
+    const storedUserString = localStorage.getItem("user");
+
+    storedUser = storedUserString
+      ? JSON.parse(storedUserString)
+      : null;
+
+  } catch (error) {
+    console.error("Invalid user data in localStorage:", error);
+  }
 
   console.log("Logged in user:", storedUser);
 
@@ -148,21 +154,23 @@ export default function BookAppointment() {
   const handleConfirmAppointment = async () => {
 
     if (!doctorId) {
-      console.error("Doctor ID not found");
+      alert("Doctor ID not found.");
       return;
     }
 
 
     if (!selectedDate || !selectedTime) {
-      console.error("Date or time not selected");
+      alert("Please select date and time.");
       return;
     }
 
 
     if (!storedUser?._id) {
-      console.error("Patient ID not found. Please login again.");
+      console.error("Patient ID not found:", storedUser);
 
-      alert("Please logout and login again.");
+      alert(
+        "Your login information is missing. Please logout and login again."
+      );
 
       return;
     }
@@ -171,7 +179,8 @@ export default function BookAppointment() {
     const appointmentData = {
 
       // DOCTOR INFORMATION
-      doctorId: selectedDoctor?._id || doctorId,
+      doctorId:
+        selectedDoctor?._id || doctorId,
 
       doctorName:
         selectedDoctor?.fullname || "",
@@ -194,9 +203,13 @@ export default function BookAppointment() {
       // APPOINTMENT INFORMATION
       bookedFor: "myself",
 
-      date: selectedDate,
+      // IMPORTANT:
+      // These names match your earlier appointment payload
+      appointmentDate:
+        selectedDate,
 
-      time: selectedTime,
+      timeSlot:
+        selectedTime,
 
 
       consultationFee:
@@ -228,14 +241,14 @@ export default function BookAppointment() {
     } catch (error) {
 
       console.error(
-        "Booking failed:",
+        "Appointment booking failed:",
         error
       );
-
     }
   };
 
 
+  // LOADING
   if (doctorLoading) {
     return (
       <div className="container py-5 text-center">
@@ -254,6 +267,7 @@ export default function BookAppointment() {
   }
 
 
+  // DOCTOR FETCH ERROR
   if (doctorFailed) {
 
     console.error(
@@ -280,6 +294,7 @@ export default function BookAppointment() {
   }
 
 
+  // DOCTOR NOT FOUND
   if (!selectedDoctor) {
 
     return (
@@ -303,14 +318,12 @@ export default function BookAppointment() {
 
   return (
 
-    <div className="py-5 min-vh-100 d-flex flex-column w-100">
+    <div className="min-vh-100">
 
-      <div className="w-100">
-        <NavbarComp />
-      </div>
+      <NavbarComp />
 
 
-      <div className="container">
+      <div className="container py-5">
 
         <h2 className="mb-4">
           Confirm Appointment
@@ -418,15 +431,13 @@ export default function BookAppointment() {
             <div className="p-3 bg-light rounded">
 
               <h4 className="mb-3">
-                Selected appointment
+                Selected Appointment
               </h4>
 
 
               <p className="mb-2">
 
-                <strong>
-                  Date:
-                </strong>{" "}
+                <strong>Date:</strong>{" "}
 
                 {formatSelectedDate(selectedDate)}
 
@@ -435,9 +446,7 @@ export default function BookAppointment() {
 
               <p className="mb-0">
 
-                <strong>
-                  Time:
-                </strong>{" "}
+                <strong>Time:</strong>{" "}
 
                 {selectedTime ||
                   "Time not selected"}
@@ -482,7 +491,7 @@ export default function BookAppointment() {
                   className="btn btn-outline-danger btn-sm"
                   onClick={resetBooking}
                 >
-                  Try again
+                  Try Again
                 </button>
 
               </div>
@@ -497,15 +506,16 @@ export default function BookAppointment() {
                 <button
                   type="button"
                   className="btn btn-primary"
+
                   disabled={
                     !doctorId ||
                     !selectedDate ||
                     !selectedTime ||
+                    !storedUser?._id ||
                     isBooking
                   }
-                  onClick={
-                    handleConfirmAppointment
-                  }
+
+                  onClick={handleConfirmAppointment}
                 >
 
                   {isBooking
@@ -521,9 +531,11 @@ export default function BookAppointment() {
                 to="/FindDoctors"
                 className="btn btn-outline-secondary"
               >
+
                 {bookingSuccess
                   ? "Back to Doctors"
                   : "Change Doctor"}
+
               </Link>
 
             </div>
